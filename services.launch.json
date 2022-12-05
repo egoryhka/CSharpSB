@@ -1,0 +1,7 @@
+{
+  "FRONTEND_PORT": 3000,
+  "BACKEND_PORT": 5001,
+  "PROXY_PORT": 44892,
+  "ANALYZE_SERVICE_PORT": 8000,
+  "HOST": "localhost"
+}
