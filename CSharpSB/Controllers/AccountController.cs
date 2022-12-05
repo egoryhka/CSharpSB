@@ -30,7 +30,7 @@ namespace CSharpSB.Controllers
             return View();
         }
 
-
+        
         [HttpGet]
         public ActionResult GetInfo() 
         {
