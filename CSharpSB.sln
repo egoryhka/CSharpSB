@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpSB", "CSharpSB\CSharpSB.csproj", "{8564ABD1-970C-43ED-B991-37FFFD735720}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSharpSB", "CSharpSB\CSharpSB.csproj", "{8564ABD1-970C-43ED-B991-37FFFD735720}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCompilerLibrary", "CodeCompilerLibrary\CodeCompilerLibrary.csproj", "{E30965BF-8C20-4B7D-A0A6-2C0FB0E2903B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeCompilerLibrary", "CodeCompilerLibrary\CodeCompilerLibrary.csproj", "{E30965BF-8C20-4B7D-A0A6-2C0FB0E2903B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpSBTest", "CSharpSBTest\CSharpSBTest.csproj", "{CE0BC8A6-273F-4216-828C-AD55EA9120E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSharpSBTest", "CSharpSBTest\CSharpSBTest.csproj", "{CE0BC8A6-273F-4216-828C-AD55EA9120E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpSbAPI", "CSharpSbAPI\CSharpSbAPI.csproj", "{93185128-F66E-4FF0-A6E5-3CDE7E7E9D49}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{CE0BC8A6-273F-4216-828C-AD55EA9120E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE0BC8A6-273F-4216-828C-AD55EA9120E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE0BC8A6-273F-4216-828C-AD55EA9120E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93185128-F66E-4FF0-A6E5-3CDE7E7E9D49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93185128-F66E-4FF0-A6E5-3CDE7E7E9D49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93185128-F66E-4FF0-A6E5-3CDE7E7E9D49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93185128-F66E-4FF0-A6E5-3CDE7E7E9D49}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
