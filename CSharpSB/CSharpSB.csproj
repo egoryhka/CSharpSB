@@ -16,4 +16,9 @@
     <ProjectReference Include="..\CSharpSBTest\CSharpSBTest.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Course\" />
+    <Folder Include="Views\Level\" />
+  </ItemGroup>
+
 </Project>
