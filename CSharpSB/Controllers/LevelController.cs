@@ -11,74 +11,33 @@ namespace CSharpSB.Controllers
 
         }    
 
-
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult Create()
+        //Кнопка назад к выбору уровней 
+        public ActionResult Back() 
+        {
+            return RedirectToAction("Index");
+        }
+
+        //Кнопка перехода на новый уровень
+        public ActionResult GetNextLevel(int levelid) 
         {
             return View();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-      
-
-        [HttpPost]
+        // Получить подсказку по уровню
         public ActionResult GetHelp(int id) 
         {
-
             return View();
         }
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        //Очистка написанного пользователем кода, остается тольео захардкоженный
+        public ActionResult RemoveCod() 
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
     }
 }
