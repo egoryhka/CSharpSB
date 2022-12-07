@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import { useActions } from './utils/UseActions';
+import {Container, Paper, ThemeProvider } from '@mui/material';
+import { useTypeSelector } from './utils/UseTypeSelector';
+import { Header } from './components/Header/Header';
+import { Footer } from './components/Footer/Footer';
+import { Main } from './components/Main/Main';
+import { store } from './redux/redux';
+import {Provider} from "react-redux";
+import { BrowserRouter } from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+export const App: React.FC = () => {
+    const { tokenUserAuth } = useActions();
 
-export default App;
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            tokenUserAuth(token);
+        }
+    }, []);
+
+    const theme = useTypeSelector(store => store.theme.currentTheme);
+
+    return (
+            <BrowserRouter>
+                <ThemeProvider theme={theme}>
+                    <Header/>
+                    <Paper sx={{borderRadius: "0", flex: "1 0 auto"}} >
+                        <Container className={"main-container"} maxWidth={"lg"}>
+                            <Main/>
+                        </Container>
+                    </Paper>
+                    <Footer/>
+                </ThemeProvider>
+            </BrowserRouter>
+    );
+};
+
+

@@ -1,0 +1,33 @@
+@import "variables"
+@import "reset.css"
+@import "/src/components/Header/Header"
+@import "/src/components/Footer/Footer"
+@import "/src/components/Main/Main"
+@import "/src/components/Main/RegistrationForm/Registration"
+@import "/src/components/Main/CreateConference/CreateConference"
+@import "/src/components/utils/index"
+
+
+html, body
+  height: 100%
+
+body
+  display: flex
+  flex-direction: column
+
+a
+  text-decoration: none
+  cursor: pointer
+
+.container
+  max-width: 1440px
+  width: 80%
+  margin: 0 auto
+  border: 1px solid $main-pink
+
+#root
+  display: flex
+  flex-direction: column
+  height: 100%
+
+
