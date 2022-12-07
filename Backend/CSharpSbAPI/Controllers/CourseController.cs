@@ -15,34 +15,15 @@ namespace CSharpSbAPI.Controllers
 			_courseService = courseService;
 		}
 
-		[HttpGet("course")]
-		public ActionResult<Course> GetCourse(int id)
-		{
-			var course = _courseService.Get(id);
-			return course != null ? course : NotFound();
-		}
+		[HttpGet("all")] public Response GetCourses() => _courseService.GetCourses();
 
-		[HttpGet("courses")]
-		public ActionResult<List<Course>> GetCourses()
-		{
-			var courses = _courseService.Get();
-			return courses;
-		}
+		[HttpGet("{id}")] public Response GetCourse(int id) => _courseService.GetCourse(id);
 
-		[HttpPost("add")]
-		public IActionResult AddCourse(Course course)
-		{
-			var res = _courseService.Add(course);
-			if (res.Status == StatusResp.OK) return Ok();
-			return StatusCode((int)res.Status, res);
-		}
+		[HttpPost("add")] public Response AddCourse(Course course) => _courseService.AddCourse(course);
 
-		[HttpPost("update")]
-		public IActionResult UpdateCourse(Course course)
-		{
-			var res = _courseService.Update(course);
-			if (res.Status == StatusResp.OK) return Ok();
-			return StatusCode((int)res.Status, res);
-		}
+		[HttpPost("update")] public Response UpdateCourse(Course course) => _courseService.UpdateCourse(course);
+
+		[HttpPost("delete")] public Response DeleteCourse(int id) => _courseService.DeleteCourse(id);
+
 	}
 }

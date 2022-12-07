@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 using System.Text.Json;
 using Newtonsoft.Json;
 using CSharpSbAPI.Data.Models;
+using System.Data.Entity;
 
 namespace CSharpSbAPI.Services
 {
@@ -19,27 +20,33 @@ namespace CSharpSbAPI.Services
 
 		#region CRUD Operation
 
-		public List<Course> Get() => _context.Courses.ToList();
-		
-		public Course? Get(int id) => _context.Courses.Find(id);
+		public Response GetCourses()
+		{
+			return new Response<List<Course>>(StatusResp.OK, _context.Courses
+				.Include(x => x.Users)
+				.ToList());
+		}
 
-		public Response Add(Course course)
+		public Response GetCourse(int id)
+		{
+			var exist = _context.Courses.Find(id);
+			if (exist == null) return new Response(StatusResp.ClientError, "Не найден");
+			return new Response<Course>(StatusResp.OK, exist);
+		}
+
+		public Response AddCourse(Course course)
 		{
 			var exist = _context.Courses.FirstOrDefault(x => x.Name == course.Name);
 			if (exist != null)
 				return new Response(StatusResp.ClientError, "Уже существует");
 
-			_context.Courses.Add(new()
-			{
-				Name = course.Name,
-				Description = course.Description,
-			});
+			_context.Courses.Add(course);
 			_context.SaveChanges();
 
 			return Response.OK;
 		}
 
-		public Response Update(Course course)
+		public Response UpdateCourse(Course course)
 		{
 			var exist = _context.Courses.Find(course.Id);
 			if (exist == null)
@@ -48,19 +55,20 @@ namespace CSharpSbAPI.Services
 			if (_context.Courses.Any(x => x.Name == course.Name))
 				return new Response(StatusResp.ClientError, "Имя занято");
 
-			_context.Courses.Update(course);
+			exist.Name = course.Name;
+			exist.Description = course.Description;
 			_context.SaveChanges();
 			return Response.OK;
 		}
 
-		public void Delete(int courseId)
+		public Response DeleteCourse(int courseId)
 		{
 			var exist = _context.Courses.Find(courseId);
-			if (exist != null)
-			{
-				_context.Courses.Remove(exist);
-				_context.SaveChanges();
-			}
+			if (exist == null) return new Response(StatusResp.ClientError, "Не найден");
+
+			_context.Courses.Remove(exist);
+			_context.SaveChanges();
+			return Response.OK;
 		}
 
 		#endregion

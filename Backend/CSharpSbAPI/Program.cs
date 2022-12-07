@@ -1,18 +1,11 @@
-using System.Collections.Generic;
-using System.IO;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System.Linq;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using CSharpSbAPI.Data.Models;
+using CSharpSbAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using CSharpSbAPI.Services;
-//using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer;
+using Microsoft.Extensions.Configuration;
+using CSharpSbAPI.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSharpSbAPI
 {
@@ -24,6 +17,10 @@ namespace CSharpSbAPI
 
 			// Add services to the container.
 			builder.Services.AddControllers();
+
+			// EntityFramework
+			builder.Services.AddDbContext<CSharpSbDbContext>(options =>
+			options.UseSqlServer(builder.Configuration.GetConnectionString("CSharpSbDbConnectionString")));
 
 			// Swagger
 			builder.Services.AddEndpointsApiExplorer();
@@ -60,6 +57,7 @@ namespace CSharpSbAPI
 				});
 
 			// CSharpSbServices . . .
+			builder.Services.AddScoped<AccountService>();
 			builder.Services.AddScoped<CourseService>();
 
 

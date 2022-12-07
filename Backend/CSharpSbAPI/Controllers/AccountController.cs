@@ -1,4 +1,6 @@
 ﻿using CSharpSbAPI.Data.Models;
+using CSharpSbAPI.Data.Models.DB;
+using CSharpSbAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,45 +10,32 @@ using System.Security.Claims;
 
 namespace CSharpSbAPI.Controllers
 {
-    [Route("api/v1/account")]
-    [ApiController]
-    public class AccountController : ControllerBase
-    {
-
-        [HttpGet("login")]
-        public string Login(string name)
-        {
-			var claims = new List<Claim> { new Claim(ClaimTypes.Name, name) };
-			// создаем JWT-токен
-			var jwt = new JwtSecurityToken(
-					issuer: AuthOptions.ISSUER,
-					audience: AuthOptions.AUDIENCE,
-					claims: claims,
-					expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(2)),
-					signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
-
-			return new JwtSecurityTokenHandler().WriteToken(jwt);
+	[Route("api/v1/account")]
+	[ApiController]
+	public class AccountController : ControllerBase
+	{
+		private readonly AccountService _accountService;
+		public AccountController(AccountService accountService)
+		{
+			_accountService = accountService;
 		}
 
-        [Authorize]
-        [HttpGet("register")]
-        public ActionResult<string> Register()
-        {
-            
-            return "resp";
-            return BadRequest();
-        }
+		[HttpPost("register")]
+		public Response Register(RegisterModel registerModel)
+		{
+			var res = _accountService.Register(registerModel, out var token);
+			if (res.Status == StatusResp.OK && token != null) HttpContext.Response.Headers["Token"] = token;
+			return res;
+		}
 
-        [HttpGet("getinfo")]
-        public string GetInfo()
-        {
-            return "Работает";
-        }
+		[HttpPost("login")]
+		public Response Login(string name)
+		{
+			return null!;
+		}
 
-        [HttpGet("logout")]
-        public string LogOut()
-        {
-            return "Работает";
-        }
-    }
+		[HttpPost("update")] public Response UpdateUser(User user) => _accountService.UpdateUser(user);
+
+		[HttpGet("logout")] public string LogOut() => ""; 
+	}
 }
