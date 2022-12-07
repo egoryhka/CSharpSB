@@ -46,38 +46,38 @@ namespace CSharpSbAPI.Services
             //HttpContext.
         }
 
-        public Response Register(RegisterModel r,out string token)
-        {
-            var user = _context.Users.FirstOrDefault(x => x.Login == r.Login);
-            token = null;
+    //    public Response Register(RegisterModel r,out string token)
+    //    {
+    //        var user = _context.Users.FirstOrDefault(x => x.Login == r.Login);
+    //        token = null;
 
-            if (user == null)
-            {
-                token = CreateToken(r);
-                user = new User
-                {
-                    Email = r.Email,
-                    Login = r.Login,
-                    Name = r.Name,
-                    Surname = r.Surname,
-                    Role = Role.User,
-                    Password = GetEncrypedPassword(r.Password),
-                    Token = token
-                };
-                _context.Users.Add(user);
-                _context.SaveChanges();
+    //        if (user == null)
+    //        {
+    //            token = CreateToken(r);
+    //            user = new User
+    //            {
+    //                Email = r.Email,
+    //                Login = r.Login,
+    //                Name = r.Name,
+    //                Surname = r.Surname,
+    //                Role = Role.User,
+    //                Password = GetEncrypedPassword(r.Password),
+    //                Token = token
+    //            };
+    //            _context.Users.Add(user);
+    //            _context.SaveChanges();
 
-                return new Response { Status = StatusCode.OK };
-            }
+    //            return new Response { Status = Data.Models.StatusResp.OK };
+    //        }
 
-            else
-                return new Response
-                {
-                    Status = StatusCode.ClientError,
-                    Error = "Такой пользователь существует",
-                    Description = "Ты неоригинальное мудило"
-                };
-        }
+    //        else
+    //            return new Response
+				//{
+    //                Status = Data.Models.StatusResp.ClientError,
+    //                Error = "Такой пользователь существует",
+    //                Description = "Ты неоригинальное мудило"
+    //            };
+    //    }
 
         private string? GetEncrypedPassword(string password) => SHA256.Create(password)?.ToString();
 

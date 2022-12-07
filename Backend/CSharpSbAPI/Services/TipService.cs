@@ -26,29 +26,29 @@ namespace CSharpSbAPI.Services
             _context.SaveChanges();
         }
 
-        public Response Update(int levelId, string text, int tipId)
-        {
-            var tip = _context.Tips.FirstOrDefault(x => x.Id == tipId);
+        //public Response Update(int levelId, string text, int tipId)
+        //{
+        //    var tip = _context.Tips.FirstOrDefault(x => x.Id == tipId);
 
-            if (tip == null)
-                return new Response { Status = StatusCode.ClientError, Error = "Такой подсказки нет" };
+        //    if (tip == null)
+        //        return new Response { Status = Data.Models.StatusResp.ClientError, Error = "Такой подсказки нет" };
 
-            tip.Text = text;
-            tip.LevelId = levelId;
-            _context.Tips.Update(tip);
-            _context.SaveChanges();
-            return new Response { Status = StatusCode.OK };
-        }
+        //    tip.Text = text;
+        //    tip.LevelId = levelId;
+        //    _context.Tips.Update(tip);
+        //    _context.SaveChanges();
+        //    return new Response { Status = Data.Models.StatusResp.OK };
+        //}
 
-        public Response Delete(int tipId) 
-        {
-            var tip = _context.Tips.FirstOrDefault(x => x.Id == tipId);
-            if (tip == null) return new Response { Status = StatusCode.ClientError, Error = "Такой подсказки нет"};
+        //public Response Delete(int tipId) 
+        //{
+        //    var tip = _context.Tips.FirstOrDefault(x => x.Id == tipId);
+        //    if (tip == null) return new Response { Status = Data.Models.StatusResp.ClientError, Error = "Такой подсказки нет"};
 
-            _context.Tips.Remove(tip);
-            _context.SaveChanges();
-            return new Response { Status = StatusCode.OK };
-        }
+        //    _context.Tips.Remove(tip);
+        //    _context.SaveChanges();
+        //    return new Response { Status = Data.Models.StatusResp.OK };
+        //}
 
 
         #endregion 

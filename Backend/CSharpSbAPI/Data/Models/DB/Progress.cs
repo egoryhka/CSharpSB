@@ -8,9 +8,9 @@
         public int LevelId { get; set; }
 
         public string? Code { get; set; }
-        public DateTime TimeStart { get; set; }
+		public bool HelpUsed { get; set; }
+		public DateTime TimeStart { get; set; }
         public DateTime TimeEnd { get; set; }
-        public bool HelpUsed { get; set; }
         public Status Status { get; set; }
 
     }

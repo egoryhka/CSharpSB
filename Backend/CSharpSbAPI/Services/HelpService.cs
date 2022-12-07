@@ -21,7 +21,7 @@ namespace CSharpSbAPI.Services
             _context.Helps.Add(new()
             {
                 Text = text,
-                 TimeOut = 15, 
+                 TimeOut = timeout, 
                   Id = levelId
             });
             _context.SaveChanges();
@@ -30,27 +30,27 @@ namespace CSharpSbAPI.Services
         public void Delete(int helpId) => _context.Helps.Remove(_context.Helps.Find(helpId));
 
 
-        public Response Update(int helpId, string text, int timeout) 
-        {
-            var help = _context.Helps.FirstOrDefault(x => x.Id == helpId);
+        //public Response Update(int helpId, string text, int timeout) 
+        //{
+        //    var help = _context.Helps.FirstOrDefault(x => x.Id == helpId);
 
-            if (help == null)
-                return new Response { Status = StatusCode.ClientError, Error = "Такой подсказки нет" };
+        //    if (help == null)
+        //        return new Response { Status = Data.Models.StatusResp.ClientError, Error = "Такой подсказки нет" };
 
-            help.Text = text;
-            help.TimeOut = timeout;
-            _context.Helps.Update(help);
-            _context.SaveChanges();
-            return new Response { Status = StatusCode.OK };
-        }
+        //    help.Text = text;
+        //    help.TimeOut = timeout;
+        //    _context.Helps.Update(help);
+        //    _context.SaveChanges();
+        //    return new Response { Status = Data.Models.StatusResp.OK };
+        //}
         #endregion
 
         public string Get(int levelId) 
         {
            
             var curerntHelp = _context.Helps
-                .Where(x => x.levelId == levelId)
-                .Select(x=> x.levelId);
+                .Where(x => x.LevelId == levelId)
+                .Select(x=> x.LevelId);
 
             return JsonConvert.SerializeObject(curerntHelp);
         }

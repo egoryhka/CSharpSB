@@ -30,13 +30,11 @@ namespace CSharpSbAPI.Controllers
 
         [Authorize]
         [HttpGet("register")]
-        public string Register()
+        public ActionResult<string> Register()
         {
-
-            //HttpContext.Response.Headers.Add("Token", );
-
-
-            return "ХУЕТА";
+            
+            return "resp";
+            return BadRequest();
         }
 
         [HttpGet("getinfo")]

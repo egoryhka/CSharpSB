@@ -7,10 +7,7 @@ namespace CSharpSbAPI.Data.Models.DB
 {   
     public class UserCourse
     {
-
         public int UserId { get; set; }
-
-    
         public int CourseId { get; set; }
 
         public DateTime StartDate { get; set; }
