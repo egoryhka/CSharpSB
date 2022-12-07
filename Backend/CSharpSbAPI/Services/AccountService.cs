@@ -34,10 +34,6 @@ namespace CSharpSbAPI.Services
             _context.SaveChanges();
 
 
-
-
-
-
         }
         public void Delete(int userId) => _context.Users.Remove(_context.Users.Find(userId));
 

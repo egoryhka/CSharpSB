@@ -14,9 +14,9 @@ namespace CSharpSbAPI.Data
         public DbSet<Level> Levels { get; set; } = null!;
         public DbSet<Progress> Progresses { get; set; } = null!;
 
-        public DbSet<Help> Helps { get; set; } = null!;           
+        public DbSet<Help> Helps { get; set; } = null!;
         public DbSet<Tip> Tips { get; set; } = null!;
-       
+
 
         public CSharpSbDbContext(DbContextOptions<CSharpSbDbContext> options) : base(options)
         {
@@ -26,6 +26,13 @@ namespace CSharpSbAPI.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<User>().HasMany(x => x.Courses)
+                .WithMany(x => x.Users)
+                .UsingEntity<UserCourse>(x => x.HasOne(y => y.Course)
+                .WithMany().HasForeignKey(x => x.CourseId),
+                x => x.HasOne(y => y.User)
+                .WithMany().HasForeignKey(x => x.UserId));
+
         }
     }
 }

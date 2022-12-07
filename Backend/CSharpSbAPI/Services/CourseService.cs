@@ -4,7 +4,7 @@ using CSharpSbAPI.Data.Models.DB;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using Newtonsoft.Json;
-
+using CSharpSbAPI.Data.Models;
 
 namespace CSharpSbAPI.Services
 {
@@ -34,7 +34,6 @@ namespace CSharpSbAPI.Services
 
         #endregion
 
-
         public string GetTips(int userId, int courseId)
         {
             var passLevelIds = _context.Progresses
@@ -55,5 +54,14 @@ namespace CSharpSbAPI.Services
             return JsonConvert.SerializeObject(passTips);
         }
 
+
+        public Response GetCourseInfo(int courseId, int userId) 
+        {
+            var courseInfo = _context.UserCourses.FirstOrDefault(x => x.CourseId == courseId && x.UserId == userId);
+            if (courseInfo == null)
+                return new Response { Status = StatusCode.ClientError, Error = " пошел нахуй" };
+
+            
+        }
     }
 }

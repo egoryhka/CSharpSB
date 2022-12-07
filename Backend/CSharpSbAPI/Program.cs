@@ -39,6 +39,7 @@ namespace CSharpSbAPI
                         policy.AllowAnyOrigin();
                     });
             });
+            
 
             builder.Services.AddAuthorization();
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
