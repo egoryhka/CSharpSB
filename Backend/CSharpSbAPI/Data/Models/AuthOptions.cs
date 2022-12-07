@@ -7,7 +7,7 @@ namespace CSharpSbAPI.Data.Models
     {
         public const string ISSUER = "CsharpSBServer"; // издатель токена
         public const string AUDIENCE = "CsharpSBClient"; // потребитель токена
-        const string KEY = "ORALCUMSHOT";   // ключ для шифрации
+        const string KEY = "mysupersecret_secretkey!123";   // ключ для шифрации
         public const int LIFETIME = 1; // время жизни токена - 1 минута
         public static SymmetricSecurityKey GetSymmetricSecurityKey()
         {

@@ -1,5 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CSharpSbAPI.Data.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace CSharpSbAPI.Controllers
 {
@@ -9,15 +14,21 @@ namespace CSharpSbAPI.Controllers
     {
 
         [HttpGet("login")]
-        public string Login()
+        public string Login(string name)
         {
+			var claims = new List<Claim> { new Claim(ClaimTypes.Name, name) };
+			// создаем JWT-токен
+			var jwt = new JwtSecurityToken(
+					issuer: AuthOptions.ISSUER,
+					audience: AuthOptions.AUDIENCE,
+					claims: claims,
+					expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(2)),
+					signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
 
+			return new JwtSecurityTokenHandler().WriteToken(jwt);
+		}
 
-
-
-            return "Работает";
-        }
-
+        [Authorize]
         [HttpGet("register")]
         public string Register()
         {
