@@ -1,7 +1,7 @@
 ﻿namespace CSharpSbAPI.Data.Models.DB
 {
-    public class User
-    {
+    public class User : IItem
+	{
         public int Id { get; set; }
 
         public string? Login { get; set; }

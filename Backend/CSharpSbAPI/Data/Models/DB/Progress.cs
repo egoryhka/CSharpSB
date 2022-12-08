@@ -1,7 +1,7 @@
 ﻿namespace CSharpSbAPI.Data.Models.DB
 {
-    public class Progress
-    {
+    public class Progress : IItem
+	{
         public int Id { get; set; }
 
         public int UserId { get; set; }

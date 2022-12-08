@@ -61,11 +61,12 @@ namespace CSharpSbAPI
 			builder.Services.AddScoped<CourseService>();
             builder.Services.AddScoped<LevelService>();
 
+			builder.Services.AddScoped<ExampleService>();
 
 
 
-            // --------------------------------------------------
-            var app = builder.Build();
+			// --------------------------------------------------
+			var app = builder.Build();
 
 			if (app.Environment.IsDevelopment())
 			{

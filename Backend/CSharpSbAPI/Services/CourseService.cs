@@ -9,14 +9,10 @@ using System.Data.Entity;
 
 namespace CSharpSbAPI.Services
 {
-	public class CourseService
+	public class CourseService : CrudService<Course>
 	{
-		private readonly CSharpSbDbContext _context;
+		public CourseService(CSharpSbDbContext context) : base(context) { }
 
-		public CourseService(CSharpSbDbContext context)
-		{
-			_context = context;
-		}
 
 		#region CRUD Operation
 

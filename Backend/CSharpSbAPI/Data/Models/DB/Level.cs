@@ -1,7 +1,7 @@
 ﻿namespace CSharpSbAPI.Data.Models.DB
 {
-    public class Level
-    {
+    public class Level : IItem
+	{
         public int Id { get; set; }
         public int CourseId { get; set; }
 
