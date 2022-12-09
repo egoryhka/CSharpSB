@@ -21,7 +21,7 @@ namespace CSharpSbAPI.Services
 		public virtual Response GetItem(int id)
 		{
 			var exist = _context.Set<T>().Find(id);
-			if (exist == null) return new Response(StatusResp.ClientError, "Не найден");
+			if (exist == null) return new Response(StatusResp.ClientError, errors: "Не найден");
 			return new Response<T>(StatusResp.OK, exist);
 		}
 
@@ -39,7 +39,7 @@ namespace CSharpSbAPI.Services
 		public virtual Response UpdateItem(T item)
 		{
 			var exist = _context.Set<T>().Find(item.Id);
-			if (exist == null) return new Response(StatusResp.ClientError, "Не найден");
+			if (exist == null) return new Response(StatusResp.ClientError,errors: "Не найден");
 
 			var res = ValidateUpdate(item);
 			if (res.Status != StatusResp.OK) return res;
@@ -53,7 +53,7 @@ namespace CSharpSbAPI.Services
 		public Response DeleteItem(int id)
 		{
 			var exist = _context.Set<T>().Find(id);
-			if (exist == null) return new Response(StatusResp.ClientError, "Не найден");
+			if (exist == null) return new Response(StatusResp.ClientError, errors: "Не найден");
 
 			var res = ValidateDelete(exist);
 			if (res.Status != StatusResp.OK) return res;

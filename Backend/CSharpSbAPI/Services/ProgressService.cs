@@ -1,31 +1,53 @@
 ﻿using CSharpSbAPI.Data;
+using CSharpSbAPI.Data.Models.DB;
+using CSharpSbAPI.Data.Models;
 
 namespace CSharpSbAPI.Services
 {
-    public class ProgressService
+    public class ProgressService : CrudService<Progress>
     {
-        private readonly CSharpSbDbContext _context;
+        public ProgressService(CSharpSbDbContext context) : base(context) { }
+      
 
-        public ProgressService(CSharpSbDbContext context)
+        
+
+        // Вход на уровень
+        public override Response AddItem(Progress progress)
         {
-            _context = context;
-        }
+            var res = ValidateAdd(progress);
+            if (res.Status != StatusResp.OK) return res;
 
-        #region CRUD Operation
-        public void Add(int levelId, int  userId)
-        {
+            progress.Status = Status.InProgress;
+            progress.TimeStart = DateTime.Now;
 
-            _context.Progresses.Add(new()
-            {
-                LevelId = levelId,
-                UserId = userId,
-            }) ;
+            _context.Progresses.Add(progress);
             _context.SaveChanges();
+
+            return Response.OK;
+
         }
 
-        public void Delete(int progressId) => _context.Progresses.Remove(_context.Progresses.Find(progressId));
+        
+
+        public Response PrevLevel(Progress progress)
+        {
+            var prevLevel = _context.Progresses.FirstOrDefault(x => x.LevelId == progress.LevelId - 1 && x.UserId == progress.UserId);
+            return new Response<Progress>(StatusResp.OK, prevLevel);
+
+        }
+
+        protected override Response ValidateAdd(Progress progress)
+        {
+            var existUser = _context.Users.FirstOrDefault(x => x.Id == progress.UserId);
+            if (existUser != null) { return new Response(StatusResp.ClientError, errors: "Несуществующий пользователь"); }
+
+            var existlevel = _context.Levels.FirstOrDefault(x => x.Id == progress.LevelId);
+            if (existlevel != null) { return new Response(StatusResp.ClientError, errors: "Несуществующий уровень"); }
+
+            return Response.OK;
+        }
 
 
-        #endregion
+       
     }
 }

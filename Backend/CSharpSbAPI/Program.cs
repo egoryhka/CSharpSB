@@ -61,7 +61,6 @@ namespace CSharpSbAPI
 			builder.Services.AddScoped<CourseService>();
             builder.Services.AddScoped<LevelService>();
 
-			builder.Services.AddScoped<ExampleService>();
 
 
 

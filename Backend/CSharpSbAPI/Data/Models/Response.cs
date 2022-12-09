@@ -2,26 +2,27 @@
 {
 	public class Response
 	{
-		public Response(StatusResp status, string error = "", string description = "")
+		public Response(StatusResp status,  string description = "", params string[] errors )
 		{
 			Status = status;
-			Error = error;
+			Errors = errors;
 			Description = description;
 		}
 		public StatusResp Status { get; set; }
-		public string? Error { get; set; }
+		public string[] Errors { get; set; }
 		public string? Description { get; set; }
+
 
 		public static Response OK => new Response(StatusResp.OK);
 	}
 
 	public class Response<T> : Response
 	{
-		public Response(StatusResp status, T data, string error = "", string description = "") :
-			base(status, error, description)
+		public Response(StatusResp status, T data, string description = "", params string[] errors) :
+			base(status,  description, errors)
 		{
 			Status = status;
-			Error = error;
+			Errors = errors;
 			Description = description;
 			Data = data;
 		}

@@ -17,17 +17,22 @@ namespace CSharpSbAPI.Controllers
             _levelService = levelService;
         }
 
-        [HttpGet("all")] public Response GetLevels() => _levelService.GetLevels();
+        [HttpGet("all")] public Response GetLevels() => _levelService.GetAll();
 
-        [HttpGet("{id}")] public Response GetLevel(int id) => _levelService.GetLevel(id);
+        [HttpGet("{id}")] public Response GetLevel(int id) => _levelService.GetItem(id);
 
-        [HttpPost("add")] public Response AddLevel(Level level) => _levelService.AddLevel(level);
+        [HttpPost("add")] public Response AddLevel(Level level) => _levelService.AddItem(level);
 
-        [HttpPost("update")] public Response UpdateLevel(Level level) => _levelService.UpdateLevel(level);
+        [HttpPost("update")] public Response UpdateLevel(Level level) => _levelService.UpdateItem(level);
 
-        [HttpPost("delete")] public Response DeleteLevel(int id) => _levelService.DeleteLevel(id);
+        [HttpPost("delete")] public Response DeleteLevel(int id) => _levelService.DeleteItem(id);
 
         [HttpPost("gethelp")] public Response GetHelp(int id) => _levelService.GetHelp(id);
+
+
+       
+
+
 
     }
 }

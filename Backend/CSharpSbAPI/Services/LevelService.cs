@@ -5,34 +5,15 @@ using Newtonsoft.Json;
 
 namespace CSharpSbAPI.Services
 {
-    public class LevelService
+    public class LevelService : CrudService<Level>
     {
-        private readonly CSharpSbDbContext _context;
-
-        public LevelService(CSharpSbDbContext context)
-        {
-            _context = context;
-        }
+        public LevelService(CSharpSbDbContext context) : base(context) { }
 
         #region CRUD Operation
-
-        public Response GetLevels()
+        public override Response AddItem(Level level)
         {
-            return new Response<List<Level>>(StatusResp.OK, _context.Levels.ToList());
-        }
-
-        public Response GetLevel(int id)
-        {
-            var exist = _context.Levels.Find(id);
-            if (exist == null) return new Response(StatusResp.ClientError, "Не найден");
-            return new Response<Level>(StatusResp.OK, exist);
-        }
-
-        public Response AddLevel(Level level)
-        {
-            var exist = _context.Levels.FirstOrDefault(x => x.Name == level.Name);
-            if (exist != null)
-                return new Response(StatusResp.ClientError, "Уже существует");
+            var res = ValidateAdd(level);
+            if (res.Status != StatusResp.OK) return res;
 
             level.Order = GetMaxOrder(level.CourseId) + 1;
             _context.Levels.Add(level);
@@ -41,41 +22,25 @@ namespace CSharpSbAPI.Services
             return Response.OK;
         }
 
-        public Response UpdateLevel(Level level)
+        protected override Response ValidateUpdate(Level level)
         {
-            var exist = _context.Levels.Find(level.Id);
-            if (exist == null)
-                return new Response(StatusResp.ClientError, "Не найден");
-
-            if (_context.Levels.Any(x => x.Name == level.Name && x.Id != level.Id))
-                return new Response(StatusResp.ClientError, "Имя занято");
-
-            exist.Name = level.Name;
-            exist.Description = level.Description;
-            exist.CourseId = level.CourseId;
-            exist.TipText = level.TipText;
-            exist.HelpText = level.HelpText;
-
-            _context.SaveChanges();
+            if (_context.Levels.Any(x => x.Name == level.Name && x.Id != level.Id)) return new Response(StatusResp.ClientError, errors: "Имя занято");
             return Response.OK;
         }
-
-        public Response DeleteLevel(int levelId)
-        {
-            var exist = _context.Levels.Find(levelId);
-            if (exist == null) return new Response(StatusResp.ClientError, "Не найден");
-
-            _context.Levels.Remove(exist);
-            _context.SaveChanges();
-            return Response.OK;
-        }
-
+      
         #endregion
+
+        protected override Response ValidateAdd(Level level)
+        {
+            var exist = _context.Levels.FirstOrDefault(x => x.Name == level.Name);
+            if (exist != null) return new Response(StatusResp.ClientError, errors: "Уже существует");
+            return Response.OK;
+        }
 
         public Response GetHelp(int id)
         {
             var help = _context.Levels.Find(id);
-            if (help == null) return new Response(StatusResp.ClientError, "Не найден");
+            if (help == null) return new Response(StatusResp.ClientError, errors: "Не найден");
             return new Response<string?>(StatusResp.OK, help.HelpText);
 
         }
