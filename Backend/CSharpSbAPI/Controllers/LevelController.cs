@@ -28,11 +28,5 @@ namespace CSharpSbAPI.Controllers
         [HttpPost("delete")] public Response DeleteLevel(int id) => _levelService.DeleteItem(id);
 
         [HttpPost("gethelp")] public Response GetHelp(int id) => _levelService.GetHelp(id);
-
-
-       
-
-
-
     }
 }

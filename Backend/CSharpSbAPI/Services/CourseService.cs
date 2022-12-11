@@ -27,6 +27,23 @@ namespace CSharpSbAPI.Services
             return new Response<Course>(StatusResp.OK, exist);
         }
 
+        //Запись чела на курс 
+        public Response AssingUser(int userId, int courseId)
+        {
+            var course = _context.Courses.Find(courseId);
+            if (course == null) return new Response(StatusResp.ClientError, errors: "Курс не найден");
+   
+            var user = _context.Users.Find(courseId);
+            if (user == null) return new Response(StatusResp.ClientError, errors: "Пользователь не найден");
+
+            if (user.Courses.Contains(course)) return new Response(StatusResp.ClientError, errors: "Вы уже записаны на этот курс");
+
+            _context.UserCourses.Add(new UserCourse { StartDate = DateTime.Now, UserId = user.Id, CourseId = course.Id });
+            _context.SaveChanges();
+
+            return Response.OK;
+        }
+
         protected override Response ValidateAdd(Course course)
         {
             var exist = _context.Courses.FirstOrDefault(x => x.Name == course.Name);

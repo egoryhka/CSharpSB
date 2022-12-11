@@ -27,6 +27,7 @@ namespace CSharpSbAPI.Controllers
 
         [HttpPost("gettips")] public Response GetTips(int userId, int courseId) => _courseService.GetTips(userId, courseId);
 
+        [HttpPost("assignuser")] public Response AssignUser (int userId, int courseId) => _courseService.AssingUser(userId, courseId);
 
 
     }

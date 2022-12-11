@@ -20,22 +20,22 @@ namespace CSharpSbAPI.Controllers
 			_accountService = accountService;
 		}
 
-		[HttpPost("register")]
-		public Response Register(RegisterModel registerModel)
-		{
-			var res = _accountService.Register(registerModel, out var token);
-			if (res.Status == StatusResp.OK && token != null) HttpContext.Response.Headers["Token"] = token;
-			return res;
-		}
+		//[HttpPost("register")]
+		//public Response Register(RegisterModel registerModel)
+		//{
+		//	var res = _accountService.Register(registerModel, out var token);
+		//	if (res.Status == StatusResp.OK && token != null) HttpContext.Response.Headers["Token"] = token;
+		//	return res;
+		//}
 
-		[HttpPost("login")]
-		public Response Login(string name)
-		{
-			return null!;
-		}
+		//[HttpPost("login")]
+		//public Response Login(string name)
+		//{
+		//	return null!;
+		//}
 
-		[HttpPost("update")] public Response UpdateUser(User user) => _accountService.UpdateUser(user);
+		//[HttpPost("update")] public Response UpdateUser(User user) => _accountService.UpdateUser(user);
 
-		[HttpGet("logout")] public string LogOut() => ""; 
+		//[HttpGet("logout")] public string LogOut() => ""; 
 	}
 }

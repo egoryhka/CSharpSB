@@ -11,93 +11,95 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Policy;
 
 namespace CSharpSbAPI.Services
 {
-	public class AccountService
+	public class AccountService : CrudService<User>
 	{
-		private readonly CSharpSbDbContext _context;
+		
 
-		public AccountService(CSharpSbDbContext context)
-		{
-			_context = context;
-		}
+        public AccountService(CSharpSbDbContext context) : base(context) { }
 
 		#region CRUD Operation
 
-		public Response GetUsers()
-		{
-			return new Response<List<User>>(StatusResp.OK, _context.Users
-				.Include(x => x.Courses)
-				.ToList());
-		}
+		//      public Response GetUsers()
+		//{
+		//	return new Response<List<User>>(StatusResp.OK, _context.Users
+		//		.Include(x => x.Courses)
+		//		.ToList());
+		//}
 
-		public Response GetUser(int id)
-		{
-			var exist = _context.Users.Find(id);
-			if (exist == null) return new Response(StatusResp.ClientError, "Не найден");
-			return new Response<User>(StatusResp.OK, exist);
-		}
+		//public Response GetUser(int id)
+		//{
+		//	var exist = _context.Users.Find(id);
+		//	if (exist == null) return new Response(StatusResp.ClientError, "Не найден");
+		//	return new Response<User>(StatusResp.OK, exist);
+		//}
 
-		public Response AddUser(User user)
-		{
-			var exist = _context.Users.FirstOrDefault(x => x.Login == user.Login);
-			if (exist != null)
-				return new Response(StatusResp.ClientError, "Логин занят");
+		//public Response AddUser(User user)
+		//{
+		//	var exist = _context.Users.FirstOrDefault(x => x.Login == user.Login);
+		//	if (exist != null)
+		//		return new Response(StatusResp.ClientError, "Логин занят");
 
-			_context.Users.Add(user);
-			_context.SaveChanges();
+		//	_context.Users.Add(user);
+		//	_context.SaveChanges();
 
-			return Response.OK;
-		}
+		//	return Response.OK;
+		//}
 
-		public Response UpdateUser(User user)
-		{
-			var exist = _context.Users.Find(user.Id);
-			if (exist == null)
-				return new Response(StatusResp.ClientError, "Не найден");
+		//public Response UpdateUser(User user)
+		//{
+		//	var exist = _context.Users.Find(user.Id);
+		//	if (exist == null)
+		//		return new Response(StatusResp.ClientError, "Не найден");
 
-			if (_context.Users.Any(x => x.Login == user.Login))
-				return new Response(StatusResp.ClientError, "Логин занят");
+		//	if (_context.Users.Any(x => x.Login == user.Login))
+		//		return new Response(StatusResp.ClientError, "Логин занят");
 
-			exist.Login = user.Login;
-			exist.Name = user.Name;
-			exist.Surname = user.Surname;
-			exist.Email = user.Email;
+		//	exist.Login = user.Login;
+		//	exist.Name = user.Name;
+		//	exist.Surname = user.Surname;
+		//	exist.Email = user.Email;
 
-			_context.SaveChanges();
-			return Response.OK;
-		}
+		//	_context.SaveChanges();
+		//	return Response.OK;
+		//}
 
-		public Response DeleteUser(int userId)
-		{
-			var exist = _context.Users.Find(userId);
-			if (exist == null) return new Response(StatusResp.ClientError, "Не найден");
+		//public Response DeleteUser(int userId)
+		//{
+		//	var exist = _context.Users.Find(userId);
+		//	if (exist == null) return new Response(StatusResp.ClientError, "Не найден");
 
-			_context.Users.Remove(exist);
-			_context.SaveChanges();
-			return Response.OK;
-		}
+		//	_context.Users.Remove(exist);
+		//	_context.SaveChanges();
+		//	return Response.OK;
+		//}
 
 		#endregion
 
-		public Response Register(RegisterModel r, out string? token)
-		{
-			token = null;
-			if (string.IsNullOrWhiteSpace(r.Login)) return new Response(StatusResp.ClientError, "Не указан логин");
-			if (string.IsNullOrWhiteSpace(r.Password)) return new Response(StatusResp.ClientError, "Не указан пароль");
 
-			token = CreateToken(r);
-			var user = new User
-			{
-				Login = r.Login,
-				Role = Role.User,
-				Password = r.Password.GetSha256(),
-				Token = token
-			};
 
-			return AddUser(user);
-		}
+		//public Response Register(RegisterModel r, out string? token)
+		//{
+		//	token = null;
+		//	if (string.IsNullOrWhiteSpace(r.Login)) return new Response(StatusResp.ClientError, "Не указан логин");
+		//	if (string.IsNullOrWhiteSpace(r.Password)) return new Response(StatusResp.ClientError, "Не указан пароль");
+
+		//	token = CreateToken(r);
+		//	var user = new User
+		//	{
+		//		Login = r.Login,
+		//		Role = Role.User,
+		//		Password = r.Password.GetSha256(),
+		//		Token = token
+		//	};
+
+		//	return AddUser(user);
+		//}
+
+		
 
 		private int GetUserIdByToken(string token)
 		{

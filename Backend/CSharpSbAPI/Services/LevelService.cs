@@ -21,7 +21,7 @@ namespace CSharpSbAPI.Services
 
             return Response.OK;
         }
-
+        
         protected override Response ValidateUpdate(Level level)
         {
             if (_context.Levels.Any(x => x.Name == level.Name && x.Id != level.Id)) return new Response(StatusResp.ClientError, errors: "Имя занято");
