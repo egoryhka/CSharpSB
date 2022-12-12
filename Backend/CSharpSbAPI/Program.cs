@@ -54,12 +54,17 @@ namespace CSharpSbAPI
 						IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
 						ValidateIssuerSigningKey = true,
 					};
+				})
+				.AddCookie(options => //CookieAuthenticationOptions
+				{
+					options.LoginPath = new PathString("/signin");
 				});
+
 
 			// CSharpSbServices . . .
 			builder.Services.AddScoped<AccountService>();
 			builder.Services.AddScoped<CourseService>();
-            builder.Services.AddScoped<LevelService>();
+			builder.Services.AddScoped<LevelService>();
 
 
 

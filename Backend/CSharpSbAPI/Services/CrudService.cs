@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSharpSbAPI.Services
 {
-	public abstract class CrudService<T> where T : class, IItem
+    public abstract class CrudService<T> where T : class, IItem
 	{
 		protected readonly CSharpSbDbContext _context;
 

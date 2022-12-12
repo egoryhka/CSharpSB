@@ -1,6 +1,6 @@
 ﻿namespace CSharpSbAPI.Data.Models.DB
 {
-	public class Course : IItem
+    public class Course : IItem
 	{
 		public int Id { get; set; }
 
