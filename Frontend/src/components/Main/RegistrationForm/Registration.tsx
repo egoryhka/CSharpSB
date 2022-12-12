@@ -1,18 +1,20 @@
-import React, {useState} from 'react';
-import {
-    registrationRequest
-} from "../../../api/Registration/Registration";
+import React, {useContext, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {Avatar, Box, Button, Container, LinearProgress, MobileStepper, TextField, Typography} from "@mui/material";
+import {Avatar, Box, Button, Container, LinearProgress, TextField, Typography} from "@mui/material";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import {isValidEmail} from "../../utils/ValidEmailChecker/CheckValidEmail";
 import SendIcon from '@mui/icons-material/Send';
 import {useActions} from "../../utils/Hooks/UseActions";
 import AlertHint from "../../utils/Alert/AlertHint";
+import {ApiProvider} from "../../../api/BaseResponse";
+
+interface a {
+    data: string;
+}
 
 const Registration = () => {
     const {userAuth} = useActions();
     const [loading, setLoading] = React.useState<boolean>(false);
+    const SBApi = useContext(ApiProvider);
     document.title = 'Регистрация';
 
     const [login, setLogin] = useState<string>('')
@@ -27,13 +29,16 @@ const Registration = () => {
         e.preventDefault();
         if (password === passwordRepeat) {
             setLoading(true);
-            const isOk = await registrationRequest({password, login});
+            // const data = await registrationRequest({password, login});
+            const data = await SBApi.post<a>("account/register", {data: {password, login}});
             setLoading(false);
-            if (isOk) {
-                setLoading(true);
-                await userAuth(login, password, true);
-                setLoading(false);
-                navigate('/myprofile');
+            console.log(data)
+            if (data.isOk) {
+                await SBApi.get("course/2")
+                // setLoading(true);
+                // await userAuth(login, password, true);
+                // setLoading(false);
+                // navigate('/myprofile');
             }
         } else {
             setNonSamePasswords(true);

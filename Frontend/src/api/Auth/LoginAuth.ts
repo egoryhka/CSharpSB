@@ -8,6 +8,6 @@ export interface IUserAuth {
 }
 
 export const AuthRequest = async (userData: IUserAuth) => {
-    const data = await axios.post(requestUrl + `api/v1/auth`, userData);
+    const data = await axios.post(requestUrl + `auth`, userData);
     return data;
 }

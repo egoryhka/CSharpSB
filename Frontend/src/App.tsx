@@ -8,11 +8,13 @@ import { Main } from './components/Main/Main';
 import { store } from './redux/redux';
 import {Provider} from "react-redux";
 import { BrowserRouter } from 'react-router-dom';
+import {ApiProvider, SBAPIInitial} from "./api/BaseResponse";
 
 export const App: React.FC = () => {
     const { tokenUserAuth } = useActions();
 
     useEffect(() => {
+
         const token = localStorage.getItem('token');
         if (token) {
             tokenUserAuth(token);
@@ -22,6 +24,7 @@ export const App: React.FC = () => {
     const theme = useTypeSelector(store => store.theme.currentTheme);
 
     return (
+        <ApiProvider.Provider value={SBAPIInitial}>
             <BrowserRouter>
                 <ThemeProvider theme={theme}>
                     <Header/>
@@ -33,6 +36,7 @@ export const App: React.FC = () => {
                     <Footer/>
                 </ThemeProvider>
             </BrowserRouter>
+        </ApiProvider.Provider>
     );
 };
 

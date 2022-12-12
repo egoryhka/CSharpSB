@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, {AxiosInstance, AxiosRequestConfig, Method} from "axios";
 import requestUrl from "../BaseUrl/CreateBaseUrl";
 import {BaseResponse} from "../BaseResponse";
 
