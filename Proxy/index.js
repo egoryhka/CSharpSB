@@ -23,6 +23,7 @@ const ANALYZE_SERVICE = `http://${HOST}:${ANALYZE_SERVICE_PORT}`;
 
 app.use(cors());
 app.use(morgan('dev'));
+app.use(express.static("build"));
 
 app.use("/api", createProxyMiddleware({
     target: TARGET,
@@ -34,11 +35,20 @@ app.use("/analyze", createProxyMiddleware({
     target: ANALYZE_SERVICE,
     changeOrigin: true,
 }));
+if (process.env.ENV === "production") {
+    console.log("Use frontend production mode");
+    app.get("", (req, res) => {
+        res.sendFile(path.join(__dirname, "build", "index.html"));
+    });
+} else {
+    console.log("Use frontend dev-server mode")
+    app.use(createProxyMiddleware({
+        target: ORIGIN,
+        changeOrigin: true,
+    }));
+}
 
-app.use(createProxyMiddleware({
-    target: ORIGIN,
-    changeOrigin: true,
-}));
+
 
 if (!PROXY_PORT) {
     throw new Error("PROXY_PORT is not defined in ../services.launch.json")
