@@ -27,8 +27,12 @@ namespace CodeCompilerLibrary.Tests
 					Console.SetOut(stringWriter);
 					ass.EntryPoint?.Invoke(null, null);
 					result.Outputs.AddRange(stringWriter.ToString().TrimEnd('\r', '\n').Split("\r\n"));
-				}
 
+                    var standardOutput = new StreamWriter(Console.OpenStandardOutput());
+                    standardOutput.AutoFlush = true;
+                    Console.SetOut(standardOutput);
+                }
+				
 				result.Status = TestResultStatus.Success;
 			}
 			catch (Exception ex)
