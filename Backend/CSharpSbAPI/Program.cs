@@ -62,9 +62,11 @@ namespace CSharpSbAPI
 
 
 			// CSharpSbServices . . .
+			builder.Services.AddScoped<ProgressService>();
 			builder.Services.AddScoped<AccountService>();
 			builder.Services.AddScoped<CourseService>();
 			builder.Services.AddScoped<LevelService>();
+			builder.Services.AddScoped<GameService>();
 
 
 

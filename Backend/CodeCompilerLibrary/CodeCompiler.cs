@@ -57,7 +57,7 @@ namespace CodeCompilerLibrary
                 assemblyName,
                 syntaxTrees: new[] { encoded },
                 references: references,
-                options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
+                options: new CSharpCompilationOptions(OutputKind.ConsoleApplication)
                     .WithOptimizationLevel(optimizationLevel)
                     .WithPlatform(Platform.AnyCpu)
             );
