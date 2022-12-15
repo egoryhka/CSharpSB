@@ -4,11 +4,13 @@ using CSharpSbAPI.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CSharpSbAPI.Controllers
 {
     [Route("api/v1/level")]
     [ApiController]
+    [Authorize]
     public class LevelController : ControllerBase
     {
         private readonly LevelService _levelService;
@@ -27,6 +29,6 @@ namespace CSharpSbAPI.Controllers
 
         [HttpPost("delete")] public Response DeleteLevel(int id) => _levelService.DeleteItem(id);
 
-        [HttpPost("gethelp")] public Response GetHelp(int id) => _levelService.GetHelp(id);
+        [HttpPost("gethelp")][Authorize(Roles = "User")] public Response GetHelp(int id) => _levelService.GetHelp(id);
     }
 }

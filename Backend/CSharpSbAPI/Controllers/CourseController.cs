@@ -2,12 +2,14 @@
 using CSharpSbAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using CSharpSbAPI.Data.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CSharpSbAPI.Controllers
 {
 	[Route("api/v1/course")]
 	[ApiController]
-	public class CourseController : ControllerBase
+    [Authorize]
+    public class CourseController : ControllerBase
 	{
 		private readonly CourseService _courseService;
 		public CourseController(CourseService courseService)
@@ -15,7 +17,8 @@ namespace CSharpSbAPI.Controllers
 			_courseService = courseService;
 		}
 
-		[HttpGet("all")] public Response GetCourses() => _courseService.GetAll();
+
+		[HttpGet("all")]  public Response GetCourses() => _courseService.GetAll();
 
 		[HttpGet("{id}")] public Response GetCourse(int id) => _courseService.GetItem(id);
 
@@ -25,10 +28,8 @@ namespace CSharpSbAPI.Controllers
 
 		[HttpPost("delete")] public Response DeleteCourse(int id) => _courseService.DeleteItem(id);
 
-        [HttpPost("gettips")] public Response GetTips(int userId, int courseId) => _courseService.GetTips(userId, courseId);
+        [HttpPost("gettips")][Authorize(Roles = "User")] public  Response GetTips(int userId, int courseId) => _courseService.GetTips(userId, courseId);
 
         [HttpPost("assignuser")] public Response AssignUser (int userId, int courseId) => _courseService.AssingUser(userId, courseId);
-
-
     }
 }

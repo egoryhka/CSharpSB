@@ -13,5 +13,7 @@
 
         public string? TipText { get; set; }
 
+        public string? Answer { get; set; }
+
     }
 }
