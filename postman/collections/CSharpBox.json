@@ -1,0 +1,100 @@
+{
+	"info": {
+		"_postman_id": "ea1a6b30-ee5a-46af-9fdf-7fcf044c7a39",
+		"name": "CSharpBox",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "24964883-ea1a6b30-ee5a-46af-9fdf-7fcf044c7a39"
+	},
+	"item": [
+		{
+			"name": "Регистрация",
+			"id": "bbaa38dc-cdbc-4d0f-aeac-c98a22ea416d",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получение всех курсов",
+			"id": "266c0e3d-b008-498c-8e10-29412be6ef95",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Тестовая отправка кода конс вывод",
+			"id": "5e233ce1-5d85-499c-8719-b605bf93fe4a",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Создание уровня",
+			"id": "85b3d037-18ad-4f5d-b8d5-87b77e7bd9fc",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ТестКод",
+			"id": "7dd47787-bab2-496d-8a17-ec5b1216d9b3",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Обновление уровня",
+			"id": "ab8eaba2-c409-4d72-819c-105530f882de",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		}
+	]
+}
