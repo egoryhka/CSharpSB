@@ -16,7 +16,18 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": ""
+					"raw": "http://localhost:5000/api/v1/account/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"account",
+						"register"
+					]
 				}
 			},
 			"response": []
@@ -31,22 +42,18 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": ""
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Тестовая отправка кода конс вывод",
-			"id": "5e233ce1-5d85-499c-8719-b605bf93fe4a",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": ""
+					"raw": "http://localhost:5000/api/v1/course/getall",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"course",
+						"getall"
+					]
 				}
 			},
 			"response": []
