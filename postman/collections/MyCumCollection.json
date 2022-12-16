@@ -1,0 +1,31 @@
+{
+	"info": {
+		"_postman_id": "e85df077-5056-4316-bebb-9a2b8b275d08",
+		"name": "MyCumCollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "24964883-e85df077-5056-4316-bebb-9a2b8b275d08"
+	},
+	"item": [
+		{
+			"name": "RequestCum",
+			"id": "38de139f-c633-42b4-994a-0555ccd77c91",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "/api/v1/course/all",
+					"path": [
+						"api",
+						"v1",
+						"course",
+						"all"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
