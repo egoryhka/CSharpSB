@@ -34,6 +34,9 @@ namespace CSharpSbAPI.Services
         {
             var exist = _context.Levels.FirstOrDefault(x => x.Name == level.Name);
             if (exist != null) return new Response(StatusResp.ClientError, errors: "Уже существует");
+
+            var course = _context.Courses.Find(level.CourseId);
+            if (course == null) return new Response(StatusResp.ClientError, errors: "Указан несуществующий курс");
             return Response.OK;
         }
 
@@ -42,7 +45,6 @@ namespace CSharpSbAPI.Services
             var help = _context.Levels.Find(id);
             if (help == null) return new Response(StatusResp.ClientError, errors: "Не найден");
             return new Response<string?>(StatusResp.OK, help.HelpText);
-
         }
 
         public int GetMaxOrder(int courseId) => _context.Levels.Where(x => x.CourseId == courseId).Count();

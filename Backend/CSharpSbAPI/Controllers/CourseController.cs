@@ -8,7 +8,7 @@ namespace CSharpSbAPI.Controllers
 {
 	[Route("api/v1/course")]
 	[ApiController]
-    [Authorize]
+
     public class CourseController : ControllerBase
 	{
 		private readonly CourseService _courseService;

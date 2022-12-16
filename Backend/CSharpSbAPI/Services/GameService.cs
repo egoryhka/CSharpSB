@@ -23,8 +23,18 @@ namespace CSharpSbAPI.Services
 			_accountService = accountService;
 		}
 
+
+
 		public Response TestCode(int levelId, string code)
 		{
+			var levelRes = _levelService.GetItem(levelId);
+			if (levelRes.Status != StatusResp.OK) return levelRes;
+
+			var level = ((Response<Level>)levelRes).Data;
+			
+			var correctOutputs = level.ExpResultsJson.FromJson<List<string>>();
+
+
 			var mainCode = @"
 					     Console.WriteLine(Max(new int[0]));
 					     Console.WriteLine(Max(new[] { 3 }));
@@ -44,14 +54,13 @@ namespace CSharpSbAPI.Services
 							  if(source[i].CompareTo(max) == 1) max = source[i];
 							}
 
-							var a = 0;
-							var b = 12 / a;
+							
 						
 							return max;
 						}
 					";
 
-			var testResult = CodeTest.Test(mainCode, code, null!);
+			var testResult = CodeTest.Test(mainCode, code, correctOutputs);
 
 			return new Response<TestResult>(StatusResp.OK, testResult);
 		}

@@ -10,7 +10,7 @@ namespace CSharpSbAPI.Controllers
 {
     [Route("api/v1/level")]
     [ApiController]
-    [Authorize]
+
     public class LevelController : ControllerBase
     {
         private readonly LevelService _levelService;
