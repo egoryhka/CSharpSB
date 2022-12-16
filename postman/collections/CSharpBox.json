@@ -102,6 +102,32 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Получение всех уровней",
+			"id": "5279b211-91de-408f-8f1a-41475e3c5f95",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/level/getall",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"level",
+						"getall"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
