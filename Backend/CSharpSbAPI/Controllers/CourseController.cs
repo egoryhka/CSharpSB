@@ -28,8 +28,8 @@ namespace CSharpSbAPI.Controllers
 
 		[HttpPost("delete")] public Response DeleteCourse(int id) => _courseService.DeleteItem(id);
 
-        [HttpPost("gettips")][Authorize(Roles = "User")] public  Response GetTips(int userId, int courseId) => _courseService.GetTips(userId, courseId);
+        [HttpPost("getTips")][Authorize(Roles = "User")] public  Response GetTips(int userId, int courseId) => _courseService.GetTips(userId, courseId);
 
-        [HttpPost("assignuser")] public Response AssignUser (int userId, int courseId) => _courseService.AssingUser(userId, courseId);
+        [HttpPost("assignUser")] public Response AssignUser (int userId, int courseId) => _courseService.AssignUser(userId, courseId);
     }
 }

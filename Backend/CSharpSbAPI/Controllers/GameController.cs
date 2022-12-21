@@ -1,8 +1,6 @@
-﻿using CSharpSbAPI.Data.Models.DB;
+﻿using CSharpSbAPI.Data.Models;
 using CSharpSbAPI.Services;
 using Microsoft.AspNetCore.Mvc;
-using CSharpSbAPI.Data.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace CSharpSbAPI.Controllers
 {
@@ -15,5 +13,11 @@ namespace CSharpSbAPI.Controllers
 
 		[HttpPost("test")]
 		public Response TestCode(int levelId, string code) => _gameService.TestCode(levelId, code);
+
+		[HttpGet("levels")]
+		public Response GetLevels(int courseId, int userId) => _gameService.GetLevels(courseId, userId);
+
+		[HttpGet("nextLevel")]
+		public Response NextLevel(int levelId, int userId) => _gameService.NextLevel(levelId, userId);
 	}
 }

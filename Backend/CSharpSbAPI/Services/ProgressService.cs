@@ -25,7 +25,7 @@ namespace CSharpSbAPI.Services
             _context.SaveChanges();
             return Response.OK;
         }
-
+        
         public Response Update(Progress progress)
         {
             var res = Validate(progress);
@@ -35,33 +35,6 @@ namespace CSharpSbAPI.Services
             _context.Progresses.Update(progress);
             _context.SaveChanges();
             return Response.OK;
-        }
-
-        public Response GetLevels(int userId, int courseId)
-        {
-            var levels = _context.Levels
-                .Join(_context.Progresses,
-                l => l.Id,
-                p => p.LevelId,
-                (l, p) => new
-                {
-                    levelId = l.Id,
-                    courseId = l.CourseId,
-                    userId = p.UserId,
-                    order = l.Order,
-                    name = l.Name,
-                    status = p.Status
-                })
-                .Where(x => x.userId == userId && x.courseId == courseId)
-                .Select(x => new UserLevel
-                {
-                    levelId = x.levelId,
-                    order = x.order,
-                    name = x.name,
-                    status = x.status
-                })
-                .ToList();
-            return new Response<List<UserLevel>>(StatusResp.OK, levels);
         }
 
         private Response Validate(Progress progress)

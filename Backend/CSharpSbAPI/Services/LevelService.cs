@@ -9,7 +9,6 @@ namespace CSharpSbAPI.Services
     {
         public LevelService(CSharpSbDbContext context) : base(context) { }
 
-        #region CRUD Operation
         public override Response AddItem(Level level)
         {
             var res = ValidateAdd(level);
@@ -28,8 +27,6 @@ namespace CSharpSbAPI.Services
             return Response.OK;
         }
       
-        #endregion
-
         protected override Response ValidateAdd(Level level)
         {
             var exist = _context.Levels.FirstOrDefault(x => x.Name == level.Name);
@@ -48,5 +45,6 @@ namespace CSharpSbAPI.Services
         }
 
         public int GetMaxOrder(int courseId) => _context.Levels.Where(x => x.CourseId == courseId).Count();
+
     }
 }
