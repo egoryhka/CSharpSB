@@ -13,7 +13,7 @@ export const userAuth = (login: string, password: string, save: boolean = true) 
             dispatch({type: userAuthActions.USER_AUTH});
             const {data} = await AuthRequest({login, password});
 
-            if (data.email) {
+            if (data.login) {
                 if (save) {
                     localStorage.setItem('token', data.token);
                 }
@@ -32,7 +32,7 @@ export const tokenUserAuth = (token: string) => {
         try {
             dispatch({type: userAuthActions.USER_AUTH});
             const data = await TokenAuth(token);
-            if (data.email) {
+            if (data.login) {
                 dispatch({type: userAuthActions.USER_AUTH_SUCCESS, payload: data});
             } else {
                 dispatch({type: userAuthActions.USER_AUTH_ERROR, payload: "Неверный логин или пароль"});

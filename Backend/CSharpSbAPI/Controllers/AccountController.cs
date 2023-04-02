@@ -47,6 +47,19 @@ namespace CSharpSbAPI.Controllers
             return res;
         }
 
+        [HttpGet("login")]
+        public async Task<Response> Login()
+        {
+            var token = HttpContext.Request.Headers["Authorization"];
+            var res = _accountService.Login(token, out var user);
+            if (res.Status == StatusResp.OK)
+            {
+                await Authenticate(user);
+                return res;
+            }
+            return res;
+        }
+
         [HttpPost("update")]
         [Authorize]
         public  Response Edit(UserUpdate userUpdate)

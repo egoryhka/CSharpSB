@@ -79,13 +79,17 @@ namespace CSharpSbAPI.Services
             if (existUser == null) return new Response(StatusResp.ClientError, errors: "Неверный пароль");
 
             user = existUser;
-            return Response.OK;
+            return new Response<User>(StatusResp.OK, user);
         }
 
-        private int GetUserIdByToken(string token)
+        public Response Login(string token, out User user)
         {
-            var user = _context.Users.FirstOrDefault(user => user.Token == token);
-            return user?.Id ?? -1;
+            user = _context.Users.FirstOrDefault(user => user.Token == token)!;
+            if (user == null)
+            {
+                return new Response(StatusResp.ClientError, errors: "Неопознанная ошибка");
+            }
+            return new Response<User>(StatusResp.OK, user);
         }
 
         private string CreateToken(RegisterModel r)
