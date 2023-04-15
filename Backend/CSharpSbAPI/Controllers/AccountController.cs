@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Newtonsoft.Json.Linq;
 
 namespace CSharpSbAPI.Controllers
@@ -77,7 +78,7 @@ namespace CSharpSbAPI.Controllers
         [Authorize]
         public async Task<Response> Logout()
         {
-            await HttpContext.SignOutAsync();
+            Response.Cookies.Delete("ApplicationCookie");
             return new Response(StatusResp.OK);
         }
 

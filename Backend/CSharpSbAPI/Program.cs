@@ -57,9 +57,11 @@ namespace CSharpSbAPI
 				})
 				.AddCookie(options => //CookieAuthenticationOptions
 				{
-					options.LoginPath = new PathString("/signin");
+					options.LoginPath = new PathString("/login");
+					options.LogoutPath = new PathString("/logout");
 				});
 
+			// builder.Services.
 
 			// CSharpSbServices . . .
 			builder.Services.AddScoped<ProgressService>();

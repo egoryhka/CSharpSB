@@ -44,7 +44,7 @@ const MyProfile = () => {
     const submitUserInfo = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
-        const response = await SBApi.post("account/update", {data: formData});
+        const response = await SBApi.post("account/update", {data: formData, headers: {Authorization: `Bearer ${user.token}`}});
         if (response.isOk) {
             if (user.token) {
                 await tokenUserAuth(user.token);

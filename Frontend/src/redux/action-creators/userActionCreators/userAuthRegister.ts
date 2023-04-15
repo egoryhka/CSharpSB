@@ -50,8 +50,9 @@ export const tokenUserAuth = (token: string) => {
 
 export const userLogout = () => {
     return async function (dispatch: Dispatch<userAuthAction>, _: any, {SBApi}: {SBApi: typeof SBAPIInitial}) {
+        const token = _().authUser.token;
         localStorage.removeItem('token');
-        await SBApi.get("account/logout");
+        await SBApi.get("account/logout", {headers: {Authorization: `Bearer ${token}`}});
         dispatch({type: userAuthActions.USER_LOGOUT});
     }
 }
