@@ -12,6 +12,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Policy;
+using Microsoft.AspNetCore.Authentication;
 
 namespace CSharpSbAPI.Services
 {
@@ -90,6 +91,12 @@ namespace CSharpSbAPI.Services
                 return new Response(StatusResp.ClientError, errors: "Неопознанная ошибка");
             }
             return new Response<User>(StatusResp.OK, user);
+        }
+        
+        public async Task<Response> Logout(HttpContext ctx)
+        {
+            await ctx.SignOutAsync();
+            return new Response(StatusResp.OK);
         }
 
         private string CreateToken(RegisterModel r)

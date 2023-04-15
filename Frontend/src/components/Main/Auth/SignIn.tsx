@@ -19,7 +19,6 @@ import AlertHint from "../../utils/Alert/AlertHint";
 
 const SignIn = () => {
     const [saveMe, setSaveMe] = useState<boolean>(false);
-    const location = useLocation();
 
     const [showAlert, setShowAlert] = useState<boolean>(false);
     const [severityAlert, setSeverityAlert] = useState<AlertColor>("error");
@@ -27,20 +26,12 @@ const SignIn = () => {
 
     const loading = useTypeSelector(state => state.authUser.loading);
     const error = useTypeSelector(state => state.authUser.error);
-    const email = useTypeSelector(state => state.authUser.email);
-
-    // @ts-ignore //странно что тут нет дженерика
-    const action = location?.state?.action;
-    // @ts-ignore //странно что тут нет дженерика
-    const to = location?.state?.to;
+    const login = useTypeSelector(state => state.authUser.login);
 
     const {userAuth} = useActions();
 
-    if (email) {
-        if (action && to) {
-            return <Navigate replace to={`/conference/${action}/${to}`}/>
-        }
-        return <Navigate replace to={'/'}/>
+    if (login) {
+        return <Navigate replace to={`/myprofile`}/>
     }
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

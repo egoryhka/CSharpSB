@@ -4,13 +4,13 @@ import {AppBar, Button, Typography, Container, Stack, Avatar, Box} from "@mui/ma
 import {useTypeSelector} from "../utils/Hooks/UseTypeSelector";
 import {useActions} from "../utils/Hooks/UseActions";
 import {OptionsModal} from "./OptionsModal/OptionsModal";
+import logo from "./../../image/companyLogo/img.png";
 import {SearchField} from "./SearchField/SearchField";
 
 export const Header: React.FC = () => {
-        const email = useTypeSelector(store => store.authUser.email);
-        const name = useTypeSelector(store => store.authUser.firstName);
+        const login = useTypeSelector(store => store.authUser.login);
+        const name = useTypeSelector(store => store.authUser.name);
         const navigate = useNavigate();
-
         const [openedModal, setOpenedModal] = useState(false);
         const {userLogout} = useActions();
 
@@ -45,17 +45,15 @@ export const Header: React.FC = () => {
                                 <Typography variant={"h6"} color={"inherit"}
                                             sx={{display: "flex", alignItems: "center", justifyContent: "space-around"}}
                                             component={Link} to={"/"}>
-                                    <Avatar sx={{borderRadius: 0, marginRight: 1}} src={"Леша нарисуй"}/>
-                                    <Typography sx={{textShadow: "1px 1px 1px rgba(0,0,0,0.20)"}} variant={"h6"}>Open
-                                        Space</Typography>
+                                    <Avatar sx={{borderRadius: 0, marginRight: 1}} src={logo}/>
+                                    <Typography sx={{textShadow: "1px 1px 1px rgba(0,0,0,0.20)"}}
+                                                variant={"h6"}>SbSharp</Typography>
                                 </Typography>
                                 <SearchField/>
                             </Box>
 
-                            {email ? <Stack direction="row" spacing={2}>
-                                <Button variant={"contained"} to={'/createconf'} component={Link}>Создать
-                                    конференцию</Button>
-                                <Button variant={"contained"} to={'/myprofile'} component={Link}>{name || email}</Button>
+                            {login ? <Stack direction="row" spacing={2}>
+                                <Button variant={"contained"} to={'/myprofile'} component={Link}>{name || login}</Button>
                                 <Button variant={"contained"} onClick={logout}>Выйти</Button>
 
                             </Stack> : <Stack direction="row" spacing={2}>

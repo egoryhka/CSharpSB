@@ -5,7 +5,7 @@ import {useTypeSelector} from "../../utils/Hooks/UseTypeSelector";
 import {Navigate} from "react-router-dom";
 import {ManualInfo} from "./ManualInfo";
 import {ProfileTitle} from "./ProfileTitle";
-import {ConferencesContainer} from "../Conferencies/ConferenceView/ConferencesContainer";
+import {CoursesContainer} from "../Conferencies/ConferenceView/CoursesContainer";
 
 export const OtherUserProfileView = () => {
     const userData = useTypeSelector(store => store.fetchUser);
@@ -20,8 +20,8 @@ export const OtherUserProfileView = () => {
     }
 
     const getUserName = () => {
-        if (userData.lastName && userData.firstName) {
-            return `${userData.lastName} ${userData.firstName}`;
+        if (userData.surname && userData.name) {
+            return `${userData.surname} ${userData.name}`;
         }
         return userData.email || "";
     };
@@ -31,7 +31,7 @@ export const OtherUserProfileView = () => {
             {!userData.loading ? <Grid container spacing={1}>
                 <ProfileTitle editModeExist={false} name={getUserName()}/>
                 <ManualInfo user={userData}/>
-                {userData.email ? <ConferencesContainer userId={userData.email}/> : undefined}
+                {userData.email ? <CoursesContainer userId={userData.email}/> : undefined}
             </Grid> : <Loader text={"Ищем сраничку пользователя"}/>}
         </>
     );

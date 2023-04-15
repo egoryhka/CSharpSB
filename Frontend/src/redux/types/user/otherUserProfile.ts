@@ -1,8 +1,8 @@
 import * as H from "history";
 
 export interface otherUserProfileState {
-    firstName?: string;
-    lastName?: string;
+    name?: string;
+    surname?: string;
     email?: string;
     image?: string;
     login?: string;

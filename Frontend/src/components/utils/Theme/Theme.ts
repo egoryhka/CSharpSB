@@ -3,6 +3,9 @@ import {blue, pink, purple} from "@mui/material/colors";
 
 export const lightTheme = createTheme({
     palette: {
+        primary: {
+            main: purple[600]
+        },
         secondary: {
             // This is green.A700 as hex.
             main: '#ffffff',

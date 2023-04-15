@@ -12,8 +12,8 @@ export const Footer = () => {
                 enableColorOnDark={true}
             >
                 <Container maxWidth={"lg"}>
-                    <p>Диплом?</p>
-                    <h3>created by sanay152 & Marsh</h3>
+                    <p>Првильное питание</p>
+                    <h3>В ролях: передний - Кузьмич Александр, задние - Стрелков Андрей и Демьяненко Егор, художник - Леш</h3>
                     <span>all rights didn't reserve</span>
                 </Container>
             </AppBar>

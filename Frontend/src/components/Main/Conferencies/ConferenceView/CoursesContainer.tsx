@@ -21,7 +21,7 @@ interface ConferenciesContainerProps {
     userId: string;
 }
 
-export const ConferencesContainer: React.FC<ConferenciesContainerProps> = ({userId}) => {
+export const CoursesContainer: React.FC<ConferenciesContainerProps> = ({userId}) => {
     const [page, setPage] = useState<number>(1);
     const {conferences, loading, error, message, totalPages, totalConfs} = useFetchUsersConfs(userId, page);
 
@@ -37,7 +37,7 @@ export const ConferencesContainer: React.FC<ConferenciesContainerProps> = ({user
         width: "100%",
         boxSizing: "border-box"
     }}>
-        <Typography variant={'h6'}>Всего конференций: {totalConfs}</Typography>
+        <Typography variant={'h6'}>Всего курсов: {totalConfs}</Typography>
         {error && <AlertHint text={error} size={"small"} collapse={Boolean(error)} severity={"error"}/>}
         {message && <AlertHint text={message} size={"small"} collapse={Boolean(error)} severity={"warning"}/>}
 

@@ -7,10 +7,6 @@ import {useActions} from "../../utils/Hooks/UseActions";
 import AlertHint from "../../utils/Alert/AlertHint";
 import {ApiProvider} from "../../../api/BaseResponse";
 
-interface a {
-    data: string;
-}
-
 const Registration = () => {
     const {userAuth} = useActions();
     const [loading, setLoading] = React.useState<boolean>(false);
@@ -30,15 +26,14 @@ const Registration = () => {
         if (password === passwordRepeat) {
             setLoading(true);
             // const data = await registrationRequest({password, login});
-            const data = await SBApi.post<a>("account/register", {data: {password, login}});
+            const {data} = await SBApi.post("account/register", {data: {password, login}});
             setLoading(false);
-            console.log(data)
             if (data.isOk) {
-                await SBApi.get("course/2")
-                // setLoading(true);
-                // await userAuth(login, password, true);
-                // setLoading(false);
-                // navigate('/myprofile');
+                // await SBApi.get("course/2")
+                setLoading(true);
+                await userAuth(login, password, true);
+                setLoading(false);
+                navigate('/myprofile');
             }
         } else {
             setNonSamePasswords(true);

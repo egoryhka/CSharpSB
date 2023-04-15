@@ -1,8 +1,8 @@
 import {userAuthAction, userAuthActions, userState} from "../../types/user/user";
 
 const initialUserState: userState = {
-    firstName: '',
-    lastName: '',
+    name: '',
+    surname: '',
     email: '',
     login: '',
     token: '',
@@ -18,32 +18,33 @@ export const userAuthReducer = (state = initialUserState, action: userAuthAction
             return {
                 loading: true,
                 error: null,
-                lastName: '',
-                firstName: '',
+                surname: '',
+                name: '',
                 email: '',
                 login: '',
                 token: '',
                 isGod: false,
-                image: ''
+                image: '',
             };
         case userAuthActions.USER_AUTH_SUCCESS:
             return {
                 loading: false,
                 error: null,
                 login: action.payload.login,
-                firstName: action.payload.firstName,
+                name: action.payload.name,
                 token: action.payload.token,
                 email: action.payload.email,
-                lastName: action.payload.lastName,
+                surname: action.payload.surname,
                 isGod: action.payload.isGod,
                 image: action.payload.image,
+                id: action.payload.id,
             }
         case userAuthActions.USER_AUTH_ERROR:
             return {
                 loading: false,
                 error: action.payload,
-                lastName: '',
-                firstName: '',
+                surname: '',
+                name: '',
                 email: '',
                 login: '',
                 token: '',
@@ -54,8 +55,8 @@ export const userAuthReducer = (state = initialUserState, action: userAuthAction
             return {
                 loading: false,
                 error: null,
-                lastName: '',
-                firstName: '',
+                surname: '',
+                name: '',
                 email: '',
                 login: '',
                 token: '',

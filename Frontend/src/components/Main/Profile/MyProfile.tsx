@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {useTypeSelector} from "../../utils/Hooks/UseTypeSelector";
 import {
     AlertColor,
@@ -11,7 +11,7 @@ import {
     Link, OutlinedInput,
     Typography
 } from "@mui/material";
-import {ConferencesContainer} from "../Conferencies/ConferenceView/ConferencesContainer";
+import {CoursesContainer} from "../Conferencies/ConferenceView/CoursesContainer";
 import Edit from '@mui/icons-material/Edit';
 import TextField from "@mui/material/TextField";
 import {editProfileInfo, editProfilePassword} from "../../../api/EditProfile/Edit";
@@ -23,11 +23,13 @@ import {ManualInfo} from "./ManualInfo";
 import {ProfileTitle} from "./ProfileTitle";
 import AlertHint from "../../utils/Alert/AlertHint";
 import {stringToColor} from "../../utils/StringToColor/StringToColor";
+import {ApiProvider} from "../../../api/BaseResponse";
 
 const MyProfile = () => {
     document.title = 'Мой профиль';
     const user = useTypeSelector(state => state.authUser);
     const {tokenUserAuth} = useActions();
+    const SBApi = useContext(ApiProvider);
 
     const [editMode, setEditMode] = useState<boolean>(false);
     const [imagePath, setImagePath] = useState<string>("");
@@ -41,9 +43,9 @@ const MyProfile = () => {
 
     const submitUserInfo = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        const resp = await editProfileInfo(data);
-        if (resp) {
+        const formData = new FormData(event.currentTarget);
+        const response = await SBApi.post("account/update", {data: formData});
+        if (response.isOk) {
             if (user.token) {
                 await tokenUserAuth(user.token);
                 setEditLoginResponse(true);
@@ -96,15 +98,15 @@ const MyProfile = () => {
         }
     }
 
-    if (!user.email && !user.loading) {
+    if (!user.login && !user.loading) {
         return <Navigate to={'/uregisterrequest'}/>
     }
 
     const getUserName = () => {
-        if (user.lastName && user.firstName) {
-            return `${user.lastName} ${user.firstName}`;
+        if (user.surname && user.name) {
+            return `${user.surname} ${user.name}`;
         }
-        return user.email;
+        return user.login;
     };
 
     return (
@@ -114,7 +116,8 @@ const MyProfile = () => {
                     <Grid container spacing={1}>
                         <ProfileTitle setEditMode={setEditMode} editModeExist={true} name={getUserName()}/>
                         <Grid item lg={4} xs={6}>
-                            <Avatar src={imagePath || user.image} sx={{height: "250px", width: "250px", bgcolor: stringToColor(user.email)}}/>
+                            <Avatar src={imagePath || user.image}
+                                    sx={{height: "250px", width: "250px", bgcolor: stringToColor(user.login)}}/>
                             <input type="file" name={"logo"} id="logo" onChange={inputFileChange}/>
                         </Grid>
                         <Grid item lg={8} xs={6}>
@@ -124,7 +127,7 @@ const MyProfile = () => {
                                     size={"small"}
                                     margin="none"
                                     required
-                                    name="email"
+                                    name="Email"
                                     defaultValue={user.email}
                                 />
                             </Box>
@@ -133,8 +136,8 @@ const MyProfile = () => {
                                 <TextField
                                     size={"small"}
                                     margin="none"
-                                    name="LastName"
-                                    defaultValue={user.lastName}
+                                    name="Surname"
+                                    defaultValue={user.surname}
                                 />
                             </Box>
                             <Box sx={{margin: 2}} component={'div'}>
@@ -142,17 +145,16 @@ const MyProfile = () => {
                                 <TextField
                                     size={"small"}
                                     margin="none"
-                                    name="FirstName"
-                                    defaultValue={user.firstName}
+                                    name="Name"
+                                    defaultValue={user.name}
                                 />
                             </Box>
-                            <Box sx={{margin: 2}} component={'div'}>
-                                <Typography sx={{fontSize: "20px"}} variant={"body2"}>Логин для входа</Typography>
+                            <Box sx={{display: "none"}}>
                                 <TextField
                                     size={"small"}
                                     margin="none"
-                                    name="login"
-                                    defaultValue={user.login}
+                                    name="id"
+                                    defaultValue={user.id}
                                 />
                             </Box>
                         </Grid>
@@ -232,7 +234,7 @@ const MyProfile = () => {
             }
             <AlertHint collapse={editLoginResponse} severity={editLoginAlarmColor} size={"small"}
                        text={editLoginAlarmText}/>
-            <ConferencesContainer userId={user.email} />
+            <CoursesContainer userId={user.login}/>
         </Box>
     );
 };

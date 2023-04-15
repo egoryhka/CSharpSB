@@ -3,9 +3,9 @@ import {fetchUserProfileActions, getUserAction, otherUserProfileState} from "../
 const initialUserState: otherUserProfileState = {
     isFounded: null,
     email: "",
-    firstName: "",
+    name: "",
     image: "",
-    lastName: "",
+    surname: "",
     loading: false,
     error: null,
 };
@@ -13,14 +13,14 @@ const initialUserState: otherUserProfileState = {
 export const getUserProfileReducer = (state = initialUserState, action: getUserAction): otherUserProfileState => {
     switch (action.type) {
         case fetchUserProfileActions.GET_USER:
-            return {isFounded: null, email: "", firstName: "", image: "", lastName: "", loading: false, error: null};
+            return {isFounded: null, email: "", name: "", image: "", surname: "", loading: false, error: null};
         case fetchUserProfileActions.GET_USER_SUCCESS:
             return {
                 isFounded: action.payload.isFounded,
                 email: action.payload.email,
-                firstName: action.payload.firstName,
+                name: action.payload.name,
                 image: action.payload.image,
-                lastName: action.payload.lastName,
+                surname: action.payload.surname,
                 loading: false,
                 error: null,
             };
@@ -28,9 +28,9 @@ export const getUserProfileReducer = (state = initialUserState, action: getUserA
             return {
                 isFounded: null,
                 email: "",
-                firstName: "",
+                name: "",
                 image: "",
-                lastName: "",
+                surname: "",
                 loading: false,
                 error: "Ошибка сервера"
             };
@@ -38,9 +38,9 @@ export const getUserProfileReducer = (state = initialUserState, action: getUserA
             return {
                 isFounded: false,
                 email: "",
-                firstName: "",
+                name: "",
                 image: "",
-                lastName: "",
+                surname: "",
                 loading: false,
                 error: "Пользоваиель не найден"
             };
@@ -48,9 +48,9 @@ export const getUserProfileReducer = (state = initialUserState, action: getUserA
             return {
                 isFounded: null,
                 email: "",
-                firstName: "",
+                name: "",
                 image: "",
-                lastName: "",
+                surname: "",
                 loading: false,
                 error: null
             };

@@ -18,6 +18,7 @@ namespace CSharpSbAPI.Controllers
     public class AccountController : ControllerBase
     {
         private readonly AccountService _accountService;
+
         public AccountController(AccountService accountService)
         {
             _accountService = accountService;
@@ -32,6 +33,7 @@ namespace CSharpSbAPI.Controllers
                 HttpContext.Response.Headers["Authorization"] = token;
                 await Authenticate(user);
             }
+
             return res;
         }
 
@@ -44,6 +46,7 @@ namespace CSharpSbAPI.Controllers
                 HttpContext.Response.Headers["Authorization"] = user.Token;
                 await Authenticate(user);
             }
+
             return res;
         }
 
@@ -57,21 +60,32 @@ namespace CSharpSbAPI.Controllers
                 await Authenticate(user);
                 return res;
             }
+
             return res;
         }
 
+        //Погнали файлы тоже уметь сохранять для аватарок. Пример есть, Напишите мне
         [HttpPost("update")]
         [Authorize]
-        public  Response Edit(UserUpdate userUpdate)
+        public Response Edit([FromForm] UserUpdate userUpdate)
         {
             var res = _accountService.UpdateItem(userUpdate);
             return res;
         }
 
+        [HttpGet("logout")]
+        [Authorize]
+        public async Task<Response> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return new Response(StatusResp.OK);
+        }
+
         private async Task Authenticate(User user)
         {
             var claims = new List<Claim> { new Claim("Id", user.Id.ToString()), };
-            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,
+                ClaimsIdentity.DefaultRoleClaimType);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
     }

@@ -11,7 +11,7 @@ export const HomePage = () => {
     const {timeLine, loading, error} = useFetchTimeLineConfs();
     return (
         <div>
-            <Typography variant={"h4"} component={"h5"}>Стартовая страница (дайте текста)</Typography>
+            <Typography variant={"h4"} component={"h5"}>Сервис правильного питания - призван помочь людям изучать языки программирования. Пока ток шарп остальное в будущий версиях</Typography>
             {loading ? <Loader text={"Загружаем конференции"}/> : null}
             <AlertHint
                 collapse={Boolean(error)}

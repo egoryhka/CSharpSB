@@ -20,11 +20,11 @@ export const ManualInfo: React.FC<ManualInfoProps> = ({user}) => {
                 </Box>
                 <Box sx={{margin: 3}} component={'div'}>
                     <Typography sx={{fontSize: "20px"}} variant={"body2"}>Фамилия</Typography>
-                    <Typography variant={"h5"}>{user.lastName || "Не указано"}</Typography>
+                    <Typography variant={"h5"}>{user.surname || "Не указано"}</Typography>
                 </Box>
                 <Box sx={{margin: 3}} component={'div'}>
                     <Typography sx={{fontSize: "20px"}} variant={"body2"}>Имя</Typography>
-                    <Typography variant={"h5"}>{user.firstName || "Не указано"}</Typography>
+                    <Typography variant={"h5"}>{user.name || "Не указано"}</Typography>
                 </Box>
                 <Box sx={{margin: 3}} component={'div'}>
                     <Typography sx={{fontSize: "20px"}} variant={"body2"}>Логин для входа</Typography>

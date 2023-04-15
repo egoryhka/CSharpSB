@@ -7,7 +7,31 @@
     <projectFile profileName="IIS Express">CSharpSbAPI/CSharpSbAPI.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="19af90cf-9e18-4ede-81d0-4beec51fd974" name="Changes" comment="" />
+    <list default="true" id="19af90cf-9e18-4ede-81d0-4beec51fd974" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.CSharpSB/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CSharpSB/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.CSharpSB/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CSharpSB/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSharpSbAPI/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSharpSbAPI/Controllers/AccountController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSharpSbAPI/Data/Models/UserUpdate.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSharpSbAPI/Data/Models/UserUpdate.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSharpSbAPI/Services/AccountService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSharpSbAPI/Services/AccountService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/api/Auth/LoginAuth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/src/api/Auth/LoginAuth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/api/BaseResponse.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/src/api/BaseResponse.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/components/Footer/Footer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/src/components/Footer/Footer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/components/Header/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/src/components/Header/Header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/components/Main/Auth/SignIn.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/src/components/Main/Auth/SignIn.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/components/Main/Conferencies/ConferenceView/ConferencesContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/src/components/Main/Conferencies/ConferenceView/CoursesContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/components/Main/HomePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/src/components/Main/HomePage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/components/Main/Profile/ManualInfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/src/components/Main/Profile/ManualInfo.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/components/Main/Profile/MyProfile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/src/components/Main/Profile/MyProfile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/components/Main/Profile/OtherUserProfileView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/src/components/Main/Profile/OtherUserProfileView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/components/Main/RegistrationForm/Registration.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/src/components/Main/RegistrationForm/Registration.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/components/utils/Theme/Theme.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/src/components/utils/Theme/Theme.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/redux/action-creators/userActionCreators/userAuthRegister.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/src/redux/action-creators/userActionCreators/userAuthRegister.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/redux/redusers/userReduser/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/src/redux/redusers/userReduser/auth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/redux/redusers/userReduser/getUser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/src/redux/redusers/userReduser/getUser.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/redux/redux.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/src/redux/redux.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/redux/types/user/otherUserProfile.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/src/redux/types/user/otherUserProfile.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/redux/types/user/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/src/redux/types/user/user.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,6 +39,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/601c3d2f1bfa958c0388e8435dc1543366d3c8c7f6abf4493861219f944812a/AuthorizeAttribute.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -32,9 +59,16 @@
     "WebServerToolWindowFactoryState": "false",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "C:\\Users\\aleks\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache",
+      "C:\\Users\\aleks\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache",
+      "C:\\Users\\aleks\\AppData\\Local\\Symbols\\src"
+    ]
   }
 }]]></component>
-  <component name="RunManager" selected=".NET Launch Settings Profile.CSharpSB">
+  <component name="RunManager" selected=".NET Launch Settings Profile.CSharpSbAPI">
     <configuration name="CSharpSB" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/CSharpSB/CSharpSB.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net6.0" />
@@ -105,12 +139,14 @@
       <option name="presentableId" value="Default" />
       <updated>1670260972550</updated>
       <workItem from="1670260972556" duration="638000" />
+      <workItem from="1681552083848" duration="2800000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
@@ -124,5 +160,24 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/CSharpSbAPI/Controllers/AccountController.cs</url>
+          <line>70</line>
+          <properties documentPath="C:\repos\CSharpSB\Backend\CSharpSbAPI\Controllers\AccountController.cs" initialLine="69" containingFunctionPresentation="method 'Edit'">
+            <startOffsets>
+              <option value="2211" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2212" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

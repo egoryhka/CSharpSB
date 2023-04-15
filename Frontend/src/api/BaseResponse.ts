@@ -21,18 +21,19 @@ class SBApi {
         })
     }
 
-    public async get<P>(url: string, options?: AxiosRequestConfig): Promise<P & BaseResponse> {
-        return await this.makeRequest<P & BaseResponse>("GET", url, options);
+    public async get<P = BaseResponse>(url: string, options?: AxiosRequestConfig): Promise<{data: P} & BaseResponse> {
+        return await this.makeRequest<{data: P} & BaseResponse>("GET", url, options);
     }
 
-    public async post<P>(url: string, options?: AxiosRequestConfig): Promise<P & BaseResponse> {
-        return await this.makeRequest<P & BaseResponse>("POST", url, options);
+    public async post<P = BaseResponse>(url: string, options?: AxiosRequestConfig): Promise<{data: P} & BaseResponse> {
+        return await this.makeRequest<{data: P} & BaseResponse>("POST", url, options);
     }
 
     private async makeRequest<P>(method: Method, url: string, options?: AxiosRequestConfig): Promise<P> {
         let response;
         try {
-            response = await this._axios.request<any, P & BaseResponse>({ ...options, method: method, url});
+            response = await this._axios.request<any, {data: P & BaseResponse}>({ ...options, method: method, url});
+            response = response.data
             response.isOk = this.checkStatusCodeIsOk(response);
         } catch (e) {
             return e as P;
