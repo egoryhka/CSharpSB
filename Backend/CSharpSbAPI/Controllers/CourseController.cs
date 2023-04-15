@@ -30,6 +30,6 @@ namespace CSharpSbAPI.Controllers
 
         [HttpPost("getTips")][Authorize(Roles = "User")] public  Response GetTips(int userId, int courseId) => _courseService.GetTips(userId, courseId);
 
-        [HttpPost("assignUser")] public Response AssignUser (int userId, int courseId) => _courseService.AssignUser(userId, courseId);
+        [HttpPost("join")][Authorize] public Response AssignUser(int userId, int courseId) => _courseService.AssignUser(userId, courseId);
     }
 }
