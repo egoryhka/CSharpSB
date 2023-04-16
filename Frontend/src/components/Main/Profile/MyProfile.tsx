@@ -93,8 +93,8 @@ const MyProfile = () => {
         // @ts-ignore
         const file = e.target.files[0];
         if (file) {
-            const url = URL.createObjectURL(file)
-            setImagePath(url)
+            const url = URL.createObjectURL(file);
+            setImagePath(url);
         }
     }
 

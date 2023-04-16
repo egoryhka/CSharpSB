@@ -16,7 +16,7 @@ export const Main: React.FC = () => {
     const CreateConference = React.lazy(() => import("./CreateConference/CreateConference"));
     const Registration = React.lazy(() => import("./RegistrationForm/Registration"));
     const SignIn = React.lazy(() => import("./Auth/SignIn"));
-    const ConferencePage = React.lazy(() => import("./Conferencies/ConferencePage/ConferencePage"));
+    const CoursePage = React.lazy(() => import("./Conferencies/ConferencePage/CoursePage"));
     const InvitePage = React.lazy(() => import("./InvitePage/InvitePage"));
 
     return (
@@ -34,7 +34,7 @@ export const Main: React.FC = () => {
                     <Route path='/uregisterrequest' element={<UnregisterRequest />}/>
                     <Route path='/notfound' element={<NotFoundPage />}/>
                     <Route path="/userprofile/:userId" element={<OtherUserProfileContainer />}/>
-                    <Route path="/conferencepage/:confId" element={<ConferencePage />}/>
+                    <Route path="/course/:courseId" element={<CoursePage />}/>
                     <Route path="/invitetoconference/:inviteId" element={<InvitePage />}/>
                     <Route path="/conference/:action/:confId" element={<RedirectAfterAction />}/>
                     <Route element={<NotFoundPage />}/>

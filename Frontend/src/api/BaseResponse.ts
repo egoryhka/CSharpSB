@@ -14,6 +14,7 @@ interface InnerStatus {
 
 class SBApi {
     private _axios: AxiosInstance;
+    private useAuthorization?: string = "";
 
     constructor(baseUrl: string) {
         this._axios = axios.create({
@@ -29,16 +30,30 @@ class SBApi {
         return await this.makeRequest<{data: P} & BaseResponse>("POST", url, options);
     }
 
+    public withAuthorization(token?: string): this {
+        this.useAuthorization = token;
+        return this;
+    }
+
     private async makeRequest<P>(method: Method, url: string, options?: AxiosRequestConfig): Promise<P> {
         let response;
         try {
-            response = await this._axios.request<any, {data: P & BaseResponse}>({ ...options, method: method, url});
+            const config = this.collectConfig(method, url, options);
+            response = await this._axios.request<any, {data: P & BaseResponse}>(config);
             response = response.data
             response.isOk = this.checkStatusCodeIsOk(response);
         } catch (e) {
             return e as P;
         }
+        this.useAuthorization = "";
         return response as P;
+    }
+
+    private collectConfig(method: Method, url: string, options?: AxiosRequestConfig): AxiosRequestConfig {
+        if (this.useAuthorization) {
+            return { ...options, method, url, headers: {Authorization: `Bearer ${this.useAuthorization}`}}
+        }
+        return {...options, method, url,}
     }
 
     private checkStatusCodeIsOk({status}: BaseResponse) {

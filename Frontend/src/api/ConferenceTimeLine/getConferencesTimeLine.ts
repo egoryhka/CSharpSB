@@ -1,27 +1,37 @@
 import axios from "axios";
 import requestUrl from "../BaseUrl/CreateBaseUrl";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
+import {ApiProvider} from "../BaseResponse";
 
-export interface IConferenceTimeLine {
+interface ICourseParticipants {
     name: string;
-    link: string;
-    start: Date;
-    end: Date;
+    id: string;
+    logo: string;
 }
 
-export const useFetchTimeLineConfs = () => {
+export interface ICourse {
+    id: number
+    name: string
+    description?: string
+    users: ICourseParticipants[];
+}
+
+export const useFetchCourses = () => {
     const [loading, setLoading] = useState<boolean>(false);
-    const [timeLine, setTimeLine] = useState<IConferenceTimeLine[]>([]);
+    const [courses, setCourses] = useState<ICourse[]>([]);
     const [error, setError] = useState<string>("");
+    const [isOk, setIsOk] = useState<boolean>(false);
+    const SBApi = useContext(ApiProvider);
 
     useEffect(() => {
         const getTimeLine = async () => {
             setLoading(true);
             try {
-                const data = await getConferenceTimeLine();
-                setTimeLine(data);
+                const response = await SBApi.get<ICourse[]>("course/all");
+                setCourses(response.data);
+                setIsOk(response.isOk);
             } catch (e) {
-                setError("Произошла ошибка при занрузки таймлайна")
+                setError("Произошла ошибка при занрузки курсов. Попробуйте позже или обратитесь в техподдержку")
             }
             setLoading(false);
         }
@@ -29,10 +39,5 @@ export const useFetchTimeLineConfs = () => {
         void getTimeLine();
     }, [])
 
-    return {loading, error, timeLine};
-}
-
-const getConferenceTimeLine = async () => {
-    const {data} = await axios.get<IConferenceTimeLine[]>(requestUrl + `api/Conference/getcalendar`);
-    return data;
+    return {loading, error, courses, isOk};
 }

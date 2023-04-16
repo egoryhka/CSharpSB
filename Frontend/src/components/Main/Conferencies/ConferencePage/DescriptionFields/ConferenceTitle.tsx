@@ -1,18 +1,30 @@
-import React, {useRef, useState} from 'react';
-import {Box, Divider, Grid, Typography} from "@mui/material";
+import React, {useContext, useRef, useState} from 'react';
+import {Box, Button, Divider, Grid, Typography} from "@mui/material";
 import {getLinkText, roles} from "../../../../utils/LinkTextFromRole/LinkTextFromRole";
 import {IResponceStatuses} from "../../../../utils/ResponceStatuses/ReaponceIntertface";
 import AlertHint from "../../../../utils/Alert/AlertHint";
 import {Link} from "react-router-dom";
+import {ApiProvider, BaseResponse} from "../../../../../api/BaseResponse";
+import {useTypeSelector} from "../../../../utils/Hooks/UseTypeSelector";
 
 interface ConferenceTitleProps {
     userRoles: roles;
     title: string;
-    confId: string;
+    courseId: string;
 }
 
-const ConferenceTitle: React.FC<ConferenceTitleProps> = ({userRoles, title, confId}) => {
-    const [responseStatus, setResponseStatus] = useState<IResponceStatuses>({});
+const ConferenceTitle: React.FC<ConferenceTitleProps> = ({userRoles, title, courseId}) => {
+    const [responseStatus, setResponseStatus] = useState<BaseResponse | null>(null);
+    const token = useTypeSelector(store => store.authUser.token);
+    const id = useTypeSelector(store => store.authUser.id);
+    const SBApi = useContext(ApiProvider);
+    const changeStatus = async () => {
+        const response = await SBApi.withAuthorization(token as string).post("course/join", {params: {userId: id, courseId: courseId}});
+        setResponseStatus(response)
+        if (response.isOk) {
+            window.location.reload();
+        }
+    }
 
     return (
         <Grid item lg={12} xs={12} sx={{marginBottom: 3}}>
@@ -22,16 +34,18 @@ const ConferenceTitle: React.FC<ConferenceTitleProps> = ({userRoles, title, conf
                     <Typography sx={{cursor: "pointer"}} variant={"h5"}>
                         {getLinkText(userRoles)}
                     </Typography> :
-                    <Typography to={`/conference/${userRoles.isGuest ? "join" : "leave"}/${confId}`}
-                                sx={{cursor: "pointer"}} variant={"h5"}
-                                component={Link}>
+                    <Button
+                        onClick={changeStatus}
+                        sx={{cursor: "pointer"}}
+                        variant={"contained"}
+                    >
                         {getLinkText(userRoles)}
-                    </Typography>}
+                    </Button>}
             </Box>
             <Divider/>
-            {responseStatus.info &&
-            <AlertHint text={responseStatus.info} size={"small"} collapse={Boolean(responseStatus.info)}
-                       severity={responseStatus.isError ? "error" : "success"}/>}
+            {responseStatus?.errors?.length &&
+                <AlertHint text={responseStatus.errors.join(" ")} size={"small"} collapse={Boolean(responseStatus.errors)}
+                           severity={"error"}/>}
         </Grid>
     );
 };

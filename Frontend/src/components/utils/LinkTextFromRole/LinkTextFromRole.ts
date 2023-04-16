@@ -11,7 +11,7 @@ export const getLinkText = (userRoles: roles): string => {
         return "Редактировть"
     }
     if (userRoles.isGuest) {
-        return "Участвовать"
+        return "Присоедениться"
     }
     return "Покинуть"
 }
