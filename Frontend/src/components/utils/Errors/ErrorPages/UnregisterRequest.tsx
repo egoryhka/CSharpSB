@@ -6,7 +6,7 @@ export const UnregisterRequest = () => {
     return (
         <Card sx={{marginTop: 3, alignSelf: "center"}}>
             <Typography sx={{paddingBottom: 3}} component="h1" variant="h4" textAlign="center">Похоже вы
-                не авторизованы, чтобы перейти в профиль </Typography>
+                не авторизованы, чтобы перейти в профиль</Typography>
             <Typography textAlign={"center"}>
                 <Button variant={"contained"}
                         component={urlLink}

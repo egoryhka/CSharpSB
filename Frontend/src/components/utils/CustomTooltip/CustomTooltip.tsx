@@ -3,7 +3,7 @@ import {Fade, Tooltip} from "@mui/material";
 
 interface CustomTooltipProps {
     text: string;
-    children: React.ReactNode;
+    children: React.ReactElement;
 }
 
 export const CustomTooltip: React.FC<CustomTooltipProps> = (props) => {
@@ -11,7 +11,6 @@ export const CustomTooltip: React.FC<CustomTooltipProps> = (props) => {
         <Tooltip TransitionComponent={Fade} TransitionProps={{timeout: 600}} arrow
                  placement={"top"}
                  title={props.text}>
-            {/*@ts-ignore ну че поделать*/}
             {props.children}
         </Tooltip>
     );

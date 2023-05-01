@@ -18,6 +18,7 @@ const Registration = () => {
     const [password, setPassword] = useState<string>('');
     const [passwordRepeat, setPasswordRepeat] = useState<string>('');
     const [nonSamePasswords, setNonSamePasswords] = useState<boolean>(false);
+    const [error, setError] = useState<string>("");
 
     const navigate = useNavigate();
 
@@ -25,17 +26,19 @@ const Registration = () => {
         e.preventDefault();
         if (password === passwordRepeat) {
             setLoading(true);
-            // const data = await registrationRequest({password, login});
-            const {data} = await SBApi.post("account/register", {data: {password, login}});
+            const data = await SBApi.post("account/register", {data: {password, login}});
+            console.log(data)
             setLoading(false);
             if (data.isOk) {
-                // await SBApi.get("course/2")
                 setLoading(true);
                 await userAuth(login, password, true);
                 setLoading(false);
                 navigate('/myprofile');
+            } else {
+                setError(data.fullError);
             }
         } else {
+            setError("Пароли не совпадают!")
             setNonSamePasswords(true);
         }
     }
@@ -98,7 +101,8 @@ const Registration = () => {
                     />
                     <AlertHint closeHandler={() => {
                         setNonSamePasswords(false);
-                    }} severity={"error"} size={"small"} text={"Пароли не совпадают!"} collapse={nonSamePasswords}/>
+                        setError("");
+                    }} severity={"error"} size={"small"} text={error} collapse={nonSamePasswords || !!error}/>
                     <Button
                         endIcon={<SendIcon/>}
                         variant="contained"

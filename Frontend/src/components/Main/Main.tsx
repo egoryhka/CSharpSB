@@ -18,6 +18,8 @@ export const Main: React.FC = () => {
     const SignIn = React.lazy(() => import("./Auth/SignIn"));
     const CoursePage = React.lazy(() => import("./Conferencies/ConferencePage/CoursePage"));
     const InvitePage = React.lazy(() => import("./InvitePage/InvitePage"));
+    const CreateCourse = React.lazy(() => import("./Courses/CreateCourse/CreateCourses"));
+    const EditCourse = React.lazy(() => import("./Courses/EditCourse/EditCourse"));
 
     return (
         <Box sx={{marginTop: "36px", marginBottom: "36px"}}>
@@ -30,6 +32,8 @@ export const Main: React.FC = () => {
                     <Route path='/signin' element={<SignIn />}/>
                     {/*  //TODO DEBUG  */}
                     <Route path='/myprofile' element={<MyProfile />}/>
+                    <Route path='/createcourse' element={<CreateCourse />}/>
+                    <Route path='/editcourse/:id' element={<EditCourse />}/>
                     {/*  //TODO DEBUG  */}
                     <Route path='/uregisterrequest' element={<UnregisterRequest />}/>
                     <Route path='/notfound' element={<NotFoundPage />}/>

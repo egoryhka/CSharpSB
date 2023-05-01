@@ -24,6 +24,8 @@ import {ProfileTitle} from "./ProfileTitle";
 import AlertHint from "../../utils/Alert/AlertHint";
 import {stringToColor} from "../../utils/StringToColor/StringToColor";
 import {ApiProvider} from "../../../api/BaseResponse";
+import {CustomTooltip} from "../../utils/CustomTooltip/CustomTooltip";
+import {Link as ReactDomLink} from 'react-router-dom';
 
 const MyProfile = () => {
     document.title = 'Мой профиль';
@@ -44,7 +46,10 @@ const MyProfile = () => {
     const submitUserInfo = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
-        const response = await SBApi.post("account/update", {data: formData, headers: {Authorization: `Bearer ${user.token}`}});
+        const response = await SBApi.post("account/update", {
+            data: formData,
+            headers: {Authorization: `Bearer ${user.token}`}
+        });
         if (response.isOk) {
             if (user.token) {
                 await tokenUserAuth(user.token);
@@ -235,6 +240,21 @@ const MyProfile = () => {
             <AlertHint collapse={editLoginResponse} severity={editLoginAlarmColor} size={"small"}
                        text={editLoginAlarmText}/>
             <CoursesContainer userId={user.login}/>
+            <br/>
+            <Box sx={{
+                borderRadius: 2,
+                boxShadow: "0px 0px 15px 0px rgba(34, 60, 80, 0.15)",
+                padding: 2,
+                width: "100%",
+                boxSizing: "border-box"
+            }}>
+                <Typography variant={"h5"}>У вас есть возможность создавать свои курсы и публиковать их после
+                    модерации</Typography>
+                <CustomTooltip text={""}>
+                    <Button component={ReactDomLink} to={"/createcourse"} variant={"contained"}>Создать свой
+                        курс</Button>
+                </CustomTooltip>
+            </Box>
         </Box>
     );
 };
