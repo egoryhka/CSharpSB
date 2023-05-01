@@ -1,9 +1,9 @@
+global using CSharpSbAPI.Data.Models.DTO;
+global using CSharpSbAPI.Data.Models.DB;
 using CSharpSbAPI.Data.Models;
 using CSharpSbAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.EntityFrameworkCore.SqlServer;
-using Microsoft.Extensions.Configuration;
 using CSharpSbAPI.Data;
 using Microsoft.EntityFrameworkCore;
 

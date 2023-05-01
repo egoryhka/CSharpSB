@@ -5,14 +5,12 @@ using CSharpSbAPI.Data.Models;
 
 namespace CSharpSbAPI.Data.Models.DB
 {   
-    public class UserCourse
+    public class CourseAdmin
     {
-        public int UserId { get; set; }
+        public int AdminId { get; set; }
         public int CourseId { get; set; }
 
-        public DateTime StartDate { get; set; }
-        public Role Role { get; set; }
-        public  User User { get; set; } = null!;
+        public  User Admin { get; set; } = null!;
         public  Course Course { get; set; } = null!;
     }
 }

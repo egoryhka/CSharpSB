@@ -41,17 +41,12 @@ export default () => {
             setError("Все поля должны быть заполнены");
         } else {
             const data = await SBApi.withAuthorization(token as string).post<{courseId: string}>("course/add", {data: {name, description, language}});
+            console.log("data", data)
             if (data.isOk) {
-                console.log(data.data.courseId);
-                const interval = setInterval(() => {
-                    if (timer === 0) {
-                        clearInterval(interval);
-                        navigate('/editcourse/' + data.data.courseId);
-                    }
-                    setInterval(prev => prev - 1);
-                    setSuccessText(`Курс успешно создан, автоматический переход на страницу через ${interval} секунд`);
-
-                }, 12)
+                setSuccessText(`Курс успешно создан, автоматический переход на страницу через ${timer} секунд`);
+                setTimeout(() => {
+                    navigate('/editcourse/' + data.data);
+                }, 5000);
             }
         }
     }
@@ -85,8 +80,8 @@ export default () => {
                         value={language}
                         onChange={(val) => setLanguage(val.target.value)}
                     >
-                        <MenuItem value={"JS"}>JS</MenuItem>
-                        <MenuItem value={"C#"}>C#</MenuItem>
+                        <MenuItem value={0}>JS</MenuItem>
+                        <MenuItem value={1}>C#</MenuItem>
                     </Select>
                     {/*{"TODO: Убрать хардкод, переместить языки на сервер"}*/}
                     <Typography variant="body2" mt={3} mb={2}>
@@ -113,7 +108,7 @@ export default () => {
                 <AlertHint closeHandler={() => {
                     setError("");
                 }} severity={"error"} size={"small"} text={error} collapse={!!error}/>
-                <AlertHint severity={"success"} size={"small"} text={successText} collapse={!!error}/>
+                <AlertHint severity={"success"} size={"small"} text={successText} collapse={!!successText}/>
             </Box>
         </UnauthorizedPage>
 

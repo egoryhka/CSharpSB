@@ -20,9 +20,13 @@ namespace CSharpSbAPI.Controllers
 
 		[HttpGet("all")]  public Response GetCourses() => _courseService.GetAll();
 
-		[HttpGet("{id}")] public Response GetCourse(int id) => _courseService.GetItem(id);
+		[HttpGet("{id}")] public Response GetCourse(int id) => _courseService.GetCourse(id, Convert.ToInt32(User.FindFirst("Id")?.Value));
 
-		[HttpPost("add")] public Response AddCourse(Course course) => _courseService.AddItem(course);
+		[HttpPost("add")][Authorize] public Response AddCourse(AddCourse course)
+		{
+			var ownerId = Convert.ToInt32(User.FindFirst("Id").Value);
+			return _courseService.AddCourse(course, ownerId);
+		}
 
 		[HttpPost("update")] public Response UpdateCourse(Course course) => _courseService.UpdateItem(course);
 

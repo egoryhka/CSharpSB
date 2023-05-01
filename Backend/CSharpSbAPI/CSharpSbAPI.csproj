@@ -23,4 +23,8 @@
     <ProjectReference Include="..\CodeCompilerLibrary\CodeCompilerLibrary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\Новая папка\" />
+  </ItemGroup>
+
 </Project>

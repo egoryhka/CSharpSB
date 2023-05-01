@@ -35,6 +35,5 @@
 		OK = 200,
 		ClientError = 400,
 		ServerError = 500,
-
 	}
 }

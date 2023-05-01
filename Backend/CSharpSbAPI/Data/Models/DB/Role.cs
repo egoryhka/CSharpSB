@@ -2,7 +2,9 @@
 {
     public enum Role
     {
-        User,
+        Guest,
+        Participant,
         Admin,
+        Owner,
     }
 }

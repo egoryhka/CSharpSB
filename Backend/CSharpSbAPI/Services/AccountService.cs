@@ -18,7 +18,9 @@ namespace CSharpSbAPI.Services
 {
     public class AccountService : CrudService<User>
     {
-        public AccountService(CSharpSbDbContext context) : base(context) { }
+        public AccountService(CSharpSbDbContext context) : base(context)
+        {
+        }
 
         public override Response GetAll()
         {
@@ -33,7 +35,8 @@ namespace CSharpSbAPI.Services
             if (exist != null) return new Response(StatusResp.ClientError, "Логин занят");
             return Response.OK;
         }
-        public  Response UpdateItem(UserUpdate userUpdate)
+
+        public Response UpdateItem(UserUpdate userUpdate)
         {
             var exist = _context.Users.Find(userUpdate.Id);
             if (exist == null) return new Response(StatusResp.ClientError, errors: "Не найден");
@@ -54,23 +57,25 @@ namespace CSharpSbAPI.Services
             if (string.IsNullOrWhiteSpace(r.Login)) return new Response(StatusResp.ClientError, "Не указан логин");
             if (string.IsNullOrWhiteSpace(r.Password)) return new Response(StatusResp.ClientError, "Не указан пароль");
 
-            token = CreateToken(r);
             user = new User
             {
                 Login = r.Login,
-                Role = Role.User,
                 Password = r.Password.GetSha256(),
-                Token = token
             };
-
-            return AddItem(user);
+            var result = AddItem(user);
+            if (result.Status != StatusResp.OK) return result;
+            
+            SetUserToken(user);
+            return result;
         }
 
         public Response Login(LoginModel loginModel, out User user)
         {
             user = null!;
-            if (string.IsNullOrWhiteSpace(loginModel.Login)) return new Response(StatusResp.ClientError, "Не указан логин");
-            if (string.IsNullOrWhiteSpace(loginModel.Password)) return new Response(StatusResp.ClientError, "Не указан пароль");
+            if (string.IsNullOrWhiteSpace(loginModel.Login))
+                return new Response(StatusResp.ClientError, "Не указан логин");
+            if (string.IsNullOrWhiteSpace(loginModel.Password))
+                return new Response(StatusResp.ClientError, "Не указан пароль");
 
             var encryptedPassword = loginModel.Password.GetSha256();
             var existLogin = _context.Users.Where(x => x.Login == loginModel.Login);
@@ -90,28 +95,37 @@ namespace CSharpSbAPI.Services
             {
                 return new Response(StatusResp.ClientError, errors: "Неопознанная ошибка");
             }
+
             return new Response<User>(StatusResp.OK, user);
         }
-        
+
         public async Task<Response> Logout(HttpContext ctx)
         {
             await ctx.SignOutAsync();
             return new Response(StatusResp.OK);
         }
-
-        private string CreateToken(RegisterModel r)
+        
+        public void SetUserToken(User user)
         {
-            var claims = new List<Claim> { new Claim(ClaimTypes.Name, r.Login!) };
+            var token = CreateToken(user);
+            user.Token = token;
+            _context.SaveChanges();
+        }
+        
+
+        private string CreateToken(User user)
+        {
+            var claims = new List<Claim> { new Claim("Id", user.Id.ToString()!) };
 
             var jwt = new JwtSecurityToken(
-                    issuer: AuthOptions.ISSUER,
-                    audience: AuthOptions.AUDIENCE,
-                    claims: claims,
-                    expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(2)),
-                    signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+                issuer: AuthOptions.ISSUER,
+                audience: AuthOptions.AUDIENCE,
+                claims: claims,
+                expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(2)),
+                signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(),
+                    SecurityAlgorithms.HmacSha256));
 
             return new JwtSecurityTokenHandler().WriteToken(jwt);
         }
-
     }
 }
