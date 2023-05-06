@@ -16,10 +16,9 @@ export const Main: React.FC = () => {
     const CreateConference = React.lazy(() => import("./CreateConference/CreateConference"));
     const Registration = React.lazy(() => import("./RegistrationForm/Registration"));
     const SignIn = React.lazy(() => import("./Auth/SignIn"));
-    const CoursePage = React.lazy(() => import("./Conferencies/ConferencePage/CoursePage"));
     const InvitePage = React.lazy(() => import("./InvitePage/InvitePage"));
     const CreateCourse = React.lazy(() => import("./Courses/CreateCourse/CreateCourses"));
-    const EditCourse = React.lazy(() => import("./Courses/EditCourse/EditCourse"));
+    const ViewCourse = React.lazy(() => import("./Courses/EditCourse/ViewCourse"));
 
     return (
         <Box sx={{marginTop: "36px", marginBottom: "36px"}}>
@@ -33,12 +32,12 @@ export const Main: React.FC = () => {
                     {/*  //TODO DEBUG  */}
                     <Route path='/myprofile' element={<MyProfile />}/>
                     <Route path='/createcourse' element={<CreateCourse />}/>
-                    <Route path='/editcourse/:id' element={<EditCourse />}/>
+                    <Route path='/course/:id/view' element={<ViewCourse />}/>
+                    <Route path='/course/:id/' element={<ViewCourse />}/>
                     {/*  //TODO DEBUG  */}
                     <Route path='/uregisterrequest' element={<UnregisterRequest />}/>
                     <Route path='/notfound' element={<NotFoundPage />}/>
                     <Route path="/userprofile/:userId" element={<OtherUserProfileContainer />}/>
-                    <Route path="/course/:courseId" element={<CoursePage />}/>
                     <Route path="/invitetoconference/:inviteId" element={<InvitePage />}/>
                     <Route path="/conference/:action/:confId" element={<RedirectAfterAction />}/>
                     <Route element={<NotFoundPage />}/>

@@ -23,11 +23,13 @@ export const darkTheme = createTheme({
     palette: {
         mode: "dark",
         primary: {
-            main: "#242F6A"
+            main: purple[800]
         },
         secondary: {
             // This is green.A700 as hex.
             main: '#ffffff',
+            "500": pink[500],
+            "100": purple[500],
         },
         background: {
             paper: "#202020",

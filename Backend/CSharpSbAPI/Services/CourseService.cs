@@ -105,6 +105,7 @@ namespace CSharpSbAPI.Services
             var owner = _context.UserCourses.FirstOrDefault(uc => uc.CourseId == courseId && uc.Role == Role.Owner).User;
             
             var DTOCourse = new GetCourse(course, userRole, owner, admins, participants);
+            //TODO - Егор позырь плиз
             //TODO - не тянется owner (у всех юзеров на юзеркурсе - null)
 
             return new Response<GetCourse>(StatusResp.OK, DTOCourse);

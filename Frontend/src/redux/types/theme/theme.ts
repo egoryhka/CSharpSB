@@ -6,6 +6,7 @@ export enum themeChangeActions {
 
 export interface themeState {
     currentTheme: Theme;
+    themeType: themes;
 }
 
 export enum themes {

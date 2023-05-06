@@ -7,3 +7,79 @@ export const getBGColors = (count: number) => {
     colors.length = count;
     return colors;
 }
+
+export enum Roles {
+    Guest,
+    Participant,
+    Admin,
+    Owner,
+}
+
+export interface CourseLevelInfo {
+    id: number;
+    name: string
+    description: string
+    order: number;
+    helpText: string;
+}
+
+export interface CourseInfo {
+    admins: any[]
+    description: string;
+    name: string;
+    lang: string;
+    role: Roles;
+    owner: any;
+    participants: any[]
+}
+
+export function getRoleDescription(role?: Roles) {
+    switch (role) {
+        case undefined:
+            return null;
+        case Roles.Admin:
+            return "Администратор";
+        case Roles.Owner:
+            return "Владелец";
+        case Roles.Guest:
+            return "Гость";
+        case Roles.Participant:
+            return "Участник";
+        default:
+            throw new Error("Unknown role type");
+    }
+}
+
+export const getLinkText = (role?: Roles): string => {
+    switch (role) {
+        case undefined:
+            return "";
+        case Roles.Admin:
+            return "Редактировть описание";
+        case Roles.Owner:
+            return "Редактировть описание";
+        case Roles.Guest:
+            return "Присоедениться";
+        case Roles.Participant:
+            return "Покинуть";
+        default:
+            throw new Error("Unknown role type");
+    }
+}
+
+export const getLinkLevelText = (role?: Roles): string | undefined => {
+    switch (role) {
+        case undefined:
+            return "";
+        case Roles.Admin:
+            return "Добавить уровень";
+        case Roles.Owner:
+            return "Добавить уровень";
+        case Roles.Guest:
+            return undefined;
+        case Roles.Participant:
+            return undefined;
+        default:
+            throw new Error("Unknown role type");
+    }
+}

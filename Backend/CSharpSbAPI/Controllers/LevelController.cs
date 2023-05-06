@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CSharpSbAPI.Controllers
 {
-    [Route("api/v1/level")]
+    [Route("api/v1/course/{courseId}/level")]
     [ApiController]
 
     public class LevelController : ControllerBase
@@ -19,9 +19,9 @@ namespace CSharpSbAPI.Controllers
             _levelService = levelService;
         }
 
-        [HttpGet("all")] public Response GetLevels() => _levelService.GetAll();
+        [HttpGet("all")] public Response GetLevels(int courseId) => _levelService.GetAll(courseId);
 
-        [HttpGet("{id}")] public Response GetLevel(int id) => _levelService.GetItem(id);
+        [HttpGet("{levelId}")] public Response GetLevel(int id) => _levelService.GetItem(id);
 
         [HttpPost("add")] public Response AddLevel(Level level) => _levelService.AddItem(level);
 

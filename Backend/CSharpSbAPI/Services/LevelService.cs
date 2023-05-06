@@ -1,7 +1,5 @@
 ﻿using CSharpSbAPI.Data;
 using CSharpSbAPI.Data.Models;
-using CSharpSbAPI.Data.Models.DB;
-using Newtonsoft.Json;
 
 namespace CSharpSbAPI.Services
 {
@@ -9,6 +7,13 @@ namespace CSharpSbAPI.Services
     {
         public LevelService(CSharpSbDbContext context) : base(context) { }
 
+        public Response GetAll(int courseId)
+        {
+            var courseLevels = _context.Levels.Where(level => level.CourseId == courseId).ToList().Select(l => new GetLevel(l));
+            var resp = new Response<IEnumerable<GetLevel>>(StatusResp.OK, courseLevels);
+            return resp;
+        }
+        
         public override Response AddItem(Level level)
         {
             var res = ValidateAdd(level);

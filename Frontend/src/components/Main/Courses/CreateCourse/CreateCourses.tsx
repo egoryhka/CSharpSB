@@ -35,6 +35,7 @@ export default () => {
     //const userMedia = window.matchMedia('(prefers-color-scheme: dark)');
     const SBApi = useContext(ApiProvider);
     const token = useTypeSelector(store => store.authUser.token);
+    const currentTheme = useTypeSelector(store => store.theme.themeType);
     const navigate = useNavigate();
     const createCourse = async () => {
         if (!name && !description) {
@@ -45,7 +46,7 @@ export default () => {
             if (data.isOk) {
                 setSuccessText(`Курс успешно создан, автоматический переход на страницу через ${timer} секунд`);
                 setTimeout(() => {
-                    navigate('/editcourse/' + data.data);
+                    navigate('/course/' + data.data);
                 }, 5000);
             }
         }
@@ -89,7 +90,7 @@ export default () => {
                         или
                         выделить код
                     </Typography>
-                    <div data-color-mode="light">
+                    <div data-color-mode={currentTheme}>
                         <MDEditor
                             value={description}
                             onChange={(val) => {

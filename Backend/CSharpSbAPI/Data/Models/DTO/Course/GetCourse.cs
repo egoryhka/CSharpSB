@@ -1,5 +1,4 @@
-﻿namespace CSharpSbAPI.Data.Models.DTO;
-
+﻿
 public class GetCourse
 {
     public GetCourse(Course course, Role role, User? owner, List<User> admins, List<User> partisipants)

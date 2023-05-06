@@ -8,10 +8,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="19af90cf-9e18-4ede-81d0-4beec51fd974" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/CSharpSbAPI/Data/Models/DTO/Level/GetLevel.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Frontend/src/components/Main/Courses/EditCourse/LevelsContainer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CSharpSB/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CSharpSB/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSharpSbAPI/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSharpSbAPI/Controllers/AccountController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSharpSbAPI/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSharpSbAPI/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Frontend/src/redux/action-creators/userActionCreators/userAuthRegister.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/src/redux/action-creators/userActionCreators/userAuthRegister.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSharpSbAPI/Controllers/LevelController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSharpSbAPI/Controllers/LevelController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSharpSbAPI/Data/Models/DTO/Course/GetCourse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSharpSbAPI/Data/Models/DTO/Course/GetCourse.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSharpSbAPI/Services/CourseService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSharpSbAPI/Services/CourseService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSharpSbAPI/Services/LevelService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSharpSbAPI/Services/LevelService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/components/Main/Conferencies/ConferencePage/CoursePage.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/components/Main/Conferencies/ConferencePage/CoursePageView.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/components/Main/Conferencies/ConferencePage/DescriptionFields/ConferenceStatus.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/components/Main/Conferencies/ConferencePage/DescriptionFields/ConferenceTitle.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/src/components/Main/Courses/EditCourse/CourseTitle.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/components/Main/Conferencies/ConferencePage/DescriptionFields/DateTimeItem.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/components/Main/Conferencies/ConferencePage/DescriptionFields/FullDescription.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/components/Main/Conferencies/ConferencePage/DescriptionFields/InviteLink.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/components/Main/Conferencies/ConferencePage/DescriptionFields/ParticipantsContainer/Participant.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/components/Main/Conferencies/ConferencePage/DescriptionFields/ParticipantsContainer/RolesContainer.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/components/Main/Conferencies/ConferencePage/DescriptionFields/ViewItem.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/components/Main/Conferencies/ConferencePage/ReportMenu/ReportStatusItem.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/components/Main/Conferencies/ConferencePage/ReportMenu/ReportsMenu.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/components/Main/Courses/CreateCourse/CreateCourses.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/src/components/Main/Courses/CreateCourse/CreateCourses.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/components/Main/Courses/EditCourse/EditCourse.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/src/components/Main/Courses/EditCourse/ViewCourse.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/components/Main/Courses/utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/src/components/Main/Courses/utils.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/components/Main/Main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/src/components/Main/Main.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/components/utils/LinkTextFromRole/LinkTextFromRole.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/components/utils/Theme/Theme.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/src/components/utils/Theme/Theme.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/redux/redusers/ThemeReducer/Theme.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/src/redux/redusers/ThemeReducer/Theme.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/redux/redusers/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/src/redux/redusers/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend/src/redux/types/theme/theme.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/src/redux/types/theme/theme.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,7 +46,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/0b5567882521e02aa3d40a7bce81b7235ccac4db588866e3498e614c3bc/CastHelpers.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2c29afc59b95dea2c5949ef43078128af9899da62f72d595887bf7621b0786/CorsPolicyBuilder.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5330988bfaacf93f15e30f9b3dd6018a768f89da3b38d874fda77299c62164/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/601c3d2f1bfa958c0388e8435dc1543366d3c8c7f6abf4493861219f944812a/AuthorizeAttribute.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -34,22 +60,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\aleks\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache",
-      "C:\\Users\\aleks\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache",
-      "C:\\Users\\aleks\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\aleks\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\aleks\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\aleks\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.CSharpSbAPI">
     <configuration name="CSharpSB" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/CSharpSB/CSharpSB.csproj" />
@@ -122,6 +148,7 @@
       <updated>1670260972550</updated>
       <workItem from="1670260972556" duration="638000" />
       <workItem from="1681552083848" duration="4961000" />
+      <workItem from="1683395070782" duration="2902000" />
     </task>
     <servers />
   </component>
@@ -142,5 +169,28 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/CSharpSbAPI/Services/LevelService.cs</url>
+          <line>11</line>
+          <properties documentPath="C:\repos\CSharpSB\Backend\CSharpSbAPI\Services\LevelService.cs" initialLine="11" containingFunctionPresentation="method 'GetAll'">
+            <startOffsets>
+              <option value="289" />
+              <option value="339" />
+              <option value="388" />
+            </startOffsets>
+            <endOffsets>
+              <option value="405" />
+              <option value="365" />
+              <option value="403" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

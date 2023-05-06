@@ -1,22 +1,20 @@
-import {themeChangeActions, themesAction, themeState} from "../../types/theme/theme";
-import {createTheme} from "@mui/material";
-import {purple} from "@mui/material/colors";
+import {themeChangeActions, themes, themesAction, themeState} from "../../types/theme/theme";
 import {darkTheme, lightTheme} from "../../../components/utils/Theme/Theme";
 
 const initialState: themeState = {
-    currentTheme: lightTheme,
+    currentTheme: darkTheme,
+    themeType: themes.dark,
 };
 
-export const ThemeReduser = (state = initialState, action: themesAction) : themeState => {
+export const ThemeReducer = (state = initialState, action: themesAction) : themeState => {
     switch (action.type) {
         case themeChangeActions.CHANGE_THEME:
             if (action.payload === "light") {
-                return {currentTheme: lightTheme};
+                return {currentTheme: lightTheme, themeType: themes.light};
             } else if (action.payload === "dark"){
-                return {currentTheme: darkTheme};
-            } else {
-                return {currentTheme: lightTheme};
+                return {currentTheme: darkTheme, themeType: themes.dark};
             }
+            return {currentTheme: lightTheme, themeType: themes.light};
         default:
             return state;
     }
