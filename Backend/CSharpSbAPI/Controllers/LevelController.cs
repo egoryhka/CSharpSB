@@ -23,7 +23,7 @@ namespace CSharpSbAPI.Controllers
 
         [HttpGet("{levelId}")] public Response GetLevel(int id) => _levelService.GetItem(id);
 
-        [HttpPost("add")] public Response AddLevel(Level level) => _levelService.AddItem(level);
+        [HttpPost("add")] public Response AddLevel(int courseId, AddLevel level) => _levelService.AddLevel(level, courseId);
 
         [HttpPost("update")] public Response UpdateLevel(Level level) => _levelService.UpdateItem(level);
 

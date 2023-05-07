@@ -1,14 +1,13 @@
-import {Box, Button, Typography} from '@mui/material';
+import {Box, Typography} from '@mui/material';
 import React, {useContext, useEffect, useState} from 'react';
 import MDEditor from "@uiw/react-md-editor";
 import {useNavigate, useParams} from 'react-router-dom';
 import {useTypeSelector} from "../../../utils/Hooks/UseTypeSelector";
-import {UnauthorizedPage} from "../../../utils/Hooks/UnathorizedPage";
 import {Loader} from "../../../utils/Loader/Loader";
 import {ApiProvider} from "../../../../api/BaseResponse";
-import {CourseInfo, getRoleDescription, Roles} from "../utils";
+import {CourseInfo} from "../utils";
 import CourseTitle from "./CourseTitle";
-import {LevelsContainer} from "./LevelsContainer";
+import {LevelsContainer} from "./Level/LevelsContainer";
 
 export default () => {
     const routeParams = useParams();
@@ -56,7 +55,7 @@ export default () => {
                 <MDEditor.Markdown source={courseInfo?.description}/>
             </div>
 
-            <LevelsContainer courseId={id} userRole={courseInfo?.role}/>
+            <LevelsContainer courseId={id} userRole={courseInfo?.role} courseName={courseInfo?.name}/>
 
             <Typography variant="h5" mb={1}>
                 Уже участвуют: {JSON.stringify(courseInfo?.participants)}

@@ -8,6 +8,8 @@ import {Loader} from "../utils/Loader/Loader";
 import {NotFoundPage} from "../utils/Errors/ErrorPages/NotFoundPage";
 import {Box} from "@mui/material";
 import {RedirectAfterAction} from "./Conferencies/RedirectAfterAction/RedirectAfterAction";
+import AddLevel from "./Courses/CoursePage/Level/AddLevel";
+import {Forbidden} from "../utils/Errors/ErrorPages/Forbidden";
 
 export const Main: React.FC = () => {
     document.title = 'Главная';
@@ -18,7 +20,8 @@ export const Main: React.FC = () => {
     const SignIn = React.lazy(() => import("./Auth/SignIn"));
     const InvitePage = React.lazy(() => import("./InvitePage/InvitePage"));
     const CreateCourse = React.lazy(() => import("./Courses/CreateCourse/CreateCourses"));
-    const ViewCourse = React.lazy(() => import("./Courses/EditCourse/ViewCourse"));
+    const ViewCourse = React.lazy(() => import("./Courses/CoursePage/ViewCourse"));
+    const AddLevel = React.lazy(() => import("./Courses/CoursePage/Level/AddLevel"));
 
     return (
         <Box sx={{marginTop: "36px", marginBottom: "36px"}}>
@@ -33,9 +36,11 @@ export const Main: React.FC = () => {
                     <Route path='/myprofile' element={<MyProfile />}/>
                     <Route path='/createcourse' element={<CreateCourse />}/>
                     <Route path='/course/:id/view' element={<ViewCourse />}/>
+                    <Route path='/course/:id/level/add' element={<AddLevel />}/>
                     <Route path='/course/:id/' element={<ViewCourse />}/>
                     {/*  //TODO DEBUG  */}
                     <Route path='/uregisterrequest' element={<UnregisterRequest />}/>
+                    <Route path='/permissiondenied' element={<Forbidden />}/>
                     <Route path='/notfound' element={<NotFoundPage />}/>
                     <Route path="/userprofile/:userId" element={<OtherUserProfileContainer />}/>
                     <Route path="/invitetoconference/:inviteId" element={<InvitePage />}/>
