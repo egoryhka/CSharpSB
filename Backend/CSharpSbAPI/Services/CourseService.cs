@@ -17,6 +17,16 @@ namespace CSharpSbAPI.Services
                 .Include(x => x.Users).ToList());
         }
 
+        public Response GetUsersCourses(int? userId, int page)
+        {
+            const int courseinpages = 5;
+            //TODO - Тут не работает Include, Егор, посмотри плиз.
+            var listCourses = _context.UserCourses.Include(x => x.Course).Where(x => x.UserId == userId).Select(uc => new GetUserCoursesList(uc)).ToList();
+            var filteredCourses = listCourses.GetRange(courseinpages * page - courseinpages, Math.Min(courseinpages * page, listCourses.Count));
+            var response = new GetUserCoursesInfo(courseinpages, listCourses.Count, filteredCourses);
+            return new Response<GetUserCoursesInfo>(StatusResp.OK, response);
+        }
+
         public override Response GetItem(int id)
         {
             var exist = _context.Courses.Include(x => x.Users).FirstOrDefault(x => x.Id == id);
@@ -48,7 +58,9 @@ namespace CSharpSbAPI.Services
                     .Where(x => x.CourseId == courseId)
                     .Min(x => x.Order));
 
-            if (firstLevel == null) return new Response(StatusResp.ClientError, errors: "На курсе нет уровней");
+            if (firstLevel == null)
+                return new Response(StatusResp.OK,
+                    "Не получается записаться, так как на курсе пока нет уровней. Подождите пока их администратор их добавит");
 
             _context.Progresses.Add(new Progress()
             {
@@ -61,6 +73,29 @@ namespace CSharpSbAPI.Services
             _context.SaveChanges();
 
             return Response.OK;
+        }
+
+        public Response UnAssignUser(int userId, int courseId)
+        {
+            var course = _context.Courses.Find(courseId);
+            if (course == null) return new Response(StatusResp.ClientError, errors: "Курс не найден");
+
+            var user = _context.Users.Find(userId);
+            if (user == null) return new Response(StatusResp.ClientError, errors: "Пользователь не найден");
+
+            if (_context.UserCourses.Any(x => x.UserId == userId && x.CourseId == courseId))
+            {
+                var a = _context.UserCourses.Where(x => x.UserId == userId && x.CourseId == courseId);
+                foreach (var uc in a)
+                {
+                    _context.UserCourses.Remove(uc);
+                }
+
+                _context.SaveChanges();
+                return new Response(StatusResp.OK);
+            }
+
+            return new Response(StatusResp.ClientError, "Произошла ошибка, попробуйте позже");
         }
 
         public Response AddCourse(AddCourse course, int ownerId)
@@ -80,7 +115,7 @@ namespace CSharpSbAPI.Services
 
             _context.Courses.Add(newCourse);
             _context.SaveChanges();
-            
+
             _context.UserCourses.Add(new UserCourse
             {
                 StartDate = DateTime.Now,
@@ -88,7 +123,7 @@ namespace CSharpSbAPI.Services
                 Course = newCourse,
                 Role = Role.Owner
             });
-            
+
             _context.SaveChanges();
 
             return new Response<int>(StatusResp.OK, newCourse.Id);
@@ -97,16 +132,26 @@ namespace CSharpSbAPI.Services
         public Response GetCourse(int courseId, int? userId)
         {
             var course = _context.Courses.FirstOrDefault(course => courseId == course.Id);
-            var userRole = userId != 0 ? _context.UserCourses.FirstOrDefault(uc => uc.CourseId == courseId && uc.UserId == userId).Role : Role.Guest;
+            var role = Role.Guest;
+            if (userId != 0)
+            {
+                var userRole =
+                    _context.UserCourses.FirstOrDefault(uc => uc.CourseId == courseId && uc.UserId == userId);
+                role = userRole != null ? userRole.Role : Role.Guest;
+            }
+
             var users = _context.UserCourses.Where(uc => uc.CourseId == courseId);
-            var admins = users.Where(uc => uc.CourseId == courseId && uc.Role == Role.Admin).Select(uc => uc.User).ToList();
-            var participants = users.Where(uc => uc.CourseId == courseId && uc.Role == Role.Participant).Select(uc => uc.User).ToList();
-            
-            var owner = _context.UserCourses.FirstOrDefault(uc => uc.CourseId == courseId && uc.Role == Role.Owner).User;
-            
-            var DTOCourse = new GetCourse(course, userRole, owner, admins, participants);
+            var admins = users.Where(uc => uc.CourseId == courseId && uc.Role == Role.Admin).Select(uc => uc.User)
+                .ToList();
+            var participants = users.Where(uc => uc.CourseId == courseId && uc.Role == Role.Participant)
+                .Select(uc => uc.User).Take(5).ToList();
+
+            var owner = _context.UserCourses.FirstOrDefault(uc => uc.CourseId == courseId && uc.Role == Role.Owner)
+                .User;
+
+            var DTOCourse = new GetCourse(course, role, owner, admins, participants);
             //TODO - Егор позырь плиз
-            //TODO - не тянется owner (у всех юзеров на юзеркурсе - null)
+            //TODO - не тянется owner (у всех юзеров на юзеркурсе - null). Не тянется не только OWner, а все впринципе что с юзерами связано...
 
             return new Response<GetCourse>(StatusResp.OK, DTOCourse);
         }
@@ -125,6 +170,7 @@ namespace CSharpSbAPI.Services
             return Response.OK;
         }
 
+        // TODO - че за хуйня ?
         public Response GetTips(int userId, int courseId)
         {
             var passLevelTips = _context.Progresses

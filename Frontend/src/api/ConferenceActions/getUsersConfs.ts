@@ -1,34 +1,44 @@
-import axios from "axios";
-import {ConferenceInfo} from "../../redux/types/conferencies/conference";
-import {useEffect, useState} from "react";
-import requestUrl from "../BaseUrl/CreateBaseUrl";
+import {useContext, useEffect, useState} from "react";
+import {ApiProvider} from "../BaseResponse";
+import {Roles} from "../../components/Main/Courses/utils";
 
-interface IFetchedConfs {
-    confs: ConferenceInfo[];
-    isOk: boolean;
-    errorMessage: string;
+export interface UserCourses {
     totalCount: number;
+    totalPages: number;
     countInPage: number;
+    courses: IFetchedCourses[];
 }
 
-export const useFetchUsersConfs = (email: string, currentPage: number) => {
+
+export interface IFetchedCourses {
+    startDate: string;
+    role: Roles;
+    name: string;
+    courseId: number;
+}
+
+export const useFetchUsersConfs = (page: number, id: string) => {
     const [loading, setLoading] = useState<boolean>(false);
-    const [conferences, setConferences] = useState<ConferenceInfo[]>([]);
+    const [courses, setCourses] = useState<IFetchedCourses[]>([]);
     const [error, setError] = useState<string>("");
     const [message, setMessage] = useState<string>("");
     const [totalPages, setTotalPages] = useState<number>(0);
     const [totalConfs, setTotalConfs] = useState<number>(0);
 
+    const SBApi = useContext(ApiProvider);
+
     const getUsersConf = async () => {
         try {
             setLoading(true);
-            const {data} = await axios.get<IFetchedConfs>(requestUrl + `api/Conference/getconfs?useremail=${email}&page=${currentPage}`);
+            const data = await SBApi.get<UserCourses>(`course/user/${id}/all`, {params: {page}});
+            console.log(data);
             if (data.isOk) {
-                setConferences(data.confs);
-                setTotalPages(Math.ceil(data.totalCount / data.countInPage));
-                setTotalConfs(data.totalCount);
+                setCourses(data.data.courses);
+                setTotalConfs(data.data.totalCount);
+                setTotalPages(data.data.totalPages);
+                // setTotalConfs(data.totalCount);
             } else {
-                setMessage(data.errorMessage)
+                setMessage(data.fullError)
             }
         } catch (e) {
             setLoading(false);
@@ -40,6 +50,6 @@ export const useFetchUsersConfs = (email: string, currentPage: number) => {
 
     useEffect(() => {
         getUsersConf();
-    }, [currentPage])
-    return {loading, conferences, error, message, totalPages, totalConfs};
+    }, [page])
+    return {loading, courses, error, message, totalPages, totalConfs};
 }

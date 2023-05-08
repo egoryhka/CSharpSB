@@ -30,7 +30,14 @@ export interface CourseInfo {
     lang: string;
     role: Roles;
     owner: any;
-    participants: any[]
+    participants: UserInfo[]
+}
+
+export interface UserInfo {
+    id: string;
+    name: string;
+    surname: string;
+    email: string;
 }
 
 export function getRoleDescription(role?: Roles) {

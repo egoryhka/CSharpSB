@@ -7,7 +7,6 @@ export const lightTheme = createTheme({
             main: purple[600]
         },
         secondary: {
-            // This is green.A700 as hex.
             main: '#ffffff',
             "500": pink[500],
             "100": purple[500],
@@ -15,7 +14,7 @@ export const lightTheme = createTheme({
         background: {
             paper: "#ffffff",
             default: "#ffffff"
-        }
+        },
     },
 });
 
@@ -26,7 +25,6 @@ export const darkTheme = createTheme({
             main: purple[800]
         },
         secondary: {
-            // This is green.A700 as hex.
             main: '#ffffff',
             "500": pink[500],
             "100": purple[500],
@@ -34,6 +32,9 @@ export const darkTheme = createTheme({
         background: {
             paper: "#202020",
             default: "#202020",
-        }
+        },
+        text: {
+            primary: '#ffffff',
+        },
     },
 });

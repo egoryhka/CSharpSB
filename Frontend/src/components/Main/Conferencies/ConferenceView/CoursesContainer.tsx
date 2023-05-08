@@ -23,7 +23,7 @@ interface ConferenciesContainerProps {
 
 export const CoursesContainer: React.FC<ConferenciesContainerProps> = ({userId}) => {
     const [page, setPage] = useState<number>(1);
-    const {conferences, loading, error, message, totalPages, totalConfs} = useFetchUsersConfs(userId, page);
+    const {courses, loading, error, message, totalPages, totalConfs} = useFetchUsersConfs(page, userId);
 
     const handlePagination = (_: React.ChangeEvent<unknown>, nextPage: number) => {
         if (page === nextPage) return;
@@ -52,9 +52,9 @@ export const CoursesContainer: React.FC<ConferenciesContainerProps> = ({userId})
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {loading ? <Loader text="Подгружаем конференции"/> :
-                        conferences.map(conf => <ConferenceItem key={conf.name + Math.random()}
-                                                                data={conf}/>)}
+                    {loading ? <Loader text="Подгружаем курсы"/> :
+                        courses.map(course => <ConferenceItem key={course.name + Math.random()}
+                                                                data={course}/>)}
                 </TableBody>
             </Table>
         </TableContainer>

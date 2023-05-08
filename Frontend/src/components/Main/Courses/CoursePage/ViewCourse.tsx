@@ -1,13 +1,22 @@
 import {Box, Typography} from '@mui/material';
 import React, {useContext, useEffect, useState} from 'react';
 import MDEditor from "@uiw/react-md-editor";
-import {useNavigate, useParams} from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import {useTypeSelector} from "../../../utils/Hooks/UseTypeSelector";
 import {Loader} from "../../../utils/Loader/Loader";
 import {ApiProvider} from "../../../../api/BaseResponse";
 import {CourseInfo} from "../utils";
 import CourseTitle from "./CourseTitle";
 import {LevelsContainer} from "./Level/LevelsContainer";
+import {AddLink} from "@mui/icons-material";
+
+const delay = (ms: number) => {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve(null);
+        }, ms)
+    })
+}
 
 export default () => {
     const routeParams = useParams();
@@ -18,6 +27,7 @@ export default () => {
     const token = useTypeSelector(store => store.authUser.token);
     const userLoading = useTypeSelector(store => store.authUser.loading);
     const currentTheme = useTypeSelector(store => store.theme.themeType);
+    const theme = useTypeSelector(store => store.theme.currentTheme);
 
     const navigate = useNavigate();
     useEffect(() => {
@@ -27,6 +37,10 @@ export default () => {
 
     const fetchCourseInfo = async () => {
         setLoading(true);
+        do {
+            await delay(333);
+            console.log("жду");
+        } while (loading)
         const data = await SBApi.withAuthorization(token as string).get<CourseInfo>(`course/${id}`);
         if (data.isOk) {
             setCourseInfo(data.data)
@@ -37,6 +51,7 @@ export default () => {
     if (loading || userLoading) {
         return <Loader text={"Подгружаем информацию по курсу"}/>
     }
+    console.log("theme.palette", theme.palette)
 
     return (
         // <UnauthorizedPage>
@@ -57,9 +72,19 @@ export default () => {
 
             <LevelsContainer courseId={id} userRole={courseInfo?.role} courseName={courseInfo?.name}/>
 
-            <Typography variant="h5" mb={1}>
-                Уже участвуют: {JSON.stringify(courseInfo?.participants)}
-            </Typography>
+            {courseInfo?.participants?.length ?
+                <Typography variant="h5" mb={1}>
+                    Уже участвуют:
+                    <br/>
+                    {courseInfo?.participants.map(u => <Link style={{color: theme.palette.text.primary}}
+                                                             key={u.id}
+                                                             to={`/userprofile/${u.id}`}>{u.name + " " + u.surname}</Link>)}
+                </Typography>
+                :
+                <Typography variant="h5" mb={1}>
+                    На курсе пока нет участников
+                </Typography>
+            }
         </Box>
         // </UnauthorizedPage>
     );

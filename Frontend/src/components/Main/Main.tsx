@@ -18,7 +18,6 @@ export const Main: React.FC = () => {
     const CreateConference = React.lazy(() => import("./CreateConference/CreateConference"));
     const Registration = React.lazy(() => import("./RegistrationForm/Registration"));
     const SignIn = React.lazy(() => import("./Auth/SignIn"));
-    const InvitePage = React.lazy(() => import("./InvitePage/InvitePage"));
     const CreateCourse = React.lazy(() => import("./Courses/CreateCourse/CreateCourses"));
     const ViewCourse = React.lazy(() => import("./Courses/CoursePage/ViewCourse"));
     const AddLevel = React.lazy(() => import("./Courses/CoursePage/Level/AddLevel"));
@@ -43,7 +42,6 @@ export const Main: React.FC = () => {
                     <Route path='/permissiondenied' element={<Forbidden />}/>
                     <Route path='/notfound' element={<NotFoundPage />}/>
                     <Route path="/userprofile/:userId" element={<OtherUserProfileContainer />}/>
-                    <Route path="/invitetoconference/:inviteId" element={<InvitePage />}/>
                     <Route path="/conference/:action/:confId" element={<RedirectAfterAction />}/>
                     <Route element={<NotFoundPage />}/>
                 </Routes>

@@ -51,18 +51,20 @@ export const LevelsContainer = ({courseId, userRole, courseName}: LevelsContaine
         return <Loader text={"Подгружаем информацию по уровням"}/>
     }
 
+    const buttonText = getLinkLevelText(userRole);
+
 
     return (
         <Card sx={{marginTop: 4}}>
             <Box sx={{display: "flex", justifyContent: "space-between"}}>
                 <Typography variant={"h4"}>Всего уровней: {levels?.length}</Typography>
-                {
+                {buttonText &&
                     <Button
                         onClick={addCourse}
                         sx={{cursor: "pointer"}}
                         variant={"contained"}
                     >
-                        {getLinkLevelText(userRole)}
+                        {buttonText}
                     </Button>}
             </Box>
             <Divider/>

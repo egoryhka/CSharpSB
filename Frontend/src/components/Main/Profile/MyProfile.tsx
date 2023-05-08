@@ -26,6 +26,7 @@ import {stringToColor} from "../../utils/StringToColor/StringToColor";
 import {ApiProvider} from "../../../api/BaseResponse";
 import {CustomTooltip} from "../../utils/CustomTooltip/CustomTooltip";
 import {Link as ReactDomLink} from 'react-router-dom';
+import {Loader} from "../../utils/Loader/Loader";
 
 const MyProfile = () => {
     document.title = 'Мой профиль';
@@ -101,6 +102,10 @@ const MyProfile = () => {
             const url = URL.createObjectURL(file);
             setImagePath(url);
         }
+    }
+
+    if (user.loading) {
+        return <Loader text={"Подгружаем информацию по пользоваителю"}/>
     }
 
     if (!user.login && !user.loading) {
@@ -239,7 +244,7 @@ const MyProfile = () => {
             }
             <AlertHint collapse={editLoginResponse} severity={editLoginAlarmColor} size={"small"}
                        text={editLoginAlarmText}/>
-            <CoursesContainer userId={user.login}/>
+            <CoursesContainer userId={user.id!}/>
             <br/>
             <Box sx={{
                 borderRadius: 2,

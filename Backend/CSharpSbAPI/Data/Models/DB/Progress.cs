@@ -6,12 +6,12 @@
 
         public int UserId { get; set; }
         public int LevelId { get; set; }
+        //TODO - не хватает CourseID, кажется без него не отфильтровать, Егор посмотри
 
         public string? Code { get; set; }
 		public bool HelpUsed { get; set; }
 		public DateTime TimeStart { get; set; }
         public DateTime TimeEnd { get; set; }
         public Status Status { get; set; }
-
-    }
+	}
 }
