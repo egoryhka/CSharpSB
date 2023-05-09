@@ -27,9 +27,10 @@ export interface CourseInfo {
     admins: any[]
     description: string;
     name: string;
-    lang: string;
+    language: string;
     role: Roles;
     owner: any;
+    id: string;
     participants: UserInfo[]
 }
 

@@ -21,12 +21,16 @@ public class GetUserCoursesList
     {
         StartDate = uc.StartDate;
         Role = uc.Role;
-        Name = uc.Course.Name;
+        Name = uc.Course?.Name ?? "TODO ЕГОР ПОЧИНИ, УБЕРИ ВОПРОСИКИ";
+        LevelCount = uc.Course?.LevelCount ?? 0;
+        LevelsComplete = uc.LevelsCompleted;
         CourseId = uc.CourseId;
     }
 
     public DateTime StartDate { get; set; }
     public Role Role { get; set; }
     public string Name { get; set; }
+    public int LevelCount { get; set; }
+    public int LevelsComplete { get; set; }
     public int CourseId { get; set; }
 }

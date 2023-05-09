@@ -9,7 +9,6 @@ import {Typography} from "@mui/material";
 
 export const HomePage = () => {
     const {courses, loading, error, isOk} = useFetchCourses();
-    console.log(courses, loading, error)
     return (
         <div>
             <Typography variant={"h4"} component={"h5"}>Сервис правильного питания - призван помочь людям изучать языки

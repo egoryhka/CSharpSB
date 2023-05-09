@@ -37,6 +37,8 @@ namespace CSharpSbAPI.Services
 
         public Response AddLevel(AddLevel level, int courseId)
         {
+            var course = _context.Courses.FirstOrDefault(x => x.Id == courseId);
+            if (course is null) return new Response(StatusResp.ClientError, "Курс не найден");
             var res = ValidateAdd(level, courseId);
             if (res.Status != StatusResp.OK) return res;
             var newLevel = new Level()
@@ -44,6 +46,7 @@ namespace CSharpSbAPI.Services
                 Name = level.Name, HelpText = level.HelpText, Description = level.Description,
                 ExpResultsJson = level.CompileResult
             };
+            course.LevelCount = course.LevelCount + 1; 
             newLevel.Order = GetMaxOrder(courseId) + 1;
             newLevel.CourseId = courseId;
             _context.Levels.Add(newLevel);

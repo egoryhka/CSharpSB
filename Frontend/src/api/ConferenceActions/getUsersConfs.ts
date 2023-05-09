@@ -15,6 +15,8 @@ export interface IFetchedCourses {
     role: Roles;
     name: string;
     courseId: number;
+    levelsComplete: number;
+    levelCount: number;
 }
 
 export const useFetchUsersConfs = (page: number, id: string) => {
@@ -31,7 +33,6 @@ export const useFetchUsersConfs = (page: number, id: string) => {
         try {
             setLoading(true);
             const data = await SBApi.get<UserCourses>(`course/user/${id}/all`, {params: {page}});
-            console.log(data);
             if (data.isOk) {
                 setCourses(data.data.courses);
                 setTotalConfs(data.data.totalCount);

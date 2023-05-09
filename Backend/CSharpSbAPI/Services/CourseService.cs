@@ -50,7 +50,8 @@ namespace CSharpSbAPI.Services
                 StartDate = DateTime.Now,
                 UserId = user.Id,
                 CourseId = course.Id,
-                Role = Role.Participant
+                Role = Role.Participant,
+                LevelsCompleted = 0
             });
 
             var firstLevel = _context.Levels
@@ -66,6 +67,7 @@ namespace CSharpSbAPI.Services
             {
                 UserId = userId,
                 LevelId = firstLevel.Id,
+                CourseID = course.Id,
                 TimeStart = DateTime.Now,
                 Status = Status.InProgress
             });
@@ -161,6 +163,38 @@ namespace CSharpSbAPI.Services
             var exist = _context.Courses.FirstOrDefault(x => x.Name == course.Name);
             if (exist != null) return new Response(StatusResp.ClientError, errors: "Уже существует");
             return Response.OK;
+        }
+        
+        public Response EditCourse(Course course, int userId)
+        {
+            var userCourse = _context.UserCourses.FirstOrDefault(c => c.CourseId == course.Id && c.UserId == userId);
+            if (userCourse is null)
+            {
+                return new Response(StatusResp.ClientError, "Произошла непредвиденная ошибка, попробуйте позже");
+            }
+
+            var canEdit = userCourse.Role == Role.Admin || userCourse.Role == Role.Owner;
+
+            if (!canEdit)
+            {
+                return new Response(StatusResp.ClientError, "Отказано в доступе");
+            }
+
+            var dbCourse = _context.Courses.FirstOrDefault(c => c.Id == course.Id);
+            if (dbCourse == null) return new Response(StatusResp.ClientError, errors: "Курс не найден");
+
+            if (!string.IsNullOrEmpty(course.Description))
+            {
+                dbCourse.Description = course.Description;
+            }
+            
+            if (!string.IsNullOrEmpty(course.Name))
+            {
+                dbCourse.Name = course.Name;
+            }
+
+            _context.SaveChanges();
+            return new Response(StatusResp.OK);
         }
 
         protected override Response ValidateUpdate(Course course)

@@ -6,17 +6,9 @@ import {useTypeSelector} from "../../../utils/Hooks/UseTypeSelector";
 import {Loader} from "../../../utils/Loader/Loader";
 import {ApiProvider} from "../../../../api/BaseResponse";
 import {CourseInfo} from "../utils";
-import CourseTitle from "./CourseTitle";
+import {CourseTitle} from "./Title/CourseTitle";
 import {LevelsContainer} from "./Level/LevelsContainer";
-import {AddLink} from "@mui/icons-material";
-
-const delay = (ms: number) => {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            resolve(null);
-        }, ms)
-    })
-}
+import {delay} from "../../../utils/Delay/Delay";
 
 export default () => {
     const routeParams = useParams();
@@ -39,7 +31,6 @@ export default () => {
         setLoading(true);
         do {
             await delay(333);
-            console.log("жду");
         } while (loading)
         const data = await SBApi.withAuthorization(token as string).get<CourseInfo>(`course/${id}`);
         if (data.isOk) {
@@ -51,15 +42,14 @@ export default () => {
     if (loading || userLoading) {
         return <Loader text={"Подгружаем информацию по курсу"}/>
     }
-    console.log("theme.palette", theme.palette)
 
     return (
         // <UnauthorizedPage>
         <Box>
-            <CourseTitle id={id} title={courseInfo?.name} userRoles={courseInfo?.role}></CourseTitle>
+            {courseInfo && <CourseTitle {...courseInfo} id={id!}></CourseTitle>}
 
             <Typography variant="h5" mb={1}>
-                Язык: {courseInfo?.lang ?? "C#"}
+                Язык: {courseInfo?.language ?? "C#"}
             </Typography>
 
             <Typography variant="h5" mb={1}>

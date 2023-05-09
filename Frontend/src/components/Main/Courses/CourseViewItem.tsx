@@ -25,7 +25,7 @@ export const CourseViewItem = ({name, id, users, description}: ICourse) => {
     // const gridStartLength = startPosition;
     // const gridEndLength = 30 - endPosition;
     return (
-        <Grid component={Link} replace to={`course/${id}`} item
+        <Grid key={id} component={Link} replace to={`course/${id}`} item
               bgcolor={BGColor} sx={{width: "100%", height: 80, opacity: .8, borderRadius: 5, padding: 1}}>
             <Box sx={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
                 <Grid>

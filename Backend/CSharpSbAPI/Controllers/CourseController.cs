@@ -39,7 +39,12 @@ namespace CSharpSbAPI.Controllers
         }
 
         [HttpPost("update")]
-        public Response UpdateCourse(Course course) => _courseService.UpdateItem(course);
+        [Authorize]
+        public Response UpdateCourse(Course course)
+        {
+            var userId = Convert.ToInt32(User.FindFirst("Id").Value);
+            return _courseService.EditCourse(course, userId);
+        }
 
         [HttpPost("delete")]
         public Response DeleteCourse(int id) => _courseService.DeleteItem(id);

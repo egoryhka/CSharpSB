@@ -9,6 +9,7 @@ namespace CSharpSbAPI.Data.Models.DB
 
 		public string? Name { get; set; }
 		public string? Description { get; set; }
+		public int? LevelCount { get; set; } = 0;
 		public ICollection<User> Users { get; set; } = new List<User>();
 	}
 }

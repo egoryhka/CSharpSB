@@ -31,7 +31,6 @@ export default () => {
     const canAdd = location?.state?.authorized;
     const courseId = location?.state?.courseId;
     const courseName = location?.state?.courseName;
-    console.log("state", location.state)
 
     if (!canAdd || !courseId) {
         return <Navigate to={'/permissiondenied'}/>

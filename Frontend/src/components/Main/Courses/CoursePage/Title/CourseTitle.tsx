@@ -1,32 +1,18 @@
 import React, {useContext, useState} from 'react';
 import {Box, Button, Divider, Grid, Typography} from "@mui/material";
-import {getLinkText, getRoleDescription, Roles} from "../utils";
+import AlertHint from "../../../../utils/Alert/AlertHint";
+import {CourseInfo, getLinkText, getRoleDescription, Roles} from "../../utils";
 import {useNavigate} from "react-router-dom";
-import {useTypeSelector} from "../../../utils/Hooks/UseTypeSelector";
-import {ApiProvider} from "../../../../api/BaseResponse";
-import AlertHint from "../../../utils/Alert/AlertHint";
+import {ApiProvider} from "../../../../../api/BaseResponse";
+import {useTypeSelector} from "../../../../utils/Hooks/UseTypeSelector";
 
-interface ConferenceTitleProps {
-    userRoles?: Roles;
-    title?: string;
-    id?: string;
-    errors?: string;
-}
-
-const CourseTitle: React.FC<ConferenceTitleProps> = ({id, userRoles, title}) => {
+export const CourseTitle: React.FC<CourseInfo & {id: string}> = ({id, name, description, role, language}) => {
     const [info, setInfo] = useState<string>("");
     // const token = useTypeSelector(store => store.authUser.token);
     // const id = useTypeSelector(store => store.authUser.id);
     const SBApi = useContext(ApiProvider);
     const navigate = useNavigate();
     const token = useTypeSelector(store => store.authUser.token);
-    const changeStatus = async () => {
-        // const response = await SBApi.withAuthorization(token as string).post("course/join", {params: {userId: id, courseId: courseId}});
-        // setResponseStatus(response)
-        // if (response.isOk) {
-        //     window.location.reload();
-        // }
-    }
 
     const joinCourse = async () => {
         if (!token) {
@@ -34,7 +20,6 @@ const CourseTitle: React.FC<ConferenceTitleProps> = ({id, userRoles, title}) => 
             return;
         }
         const data = await SBApi.withAuthorization(token).post("course/join", {params: {courseId: id}});
-        console.log(data);
         if (!data.isOk) {
             setInfo(data.fullError);
             return;
@@ -48,7 +33,6 @@ const CourseTitle: React.FC<ConferenceTitleProps> = ({id, userRoles, title}) => 
             return;
         }
         const data = await SBApi.withAuthorization(token).post("course/leave", {params: {courseId: id}});
-        console.log(data);
         if (!data.isOk) {
             setInfo(data.fullError);
             return;
@@ -57,10 +41,10 @@ const CourseTitle: React.FC<ConferenceTitleProps> = ({id, userRoles, title}) => 
     }
 
     const ActionButton = async () => {
-        switch (userRoles) {
+        switch (role) {
             case Roles.Admin:
             case Roles.Owner:
-                navigate('/course/' + id + "/edit");
+                navigate('/course/' + id + "/edit", {state: {canEdit: true, id, name, description, language}});
                 return;
             case Roles.Guest:
                 void joinCourse();
@@ -74,9 +58,9 @@ const CourseTitle: React.FC<ConferenceTitleProps> = ({id, userRoles, title}) => 
     return (
         <Grid item lg={12} xs={12} sx={{marginBottom: 3}}>
             <Box sx={{display: "flex", justifyContent: "space-between"}}>
-                <Typography variant={"h4"}>{title}</Typography>
+                <Typography variant={"h4"}>{name}</Typography>
                 <Typography variant="h5" mb={1}>
-                    Статус: {getRoleDescription(userRoles)}
+                    Статус: {getRoleDescription(role)}
                 </Typography>
                 {
                     <Button
@@ -84,7 +68,7 @@ const CourseTitle: React.FC<ConferenceTitleProps> = ({id, userRoles, title}) => 
                         sx={{cursor: "pointer"}}
                         variant={"contained"}
                     >
-                        {getLinkText(userRoles)}
+                        {getLinkText(role)}
                     </Button>}
             </Box>
             <Divider/>
@@ -92,5 +76,3 @@ const CourseTitle: React.FC<ConferenceTitleProps> = ({id, userRoles, title}) => 
         </Grid>
     );
 };
-
-export default CourseTitle;

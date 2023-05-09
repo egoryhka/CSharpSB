@@ -15,7 +15,6 @@ export const userAuth = (login: string, password: string, save: boolean = true) 
             dispatch({type: userAuthActions.USER_AUTH});
             const response = await SBApi.post<fetchedUser>("account/login", {data: {password, login}});
             const {data} = response;
-            console.log(response)
             if (response.isOk) {
                 if (save) {
                     localStorage.setItem('token', data.token ?? "");

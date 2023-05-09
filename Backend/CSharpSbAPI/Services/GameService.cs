@@ -78,6 +78,7 @@ namespace CSharpSbAPI.Services
 				{
 					LevelId = nextLevel.Id,
 					UserId = userId,
+					//TODO - сюда CurseID Докинуть
 				});
 
 				if (res.Status != StatusResp.OK) return res;

@@ -5,7 +5,7 @@ import {useTypeSelector} from "../../utils/Hooks/UseTypeSelector";
 import {Navigate} from "react-router-dom";
 import {ManualInfo} from "./ManualInfo";
 import {ProfileTitle} from "./ProfileTitle";
-import {CoursesContainer} from "../Conferencies/ConferenceView/CoursesContainer";
+import {CoursesContainer} from "./CoursesInProfile/CoursesContainer";
 
 export const OtherUserProfileView = () => {
     const userData = useTypeSelector(store => store.fetchUser);

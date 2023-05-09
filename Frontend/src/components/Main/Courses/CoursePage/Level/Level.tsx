@@ -10,7 +10,6 @@ interface LevelProps extends CourseLevelInfo {
 }
 
 export const Level = ({id, name, description, helpText, order, courseId}: LevelProps) => {
-    console.log(id, name, description, helpText, order)
     const navigate = useNavigate();
 
     const goToLevel = async () => {

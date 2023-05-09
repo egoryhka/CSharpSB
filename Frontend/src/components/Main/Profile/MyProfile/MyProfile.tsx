@@ -1,5 +1,4 @@
 import React, {useContext, useState} from 'react';
-import {useTypeSelector} from "../../utils/Hooks/UseTypeSelector";
 import {
     AlertColor,
     Avatar,
@@ -8,25 +7,23 @@ import {
     Divider,
     Grid,
     IconButton, InputAdornment,
-    Link, OutlinedInput,
+    Link, OutlinedInput, TextField,
     Typography
 } from "@mui/material";
-import {CoursesContainer} from "../Conferencies/ConferenceView/CoursesContainer";
-import Edit from '@mui/icons-material/Edit';
-import TextField from "@mui/material/TextField";
-import {editProfileInfo, editProfilePassword} from "../../../api/EditProfile/Edit";
-import {Visibility} from "@mui/icons-material";
-import {VisibilityOff} from "@mui/icons-material";
-import {Navigate} from "react-router-dom";
-import {useActions} from "../../utils/Hooks/UseActions";
-import {ManualInfo} from "./ManualInfo";
-import {ProfileTitle} from "./ProfileTitle";
-import AlertHint from "../../utils/Alert/AlertHint";
-import {stringToColor} from "../../utils/StringToColor/StringToColor";
-import {ApiProvider} from "../../../api/BaseResponse";
-import {CustomTooltip} from "../../utils/CustomTooltip/CustomTooltip";
-import {Link as ReactDomLink} from 'react-router-dom';
-import {Loader} from "../../utils/Loader/Loader";
+import { ApiProvider } from '../../../../api/BaseResponse';
+import AlertHint from "../../../utils/Alert/AlertHint";
+import {editProfilePassword} from "../../../../api/EditProfile/Edit";
+import {Loader} from "../../../utils/Loader/Loader";
+import {Edit, Visibility, VisibilityOff} from "@mui/icons-material";
+import {ManualInfo} from "../ManualInfo";
+import {ProfileTitle} from "../ProfileTitle";
+import {CoursesContainer} from "../CoursesInProfile/CoursesContainer";
+import {Navigate, Link as ReactDomLink} from "react-router-dom";
+import {stringToColor} from "../../../utils/StringToColor/StringToColor";
+import {CustomTooltip} from "../../../utils/CustomTooltip/CustomTooltip";
+import {useActions} from "../../../utils/Hooks/UseActions";
+import {useTypeSelector} from "../../../utils/Hooks/UseTypeSelector";
+
 
 const MyProfile = () => {
     document.title = 'Мой профиль';
@@ -256,7 +253,7 @@ const MyProfile = () => {
                 <Typography variant={"h5"}>У вас есть возможность создавать свои курсы и публиковать их после
                     модерации</Typography>
                 <CustomTooltip text={""}>
-                    <Button component={ReactDomLink} to={"/createcourse"} variant={"contained"}>Создать свой
+                    <Button component={ReactDomLink} to={"/course/create"} variant={"contained"}>Создать свой
                         курс</Button>
                 </CustomTooltip>
             </Box>

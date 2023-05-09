@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import React, {useEffect, useState} from 'react';
 import {useFetchUsersConfs} from "../../../../api/ConferenceActions/getUsersConfs";
 import {Loader} from "../../../utils/Loader/Loader";
-import {ConferenceItem} from "./ConferenceItem";
+import {CourseItem} from "./CourseItem";
 import {
     Pagination,
     Paper,
@@ -48,13 +48,13 @@ export const CoursesContainer: React.FC<ConferenciesContainerProps> = ({userId})
                         <TableCell>Название</TableCell>
                         <TableCell align="center">Статус</TableCell>
                         <TableCell align="center">Дата начала</TableCell>
-                        <TableCell align="right">Участники</TableCell>
+                        <TableCell align="right">Прогресс</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {loading ? <Loader text="Подгружаем курсы"/> :
-                        courses.map(course => <ConferenceItem key={course.name + Math.random()}
-                                                                data={course}/>)}
+                        courses.map(course => <CourseItem key={course.name + Math.random()}
+                                                          data={course}/>)}
                 </TableBody>
             </Table>
         </TableContainer>

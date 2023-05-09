@@ -27,7 +27,6 @@ const Registration = () => {
         if (password === passwordRepeat) {
             setLoading(true);
             const data = await SBApi.post("account/register", {data: {password, login}});
-            console.log(data)
             setLoading(false);
             if (data.isOk) {
                 setLoading(true);

@@ -29,7 +29,6 @@ export const LevelsContainer = ({courseId, userRole, courseName}: LevelsContaine
         if (courseId) {
             const data = await SBApi.get<CourseLevelInfo[]>(`course/${courseId}/level/all`);
             setLevels(data.data)
-            console.log(data);
         }
         // if (data.isOk) {
         //     setCourseInfo(data.data)
@@ -68,7 +67,7 @@ export const LevelsContainer = ({courseId, userRole, courseName}: LevelsContaine
                     </Button>}
             </Box>
             <Divider/>
-            <Grid container lg={12} xs={12} sx={{marginTop: 1}}>
+            <Grid container sx={{marginTop: 1}}>
                 {levels?.length && levels.map(level => <Level key={level.id} {...level} courseId={courseId}/>)}
             </Grid>
         </Card>

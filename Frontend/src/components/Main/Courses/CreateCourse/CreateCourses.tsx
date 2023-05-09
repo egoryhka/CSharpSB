@@ -42,7 +42,6 @@ export default () => {
             setError("Все поля должны быть заполнены");
         } else {
             const data = await SBApi.withAuthorization(token as string).post<{courseId: string}>("course/add", {data: {name, description, language}});
-            console.log("data", data)
             if (data.isOk) {
                 setSuccessText(`Курс успешно создан, автоматический переход на страницу через ${timer} секунд`);
                 setTimeout(() => {
@@ -81,7 +80,6 @@ export default () => {
                         value={language}
                         onChange={(val) => setLanguage(val.target.value)}
                     >
-                        <MenuItem value={0}>JS</MenuItem>
                         <MenuItem value={1}>C#</MenuItem>
                     </Select>
                     {/*{"TODO: Убрать хардкод, переместить языки на сервер"}*/}
