@@ -10,9 +10,9 @@ namespace CSharpSbAPI.Services
 		{
 		}
 
-		public Response GetAll(int courseId)
+		public Response GetAll(int courseId, int userId)
 		{
-			var userCourse = _context.UserCourses.FirstOrDefault(x => x.UserId == AuthorizedUserInfo.Id && x.CourseId == courseId);
+			var userCourse = _context.UserCourses.FirstOrDefault(x => x.UserId == userId && x.CourseId == courseId);
 			if (userCourse == null) return new Response(StatusResp.ClientError, errors: "Курс для пользователя не найден");
 
 			var levels = _context.Progresses

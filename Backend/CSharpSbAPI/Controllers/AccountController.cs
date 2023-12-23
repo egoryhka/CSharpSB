@@ -88,7 +88,6 @@ namespace CSharpSbAPI.Controllers
 			ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,
 				ClaimsIdentity.DefaultRoleClaimType);
 			await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
-			AuthorizedUserInfo.Id = User != null ? int.TryParse(User?.FindFirst("Id")?.Value, out var userId) ? userId : null : null;
 		}
 	}
 }
