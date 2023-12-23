@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CodeCompilerLibrary\CodeCompilerLibrary.csproj" />
+    <ProjectReference Include="..\CSharpSbAPI\CSharpSbAPI.csproj" />
   </ItemGroup>
 
 </Project>

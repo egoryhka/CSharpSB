@@ -2,7 +2,10 @@
 
 namespace CSharpSbAPI.Data.Models
 {
-	public record Tip { public string? tiptext { get; set; } }
+	public record Tip
+	{
+		public string? tiptext { get; set; }
+	}
 
 	public record UserLevel
 	{

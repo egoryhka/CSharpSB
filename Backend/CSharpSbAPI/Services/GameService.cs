@@ -32,32 +32,53 @@ namespace CSharpSbAPI.Services
 			var courseRes = _courseService.GetItem(courseId);
 			if (courseRes.Status != StatusResp.OK) return courseRes;
 
-			var levelRes = _levelService.GetAll();
-			if (levelRes.Status != StatusResp.OK) return levelRes;
+			//var levelRes = _levelService.GetAll();
+			//if (levelRes.Status != StatusResp.OK) return levelRes;
 
-			var levels = ((Response<List<Level>>)levelRes).Data;
+			//var levels = ((Response<List<Level>>)levelRes).Data;
 
-			var courseLevelsForUser = levels
-				.Where(x => x.CourseId == courseId)
-				.GroupJoin(_context.Progresses.Where(x => x.UserId == userId),
-				l => l.Id,
-				p => p.LevelId,
-				(l, p) => new
+			//var courseLevelsForUser = levels
+			//	.Where(x => x.CourseId == courseId)
+			//	.GroupJoin(_context.Progresses.Where(x => x.UserId == userId),
+			//	l => l.Id,
+			//	p => p.LevelId,
+			//	(l, p) => new
+			//	{
+			//		level = l,
+			//		progresses = p
+			//	})
+			//	.SelectMany(
+			//	lp => lp.progresses.DefaultIfEmpty(),
+			//	(l, p) => new UserLevel
+			//	{
+			//		levelId = l.level.Id,
+			//		name = l.level.Name,
+			//		order = l.level.Order,
+			//		status = p?.Status
+			//	}).ToList();
+
+			var userCourse = _context.UserCourses.FirstOrDefault(x => x.UserId == userId && x.CourseId == courseId);
+			if (userCourse == null) return new Response(StatusResp.ClientError, errors: "Курс для пользователя не найден");
+
+			var levels = _context.Progresses
+				.Where(x => x.UserCourse == userCourse)
+				.Join(_context.Levels,
+					p => p.LevelId,
+			 		l => l.Id,
+						(p, l) => new
+						{
+							progress = p,
+							level = l,
+						})
+				.Select(x => new UserLevel
 				{
-					level = l,
-					progresses = p
-				})
-				.SelectMany(
-				lp => lp.progresses.DefaultIfEmpty(),
-				(l, p) => new UserLevel
-				{
-					levelId = l.level.Id,
-					name = l.level.Name,
-					order = l.level.Order,
-					status = p?.Status
+					levelId = x.level.Id,
+					name = x.level.Name,
+					order = x.level.Order,
+					status = x.progress.Status,
 				}).ToList();
 
-			return new Response<List<UserLevel>>(StatusResp.OK, courseLevelsForUser);
+			return new Response<List<UserLevel>>(StatusResp.OK, levels);
 		}
 
 		public Response NextLevel(int levelId, int userId)
@@ -72,13 +93,16 @@ namespace CSharpSbAPI.Services
 			var nextLevel = _context.Levels.FirstOrDefault(x => x.CourseId == level.CourseId && x.Order == level.Order + 1);
 			if (nextLevel == null) return new Response(StatusResp.ClientError, errors: "Уровень не найден");
 
-			if (!_context.Progresses.Any(x => x.UserId == userId && x.LevelId == nextLevel.Id))
+			var userCourse = _context.UserCourses.FirstOrDefault(x => x.UserId == userId && x.CourseId == nextLevel.CourseId);
+			if (userCourse == null) return new Response(StatusResp.ClientError, errors: "Курс для пользователя не найден");
+
+			if (!_context.Progresses.Any(x => x.UserCourse.UserId == userId && x.LevelId == nextLevel.Id))
 			{
+				
 				var res = _progressService.Add(new Progress()
 				{
 					LevelId = nextLevel.Id,
-					UserId = userId,
-					//TODO - сюда CurseID Докинуть
+					UserCourse = userCourse,
 				});
 
 				if (res.Status != StatusResp.OK) return res;

@@ -1,36 +1,35 @@
 ﻿
 public class GetUserCoursesInfo
 {
-    public GetUserCoursesInfo(int countInPage, decimal totalCount, List<GetUserCoursesList> courses)
-    {
-        CountInPage = countInPage;
-        TotalCount = totalCount;
-        TotalPages = Math.Floor(Convert.ToDecimal(totalCount / countInPage));
-        Courses = courses;
-    }
-    
-    public decimal TotalPages { get; set; }
-    public decimal TotalCount { get; set; }
-    public decimal CountInPage { get; set; }
-    public List<GetUserCoursesList> Courses { get; set; }
+	public GetUserCoursesInfo(int countInPage, decimal totalCount, List<GetUserCoursesList> courses)
+	{
+		CountInPage = countInPage;
+		TotalCount = totalCount;
+		TotalPages = Math.Floor(Convert.ToDecimal(totalCount / countInPage));
+		Courses = courses;
+	}
+
+	public decimal TotalPages { get; set; }
+	public decimal TotalCount { get; set; }
+	public decimal CountInPage { get; set; }
+	public List<GetUserCoursesList> Courses { get; set; }
 }
 
 public class GetUserCoursesList
 {
-    public GetUserCoursesList(UserCourse uc)
-    {
-        StartDate = uc.StartDate;
-        Role = uc.Role;
-        Name = uc.Course?.Name ?? "TODO ЕГОР ПОЧИНИ, УБЕРИ ВОПРОСИКИ";
-        LevelCount = uc.Course?.LevelCount ?? 0;
-        LevelsComplete = uc.LevelsCompleted;
-        CourseId = uc.CourseId;
-    }
+	public GetUserCoursesList(UserCourse uc)
+	{
+		StartDate = uc.StartDate;
+		Role = uc.Role;
+		Name = uc.Course.Name;
+		LevelCount = uc.Course.Levels.Count;
+		CourseId = uc.CourseId;
+	}
 
-    public DateTime StartDate { get; set; }
-    public Role Role { get; set; }
-    public string Name { get; set; }
-    public int LevelCount { get; set; }
-    public int LevelsComplete { get; set; }
-    public int CourseId { get; set; }
+	public DateTime StartDate { get; set; }
+	public Role Role { get; set; }
+	public string Name { get; set; }
+	public int LevelCount { get; set; }
+	public int LevelsComplete { get; set; }
+	public int CourseId { get; set; }
 }

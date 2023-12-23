@@ -46,7 +46,6 @@ namespace CSharpSbAPI.Services
                 Name = level.Name, HelpText = level.HelpText, Description = level.Description,
                 ExpResultsJson = level.CompileResult
             };
-            course.LevelCount = course.LevelCount + 1; 
             newLevel.Order = GetMaxOrder(courseId) + 1;
             newLevel.CourseId = courseId;
             _context.Levels.Add(newLevel);

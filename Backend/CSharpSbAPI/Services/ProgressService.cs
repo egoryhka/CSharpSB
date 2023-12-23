@@ -39,10 +39,13 @@ namespace CSharpSbAPI.Services
 
         private Response Validate(Progress progress)
         {
-            var existUser = _context.Users.FirstOrDefault(x => x.Id == progress.UserId);
+            var existUser = _context.Users.FirstOrDefault(x => x.Id == progress.UserCourse.UserId);
             if (existUser != null) { return new Response(StatusResp.ClientError, errors: "Несуществующий пользователь"); }
 
-            var existlevel = _context.Levels.FirstOrDefault(x => x.Id == progress.LevelId);
+			var existCourse = _context.Courses.FirstOrDefault(x => x.Id == progress.UserCourse.CourseId);
+			if (existCourse != null) { return new Response(StatusResp.ClientError, errors: "Несуществующий курс"); }
+
+			var existlevel = _context.Levels.FirstOrDefault(x => x.Id == progress.LevelId);
             if (existlevel != null) { return new Response(StatusResp.ClientError, errors: "Несуществующий уровень"); }
 
             return Response.OK;
