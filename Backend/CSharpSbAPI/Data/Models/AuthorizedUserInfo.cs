@@ -2,6 +2,6 @@
 {
 	public static class AuthorizedUserInfo
 	{
-		public static int Id { get; set; }
+		public static int? Id { get; set; }
 	}
 }

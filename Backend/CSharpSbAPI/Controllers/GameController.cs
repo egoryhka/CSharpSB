@@ -12,7 +12,6 @@ namespace CSharpSbAPI.Controllers
 		public GameController(GameService gameService)
 		{
 			_gameService = gameService;
-			AuthorizedUserInfo.Id = Convert.ToInt32(User.FindFirst("Id").Value);
 		}
 
 		[HttpPost("test")]

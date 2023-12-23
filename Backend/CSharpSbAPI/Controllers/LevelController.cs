@@ -17,7 +17,6 @@ namespace CSharpSbAPI.Controllers
         public LevelController(LevelService levelService)
         {
             _levelService = levelService;
-			AuthorizedUserInfo.Id = Convert.ToInt32(User.FindFirst("Id").Value);
 		}
 
 		[HttpGet("all")] public Response GetLevels(int courseId) => _levelService.GetAll(courseId);

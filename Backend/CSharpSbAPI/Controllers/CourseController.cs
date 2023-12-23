@@ -15,7 +15,6 @@ namespace CSharpSbAPI.Controllers
         public CourseController(CourseService courseService)
         {
             _courseService = courseService;
-            AuthorizedUserInfo.Id = Convert.ToInt32(User.FindFirst("Id").Value);
 		}
 
 

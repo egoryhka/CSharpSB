@@ -14,81 +14,81 @@ using Newtonsoft.Json.Linq;
 
 namespace CSharpSbAPI.Controllers
 {
-    [Route("api/v1/account")]
-    [ApiController]
-    public class AccountController : ControllerBase
-    {
-        private readonly AccountService _accountService;
+	[Route("api/v1/account")]
+	[ApiController]
+	public class AccountController : ControllerBase
+	{
+		private readonly AccountService _accountService;
 
-        public AccountController(AccountService accountService)
-        {
-            _accountService = accountService;
-			AuthorizedUserInfo.Id = Convert.ToInt32(User.FindFirst("Id").Value);
+		public AccountController(AccountService accountService)
+		{
+			_accountService = accountService;
 		}
 
 		[HttpPost("register")]
-        public async Task<Response> Register(RegisterModel registerModel)
-        {
-            var res = _accountService.Register(registerModel, out var token, out var user);
-            if (res.Status == StatusResp.OK && token != null)
-            {
-                HttpContext.Response.Headers["Authorization"] = token;
-                await Authenticate(user);
-            }
+		public async Task<Response> Register(RegisterModel registerModel)
+		{
+			var res = _accountService.Register(registerModel, out var token, out var user);
+			if (res.Status == StatusResp.OK && token != null)
+			{
+				HttpContext.Response.Headers["Authorization"] = token;
+				await Authenticate(user);
+			}
 
-            return res;
-        }
+			return res;
+		}
 
-        [HttpPost("login")]
-        public async Task<Response> Login(LoginModel loginModel)
-        {
-            var res = _accountService.Login(loginModel, out var user);
-            if (res.Status == StatusResp.OK)
-            {
-                HttpContext.Response.Headers["Authorization"] = user.Token;
-                await Authenticate(user);
-            }
+		[HttpPost("login")]
+		public async Task<Response> Login(LoginModel loginModel)
+		{
+			var res = _accountService.Login(loginModel, out var user);
+			if (res.Status == StatusResp.OK)
+			{
+				HttpContext.Response.Headers["Authorization"] = user.Token;
+				await Authenticate(user);
+			}
 
-            return res;
-        }
+			return res;
+		}
 
-        [HttpGet("login")]
-        public async Task<Response> Login()
-        {
-            var token = HttpContext.Request.Headers["Authorization"];
-            var res = _accountService.Login(token, out var user);
-            if (res.Status == StatusResp.OK)
-            {
-                await Authenticate(user);
-                return res;
-            }
+		[HttpGet("login")]
+		public async Task<Response> Login()
+		{
+			var token = HttpContext.Request.Headers["Authorization"];
+			var res = _accountService.Login(token, out var user);
+			if (res.Status == StatusResp.OK)
+			{
+				await Authenticate(user);
+				return res;
+			}
 
-            return res;
-        }
+			return res;
+		}
 
-        //Погнали файлы тоже уметь сохранять для аватарок. Пример есть, Напишите мне
-        [HttpPost("update")]
-        [Authorize]
-        public Response Edit([FromForm] UserUpdate userUpdate)
-        {
-            var res = _accountService.UpdateItem(userUpdate);
-            return res;
-        }
+		//Погнали файлы тоже уметь сохранять для аватарок. Пример есть, Напишите мне
+		[HttpPost("update")]
+		[Authorize]
+		public Response Edit([FromForm] UserUpdate userUpdate)
+		{
+			var res = _accountService.UpdateItem(userUpdate);
+			return res;
+		}
 
-        [HttpGet("logout")]
-        [Authorize]
-        public async Task<Response> Logout()
-        {
-            Response.Cookies.Delete("ApplicationCookie");
-            return new Response(StatusResp.OK);
-        }
+		[HttpGet("logout")]
+		[Authorize]
+		public async Task<Response> Logout()
+		{
+			Response.Cookies.Delete("ApplicationCookie");
+			return new Response(StatusResp.OK);
+		}
 
-        private async Task Authenticate(User user)
-        {
-            var claims = new List<Claim> { new Claim("Id", user.Id.ToString()), };
-            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,
-                ClaimsIdentity.DefaultRoleClaimType);
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
-        }
-    }
+		private async Task Authenticate(User user)
+		{
+			var claims = new List<Claim> { new Claim("Id", user.Id.ToString()), };
+			ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,
+				ClaimsIdentity.DefaultRoleClaimType);
+			await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+			AuthorizedUserInfo.Id = User != null ? int.TryParse(User?.FindFirst("Id")?.Value, out var userId) ? userId : null : null;
+		}
+	}
 }
