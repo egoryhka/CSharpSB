@@ -2,6 +2,8 @@
 using CSharpSbAPI.Data.Models;
 using CSharpSbAPI.Data.Models.DB;
 using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.Extensions.Hosting;
+using System.Reflection.Metadata;
 
 namespace CSharpSbAPI.Services
 {
@@ -16,29 +18,13 @@ namespace CSharpSbAPI.Services
 			var userCourse = _context.UserCourses.FirstOrDefault(x => x.UserId == userId && x.CourseId == courseId);
 			if (userCourse == null) return new Response(StatusResp.ClientError, errors: "Курс для пользователя не найден");
 
-			//var levels = _context.Progresses
-			//	.Where(x => x.UserCourse == userCourse)
-			//	.Join(_context.Levels,
-			//		p => p.LevelId,
-			// 		l => l.Id,
-			//			(p, l) => new
-			//			{
-			//				progress = p,
-			//				level = l,
-			//			})
-			//	.Select(x => new GetLevel(x.level, x.progress)).ToList();
+			var query = from l in _context.Levels
+						join p in _context.Progresses
+							on l.Id equals p.LevelId into lp
+						from p in lp.DefaultIfEmpty()
+						select new { l, p };
 
-			var levels = _context.Levels
-				.LeftJoin(_context.Progresses,
-			 		l => l.Id,
-					p => p.LevelId,
-						(l, p) => new
-						{
-							level = l,
-							progress = p,
-						})
-				.Where(x => x.progress.UserCourse == userCourse)
-				.Select(x => new GetLevel(x.level, x.progress)).ToList();
+			var levels = query.Select(x => new GetLevel(x.l, x.p));
 
 			var resp = new Response<IEnumerable<GetLevel>>(StatusResp.OK, levels);
 			return resp;
