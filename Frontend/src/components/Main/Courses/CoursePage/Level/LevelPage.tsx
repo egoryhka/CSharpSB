@@ -1,10 +1,8 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useContext, useEffect, useMemo, useState} from "react";
 import {CourseInfo, CourseLevelInfo, getBGColors} from "../../utils";
-import {Grid, Typography} from "@mui/material";
 import {Editor} from "@monaco-editor/react";
 import {ApiProvider} from "../../../../../api/BaseResponse";
-import {delay} from "../../../../utils/Delay/Delay";
 import {useTypeSelector} from "../../../../utils/Hooks/UseTypeSelector";
 
 const startText = `using System;
@@ -45,13 +43,22 @@ export const LevelPage = () => {
         if (!userLoading) {
             void fetchLevelInfo();
         }
-        // window.onmessage = function (e) {
-        //     if (e.data && e.data.language) {
-        //         console.log(e.data)
-        //         // handle the e.data which contains the code object
-        //     }
-        // }
+        window.onmessage = function (e) {
+            console.log(e)
+            if (e.data && e.data.language) {
+                console.log(e.data)
+                // handle the e.data which contains the code object
+            }
+        }
+        const itr = setInterval(() => window?.document?.querySelector(".top-section-group-results")?.remove(), 1000);
+        return () => clearTimeout(itr);
     }, [userLoading]);
+
+    useEffect(() => {
+
+
+
+    });
 
     const fetchLevelInfo = async () => {
         setLoading(true);
@@ -67,12 +74,12 @@ export const LevelPage = () => {
             <br/>
             <br/>
             <Editor height="450px" defaultLanguage="csharp" defaultValue={startText}/>
-            {/*<iframe*/}
-            {/*    frameBorder="0"*/}
-            {/*    height="450px"*/}
-            {/*    src="https://onecompiler.com/embed/csharp?codeChangeEvent=true&hideTitle=true&hideNewFileOption=true&hideNew=true&hideLanguageSelection=true&hideStdin=true"*/}
-            {/*    width="100%">*/}
-            {/*</iframe>*/}
+            <iframe
+                frameBorder="0"
+                height="450px"
+                src="https://sharplab.io/#v2:CYLg1APgAgTAjAWAFBQMwAJboMLoN7LpGYZQAs6AsgBQCU+hxTUcAnNQEQe0DcjTA9P3QBfZCKA="
+                width="100%">
+            </iframe>
 
         </>
     );
