@@ -19,7 +19,7 @@ namespace CSharpSbAPI.Services
             var res = Validate(progress);
             if (res.Status != StatusResp.OK) return res;
 
-            progress.Status = Status.InProgress;
+            progress.Status = Status.Current;
             progress.TimeStart = DateTime.Now;
             _context.Progresses.Add(progress);
             _context.SaveChanges();

@@ -9,7 +9,11 @@ namespace CSharpSbAPI.Controllers
 	public class GameController : ControllerBase
 	{
 		private readonly GameService _gameService;
-		public GameController(GameService gameService) => _gameService = gameService;
+		public GameController(GameService gameService)
+		{
+			_gameService = gameService;
+			AuthorizedUserInfo.Id = Convert.ToInt32(User.FindFirst("Id").Value);
+		}
 
 		[HttpPost("test")]
 		public Response TestCode(int levelId, string code) => _gameService.TestCode(levelId, code);

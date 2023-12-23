@@ -69,7 +69,7 @@ namespace CSharpSbAPI.Services
 				LevelId = firstLevel.Id,
 				//CourseID = course.Id,
 				TimeStart = DateTime.Now,
-				Status = Status.InProgress
+				Status = Status.Current
 			});
 
 			_context.SaveChanges();
@@ -100,9 +100,9 @@ namespace CSharpSbAPI.Services
 			return new Response(StatusResp.ClientError, "Произошла ошибка, попробуйте позже");
 		}
 
-		public Response AddCourse(AddCourse course, int ownerId)
+		public Response AddCourse(AddCourse course)
 		{
-			var owner = _context.Users.FirstOrDefault(user => user.Id == ownerId);
+			var owner = _context.Users.FirstOrDefault(user => user.Id == AuthorizedUserInfo.Id);
 
 			if (owner is null)
 			{
@@ -131,14 +131,14 @@ namespace CSharpSbAPI.Services
 			return new Response<int>(StatusResp.OK, newCourse.Id);
 		}
 
-		public Response GetCourse(int courseId, int? userId)
+		public Response GetCourse(int courseId)
 		{
 			var course = _context.Courses.FirstOrDefault(course => courseId == course.Id);
 			var role = Role.Guest;
-			if (userId != 0)
+			if (AuthorizedUserInfo.Id != 0)
 			{
 				var userRole =
-					_context.UserCourses.FirstOrDefault(uc => uc.CourseId == courseId && uc.UserId == userId);
+					_context.UserCourses.FirstOrDefault(uc => uc.CourseId == courseId && uc.UserId == AuthorizedUserInfo.Id);
 				role = userRole != null ? userRole.Role : Role.Guest;
 			}
 
@@ -164,9 +164,9 @@ namespace CSharpSbAPI.Services
 			return Response.OK;
 		}
 
-		public Response EditCourse(Course course, int userId)
+		public Response EditCourse(Course course)
 		{
-			var userCourse = _context.UserCourses.FirstOrDefault(c => c.CourseId == course.Id && c.UserId == userId);
+			var userCourse = _context.UserCourses.FirstOrDefault(c => c.CourseId == course.Id && c.UserId == AuthorizedUserInfo.Id);
 			if (userCourse is null)
 			{
 				return new Response(StatusResp.ClientError, "Произошла непредвиденная ошибка, попробуйте позже");

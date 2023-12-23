@@ -23,9 +23,10 @@ namespace CSharpSbAPI.Controllers
         public AccountController(AccountService accountService)
         {
             _accountService = accountService;
-        }
+			AuthorizedUserInfo.Id = Convert.ToInt32(User.FindFirst("Id").Value);
+		}
 
-        [HttpPost("register")]
+		[HttpPost("register")]
         public async Task<Response> Register(RegisterModel registerModel)
         {
             var res = _accountService.Register(registerModel, out var token, out var user);

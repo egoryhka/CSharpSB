@@ -2,7 +2,9 @@
 {
     public enum Status
     {
-        InProgress,
-        Done,
-    }
+		Admin,
+		Current,
+		Closed,
+		Completed,
+	}
 }

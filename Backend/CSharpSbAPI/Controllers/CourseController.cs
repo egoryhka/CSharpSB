@@ -15,7 +15,8 @@ namespace CSharpSbAPI.Controllers
         public CourseController(CourseService courseService)
         {
             _courseService = courseService;
-        }
+            AuthorizedUserInfo.Id = Convert.ToInt32(User.FindFirst("Id").Value);
+		}
 
 
         [HttpGet("all")]
@@ -28,22 +29,21 @@ namespace CSharpSbAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public Response GetCourse(int id) => _courseService.GetCourse(id, Convert.ToInt32(User.FindFirst("Id")?.Value));
+        public Response GetCourse(int id) => _courseService.GetCourse(id);
 
         [HttpPost("add")]
         [Authorize]
         public Response AddCourse(AddCourse course)
         {
-            var ownerId = Convert.ToInt32(User.FindFirst("Id").Value);
-            return _courseService.AddCourse(course, ownerId);
+            return _courseService.AddCourse(course);
         }
 
         [HttpPost("update")]
         [Authorize]
         public Response UpdateCourse(Course course)
         {
-            var userId = Convert.ToInt32(User.FindFirst("Id").Value);
-            return _courseService.EditCourse(course, userId);
+           
+            return _courseService.EditCourse(course);
         }
 
         [HttpPost("delete")]
