@@ -1,6 +1,7 @@
 ﻿using CSharpSbAPI.Data;
 using CSharpSbAPI.Data.Models;
 using CSharpSbAPI.Data.Models.DB;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace CSharpSbAPI.Services
 {
@@ -17,7 +18,7 @@ namespace CSharpSbAPI.Services
 
 			var levels = _context.Progresses
 				.Where(x => x.UserCourse == userCourse)
-				.Join(_context.Levels,
+				.LeftJoin(_context.Levels,
 					p => p.LevelId,
 			 		l => l.Id,
 						(p, l) => new
