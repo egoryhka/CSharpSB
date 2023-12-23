@@ -22,6 +22,7 @@ namespace CSharpSbAPI.Services
 						join p in _context.Progresses
 							on l.Id equals p.LevelId into lp
 						from p in lp.DefaultIfEmpty()
+						where p.UserCourse == userCourse
 						select new { l, p };
 
 			var levels = query.Select(x => new GetLevel(x.l, x.p));
