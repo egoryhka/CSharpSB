@@ -5,7 +5,7 @@ import {Link, useNavigate, useParams} from 'react-router-dom';
 import {useTypeSelector} from "../../../utils/Hooks/UseTypeSelector";
 import {Loader} from "../../../utils/Loader/Loader";
 import {ApiProvider} from "../../../../api/BaseResponse";
-import {CourseInfo} from "../utils";
+import {CourseInfo, extractUserName} from "../utils";
 import {CourseTitle} from "./Title/CourseTitle";
 import {LevelsContainer} from "./Level/LevelsContainer";
 import {delay} from "../../../utils/Delay/Delay";
@@ -23,9 +23,10 @@ export default () => {
 
     const navigate = useNavigate();
     useEffect(() => {
-        void fetchCourseInfo()
-        //Загрузка курса и редактирование уровней
-    }, []);
+        if (!userLoading) {
+            void fetchCourseInfo()
+        }
+    }, [userLoading]);
 
     const fetchCourseInfo = async () => {
         setLoading(true);
@@ -44,7 +45,6 @@ export default () => {
     }
 
     return (
-        // <UnauthorizedPage>
         <Box>
             {courseInfo && <CourseTitle {...courseInfo} id={id!}></CourseTitle>}
 
@@ -53,29 +53,22 @@ export default () => {
             </Typography>
 
             <Typography variant="h5" mb={1}>
-                Создатель: {courseInfo?.owner ?? "Мусор"}
+                Описание курса:
             </Typography>
-
             <div data-color-mode={currentTheme}>
                 <MDEditor.Markdown source={courseInfo?.description}/>
             </div>
 
             <LevelsContainer courseId={id} userRole={courseInfo?.role} courseName={courseInfo?.name}/>
-
-            {courseInfo?.participants?.length ?
-                <Typography variant="h5" mb={1}>
-                    Уже участвуют:
-                    <br/>
-                    {courseInfo?.participants.map(u => <Link style={{color: theme.palette.text.primary}}
-                                                             key={u.id}
-                                                             to={`/userprofile/${u.id}`}>{u.name + " " + u.surname}</Link>)}
-                </Typography>
-                :
-                <Typography variant="h5" mb={1}>
-                    На курсе пока нет участников
-                </Typography>
-            }
+            <Typography variant="h5" mb={1}>
+                {courseInfo?.participantsCount ? `На курс записаны: ${courseInfo?.participantsCount}` : "На курсе пока нет участников"}
+            </Typography>
+            <Typography variant="h5" mb={1}>
+                Создатель: {extractUserName(courseInfo?.owner)}
+            </Typography>
+            {courseInfo?.owner?.email && <Typography variant="h5" mb={1}>
+                По всем вопросам обращайтесь на почту: {courseInfo?.owner?.email}
+            </Typography>}
         </Box>
-        // </UnauthorizedPage>
     );
 };

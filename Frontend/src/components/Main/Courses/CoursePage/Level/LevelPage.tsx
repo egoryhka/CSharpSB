@@ -1,5 +1,5 @@
 import {useNavigate, useParams} from "react-router-dom";
-import {useMemo} from "react";
+import {useEffect, useMemo} from "react";
 import {getBGColors} from "../../utils";
 import {Grid, Typography} from "@mui/material";
 
@@ -14,7 +14,25 @@ export const LevelPage = () => {
 
     const color = useMemo(() => getBGColors(1), []);
 
-    return (
-            <Typography variant={"h6"}>Жду бекенд. тут много чего надо обсудить</Typography>
+    useEffect(() => {
+        window.onmessage = function (e) {
+            if (e.data && e.data.language) {
+                console.log(e.data)
+                // handle the e.data which contains the code object
+            }
+        }
+    }, []);
+
+    return (<>
+            <br/>
+            <br/>
+            <iframe
+                frameBorder="0"
+                height="450px"
+                src="https://onecompiler.com/embed/csharp?codeChangeEvent=true&hideTitle=true&hideNewFileOption=true&hideNew=true&hideLanguageSelection=true&hideStdin=true"
+                width="100%">
+            </iframe>
+            ;
+        </>
     );
 };

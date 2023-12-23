@@ -1,3 +1,5 @@
+import {green, grey, pink, purple} from "@mui/material/colors";
+
 export const month = 1000 * 60 * 60 * 24 * 30;
 export const day = 1000 * 60 * 60 * 24;
 export const dateAfterMonthConst = new Date(Date.now() + month);
@@ -8,11 +10,34 @@ export const getBGColors = (count: number) => {
     return colors;
 }
 
+export const getBGColorByStatus = (status: LevelStatus): { defaultColor: string, hover: string } => {
+    switch (status) {
+        case LevelStatus.Current:
+            return {hover: purple[400], defaultColor: purple[100]};
+        case LevelStatus.Completed:
+            return {hover: green[400], defaultColor: green[100]};
+        case LevelStatus.Admin:
+            return {hover: grey[400], defaultColor: grey[100]};
+        case LevelStatus.Closed:
+            return {hover: grey[400], defaultColor: grey[100]};
+        default:
+            return {hover: 'rgba(128, 128, 128, .5)', defaultColor: 'rgba(220, 220, 220, .5)'};
+
+    }
+}
+
 export enum Roles {
     Guest,
     Participant,
     Admin,
     Owner,
+}
+
+export enum LevelStatus {
+    Admin,
+    Current,
+    Closed,
+    Completed,
 }
 
 export interface CourseLevelInfo {
@@ -21,6 +46,7 @@ export interface CourseLevelInfo {
     description: string
     order: number;
     helpText: string;
+    status: LevelStatus;
 }
 
 export interface CourseInfo {
@@ -29,9 +55,9 @@ export interface CourseInfo {
     name: string;
     language: string;
     role: Roles;
-    owner: any;
+    owner: UserInfo;
     id: string;
-    participants: UserInfo[]
+    participantsCount: number;
 }
 
 export interface UserInfo {
@@ -39,6 +65,17 @@ export interface UserInfo {
     name: string;
     surname: string;
     email: string;
+    login: string;
+}
+
+export function extractUserName(user?: UserInfo): string {
+    if (user?.name && user?.surname) {
+        return user?.name + " " + user?.surname;
+    }
+    if (user?.email) {
+        return user?.email;
+    }
+    return user?.login ?? "User";
 }
 
 export function getRoleDescription(role?: Roles) {

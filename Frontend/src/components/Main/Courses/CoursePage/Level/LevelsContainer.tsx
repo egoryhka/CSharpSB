@@ -52,7 +52,6 @@ export const LevelsContainer = ({courseId, userRole, courseName}: LevelsContaine
 
     const buttonText = getLinkLevelText(userRole);
 
-
     return (
         <Card sx={{marginTop: 4}}>
             <Box sx={{display: "flex", justifyContent: "space-between"}}>
@@ -68,7 +67,7 @@ export const LevelsContainer = ({courseId, userRole, courseName}: LevelsContaine
             </Box>
             <Divider/>
             <Grid container sx={{marginTop: 1}}>
-                {levels?.length && levels.map(level => <Level key={level.id} {...level} courseId={courseId}/>)}
+                {levels?.length && levels.map(level => <Level key={level.id} {...level} courseId={courseId} userRole={userRole}/>)}
             </Grid>
         </Card>
     );

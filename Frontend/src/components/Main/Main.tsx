@@ -8,6 +8,7 @@ import {Box} from "@mui/material";
 import AddLevel from "./Courses/CoursePage/Level/AddLevel";
 import {Forbidden} from "../utils/Errors/ErrorPages/Forbidden";
 import {LevelPage} from "./Courses/CoursePage/Level/LevelPage";
+import {OtherUserProfileContainer} from "./Profile/OtherUserProfileContainer";
 
 export const Main: React.FC = () => {
     document.title = 'Главная';

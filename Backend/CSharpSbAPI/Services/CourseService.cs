@@ -21,8 +21,10 @@ namespace CSharpSbAPI.Services
         {
             const int courseinpages = 5;
             //TODO - Тут не работает Include, Егор, посмотри плиз.
-            var listCourses = _context.UserCourses.Include(x => x.Course).Where(x => x.UserId == userId).Select(uc => new GetUserCoursesList(uc)).ToList();
-            var filteredCourses = listCourses.GetRange(courseinpages * page - courseinpages, Math.Min(courseinpages * page, listCourses.Count));
+            var listCourses = _context.UserCourses.Include(x => x.Course).Where(x => x.UserId == userId)
+                .Select(uc => new GetUserCoursesList(uc)).ToList();
+            var filteredCourses = listCourses.GetRange(courseinpages * page - courseinpages,
+                Math.Min(courseinpages * page, listCourses.Count));
             var response = new GetUserCoursesInfo(courseinpages, listCourses.Count, filteredCourses);
             return new Response<GetUserCoursesInfo>(StatusResp.OK, response);
         }
@@ -145,15 +147,14 @@ namespace CSharpSbAPI.Services
             var users = _context.UserCourses.Where(uc => uc.CourseId == courseId);
             var admins = users.Where(uc => uc.CourseId == courseId && uc.Role == Role.Admin).Select(uc => uc.User)
                 .ToList();
-            var participants = users.Where(uc => uc.CourseId == courseId && uc.Role == Role.Participant)
-                .Select(uc => uc.User).Take(5).ToList();
+            var participants = users.Where(uc => uc.CourseId == courseId && uc.Role == Role.Participant).Count();
 
-            var owner = _context.UserCourses.FirstOrDefault(uc => uc.CourseId == courseId && uc.Role == Role.Owner)
-                .User;
+            //Егор, я тут воткнул костыль, чтобы найти владельца. Осторожно.
+            var ownerId = _context.UserCourses.FirstOrDefault(uc => uc.CourseId == courseId && uc.Role == Role.Owner)
+                .UserId;
+            var owner = _context.Users.FirstOrDefault(u => u.Id == ownerId);
 
             var DTOCourse = new GetCourse(course, role, owner, admins, participants);
-            //TODO - Егор позырь плиз
-            //TODO - не тянется owner (у всех юзеров на юзеркурсе - null). Не тянется не только OWner, а все впринципе что с юзерами связано...
 
             return new Response<GetCourse>(StatusResp.OK, DTOCourse);
         }
@@ -164,7 +165,7 @@ namespace CSharpSbAPI.Services
             if (exist != null) return new Response(StatusResp.ClientError, errors: "Уже существует");
             return Response.OK;
         }
-        
+
         public Response EditCourse(Course course, int userId)
         {
             var userCourse = _context.UserCourses.FirstOrDefault(c => c.CourseId == course.Id && c.UserId == userId);
@@ -187,7 +188,7 @@ namespace CSharpSbAPI.Services
             {
                 dbCourse.Description = course.Description;
             }
-            
+
             if (!string.IsNullOrEmpty(course.Name))
             {
                 dbCourse.Name = course.Name;

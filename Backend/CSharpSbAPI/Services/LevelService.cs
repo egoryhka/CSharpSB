@@ -12,7 +12,7 @@ namespace CSharpSbAPI.Services
         public Response GetAll(int courseId)
         {
             var courseLevels = _context.Levels.Where(level => level.CourseId == courseId).ToList()
-                .Select(l => new GetLevel(l));
+                .Select(l => new GetLevel(l, LevelStatus.Completed));
             var resp = new Response<IEnumerable<GetLevel>>(StatusResp.OK, courseLevels);
             // var resp = new Response<IEnumerable<GetLevel>>(StatusResp.OK,
             //     new[]

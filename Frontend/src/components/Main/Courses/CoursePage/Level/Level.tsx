@@ -1,35 +1,34 @@
-import {CourseLevelInfo, getBGColors, getLinkLevelText, Roles} from "../../utils";
-import {ApiProvider} from "../../../../../api/BaseResponse";
-import {Loader} from "../../../../utils/Loader/Loader";
-import {Box, Button, Card, Divider, Grid, Typography} from "@mui/material";
-import {useContext, useEffect, useMemo, useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {CourseLevelInfo, getBGColorByStatus, LevelStatus, Roles} from "../../utils";
+import {Grid, Typography} from "@mui/material";
+import {useNavigate} from "react-router-dom";
 
 interface LevelProps extends CourseLevelInfo {
     courseId?: string;
+    userRole?: Roles;
 }
 
-export const Level = ({id, name, description, helpText, order, courseId}: LevelProps) => {
+export const Level = ({id, name, description, helpText, order, courseId, userRole, status}: LevelProps) => {
     const navigate = useNavigate();
 
     const goToLevel = async () => {
         navigate('/course/' + courseId + "/level/" + id);
     }
 
-    const color = useMemo(() => getBGColors(1), []);
+    const {defaultColor, hover} = getBGColorByStatus(status);
 
     return (
-        <Grid item lg={3} xs={5} onClick={goToLevel} sx={{
-            marginBottom: 2,
-            marginRight: 2,
-            border: `3px solid ${color}`,
+        <Grid item lg={12} xs={12} onClick={goToLevel} sx={{
+            margin: 2,
+            marginBottom: 0.5,
+            marginTop: 0.5,
+            border: `3px solid ${hover}`,
             borderRadius: "16px",
-            cursor: "pointer",
+            cursor: status === LevelStatus.Closed ? "inherit" : "pointer",
             padding: 2,
             transition: "all .5s ease",
+            backgroundColor: defaultColor,
             ":hover": {
-                backgroundColor: color,
-                opacity: 0.6,
+                backgroundColor: status === LevelStatus.Closed ? defaultColor : hover,
             }
         }}>
             <Typography variant={"h6"}>{order + ". " + name}</Typography>

@@ -13,7 +13,6 @@ namespace CSharpSbAPI.Data.Models.DB
         public DateTime StartDate { get; set; }
         public Role Role { get; set; }
         public  User User { get; set; } = null!;
-        
         public  Course Course { get; set; } = null!;
     }
 }

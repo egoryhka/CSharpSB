@@ -2,8 +2,8 @@ import {themeChangeActions, themes, themesAction, themeState} from "../../types/
 import {darkTheme, lightTheme} from "../../../components/utils/Theme/Theme";
 
 const initialState: themeState = {
-    currentTheme: darkTheme,
-    themeType: themes.dark,
+    currentTheme: lightTheme,
+    themeType: themes.light,
 };
 
 export const ThemeReducer = (state = initialState, action: themesAction) : themeState => {
