@@ -21,7 +21,7 @@ namespace CSharpSbAPI.Services
 		{
 			const int courseinpages = 5;
 			//TODO - Тут не работает Include, Егор, посмотри плиз.
-			var listCourses = _context.UserCourses.Include(x => x.Course).Where(x => x.UserId == userId)
+			var listCourses = _context.UserCourses.Include(x => x.Course).Include(x => x.User).Where(x => x.UserId == userId)
 				.Select(uc => new GetUserCoursesList(uc)).ToList();
 			var filteredCourses = listCourses.GetRange(courseinpages * page - courseinpages,
 				Math.Min(courseinpages * page, listCourses.Count));
@@ -38,7 +38,7 @@ namespace CSharpSbAPI.Services
 
 		public Response AssignUser(int userId, int courseId)
 		{
-			var course = _context.Courses.Find(courseId);
+			var course = _context.Courses.Include(x => x.Levels).FirstOrDefault(x => x.Id == courseId);
 			if (course == null) return new Response(StatusResp.ClientError, errors: "Курс не найден");
 
 			var user = _context.Users.Find(userId);
@@ -55,8 +55,8 @@ namespace CSharpSbAPI.Services
 				Role = Role.Participant,
 			};
 			_context.UserCourses.Add(userCourse);
-
-			var firstLevel = course.Levels.FirstOrDefault(x => x.Order == course.Levels.Min(x => x.Order));
+			var levels = _context.Levels.Where(x => x.CourseId == courseId);
+			var firstLevel = levels.FirstOrDefault(x => x.Order == levels.Min(x => x.Order));
 
 			if (firstLevel == null)
 				return new Response(StatusResp.OK,
