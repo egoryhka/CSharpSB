@@ -14,5 +14,6 @@
 		public Status Status { get; set; }
 
 		public UserCourse UserCourse { get; set; }
+		public Level Level { get; set; }
 	}
 }

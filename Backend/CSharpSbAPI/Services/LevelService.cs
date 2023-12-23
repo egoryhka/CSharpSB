@@ -47,6 +47,19 @@ namespace CSharpSbAPI.Services
 			newLevel.Order = GetMaxOrder(courseId) + 1;
 			newLevel.CourseId = courseId;
 			_context.Levels.Add(newLevel);
+
+			var ownerUserCourse = _context.UserCourses.FirstOrDefault(x => x.Course == course && x.Role == Role.Owner);
+			if (ownerUserCourse is null) return new Response(StatusResp.ClientError, "Владелец курса не найден");
+
+			var progress = new Progress()
+			{
+				UserCourse = ownerUserCourse,
+				Status = Status.Admin,
+				Level = newLevel,
+				TimeStart = DateTime.Now,
+			};
+			_context.Progresses.Add(progress);
+
 			_context.SaveChanges();
 
 			return Response.OK;
