@@ -6,6 +6,7 @@
     "@babel/core": "^7.16.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@monaco-editor/react": "^4.6.0",
     "@mui/icons-material": "^5.10.16",
     "@mui/material": "^5.10.17",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",

@@ -20,6 +20,7 @@ namespace CSharpSbAPI.Controllers
 		}
 
 		[HttpGet("all")]
+		[Authorize]
 		public Response GetLevels(int courseId)
 		{
 			int.TryParse(User?.FindFirst("Id")?.Value, out var userId);

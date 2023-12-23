@@ -5,6 +5,7 @@ import {Box, Button, Card, Divider, Grid, Typography} from "@mui/material";
 import {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {Level} from "./Level";
+import {useTypeSelector} from "../../../../utils/Hooks/UseTypeSelector";
 
 
 interface LevelsContainerProps {
@@ -17,17 +18,22 @@ export const LevelsContainer = ({courseId, userRole, courseName}: LevelsContaine
     const SBApi = useContext(ApiProvider);
     const [loading, setLoading] = useState(false);
     const [levels, setLevels] = useState<CourseLevelInfo[] | null>(null);
+    const userLoading = useTypeSelector(store => store.authUser.loading);
+    const token = useTypeSelector(store => store.authUser.token);
+
 
     const navigate = useNavigate();
     useEffect(() => {
-        void fetchCourseLevels()
+        if (!userLoading) {
+            void fetchCourseLevels();
+        }
         //Загрузка курса и редактирование уровней
     }, []);
 
     const fetchCourseLevels = async () => {
         setLoading(true);
         if (courseId) {
-            const data = await SBApi.get<CourseLevelInfo[]>(`course/${courseId}/level/all`);
+            const data = await SBApi.withAuthorization(token as string).get<CourseLevelInfo[]>(`course/${courseId}/level/all`);
             setLevels(data.data)
         }
         // if (data.isOk) {
@@ -67,7 +73,8 @@ export const LevelsContainer = ({courseId, userRole, courseName}: LevelsContaine
             </Box>
             <Divider/>
             <Grid container sx={{marginTop: 1}}>
-                {levels?.length && levels.map(level => <Level key={level.id} {...level} courseId={courseId} userRole={userRole}/>)}
+                {levels?.length && levels.map(level => <Level key={level.id} {...level} courseId={courseId}
+                                                              userRole={userRole}/>)}
             </Grid>
         </Card>
     );
