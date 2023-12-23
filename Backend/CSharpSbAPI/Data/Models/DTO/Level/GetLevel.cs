@@ -7,7 +7,6 @@
 		Description = level.Description;
 		HelpText = level.HelpText;
 		Order = level.Order;
-
 		LevelStatus = progress?.Status;
 		Start = progress?.TimeStart;
 		End = progress?.TimeEnd;
