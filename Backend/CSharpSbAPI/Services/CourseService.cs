@@ -1,6 +1,10 @@
 ﻿using CSharpSbAPI.Data;
 using CSharpSbAPI.Data.Models;
-using System.Data.Entity;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace CSharpSbAPI.Services
 {
@@ -21,8 +25,12 @@ namespace CSharpSbAPI.Services
 		{
 			const int courseinpages = 5;
 			//TODO - Тут не работает Include, Егор, посмотри плиз.
-			var listCourses = _context.UserCourses.Include(x => x.Course).Include(x => x.User).Where(x => x.UserId == userId)
-				.Select(uc => new GetUserCoursesList(uc)).ToList();
+			var listCourses = _context.UserCourses.Include(x => x.Course)
+				.ThenInclude(x => x.Users)
+				.Where(x => x.UserId == userId)
+				.Select(uc => new GetUserCoursesList(uc))
+				.ToList();
+
 			var filteredCourses = listCourses.GetRange(courseinpages * page - courseinpages,
 				Math.Min(courseinpages * page, listCourses.Count));
 			var response = new GetUserCoursesInfo(courseinpages, listCourses.Count, filteredCourses);
