@@ -6,6 +6,7 @@ import {ICourse} from "../../../api/ConferenceTimeLine/getConferencesTimeLine";
 import {Block} from "@mui/icons-material";
 import {CustomTooltip} from "../../utils/CustomTooltip/CustomTooltip";
 import {stringToColor} from "../../utils/StringToColor/StringToColor";
+import {purple} from "@mui/material/colors";
 
 interface CoursesViewProps {
     course: ICourse;
@@ -15,7 +16,7 @@ export const CourseViewItem = ({name, id, users, description}: ICourse) => {
     const dateNow = new Date();
     // const lineStart = new Date(start);
     // const lineEnd = new Date(end);
-    const BGColor = getBGColors(1).pop();
+    const BGColor = purple[100];
     let startPosition = 0;
     // if (lineStart > dateNow) {
     //     startPosition = Math.trunc((lineStart.getTime() - dateNow.getTime()) / day);
@@ -36,7 +37,7 @@ export const CourseViewItem = ({name, id, users, description}: ICourse) => {
                     {users.map(user =>
                         <Avatar>
                             <CustomTooltip text={user.name}>
-                                    <Avatar alt={user.name} src={user.logo} sx={{bgcolor: stringToColor(user.name)}}/>
+                                <Avatar alt={user.name} src={user.logo} sx={{bgcolor: BGColor}}/>
                             </CustomTooltip>
                         </Avatar>
                     )}

@@ -1,8 +1,11 @@
 import {useNavigate, useParams} from "react-router-dom";
-import {useEffect, useMemo} from "react";
-import {getBGColors} from "../../utils";
+import {useContext, useEffect, useMemo, useState} from "react";
+import {CourseInfo, CourseLevelInfo, getBGColors} from "../../utils";
 import {Grid, Typography} from "@mui/material";
 import {Editor} from "@monaco-editor/react";
+import {ApiProvider} from "../../../../../api/BaseResponse";
+import {delay} from "../../../../utils/Delay/Delay";
+import {useTypeSelector} from "../../../../utils/Hooks/UseTypeSelector";
 
 const startText = `using System;
 using System.Collections.Generic;
@@ -22,8 +25,15 @@ namespace HelloWorld
 
 export const LevelPage = () => {
     const navigate = useNavigate();
+    const SBApi = useContext(ApiProvider);
     const routeParams = useParams();
-    console.log("routeParams", routeParams)
+    const [loading, setLoading] = useState(false);
+    const [levelInfo, setLevelInfo] = useState<CourseLevelInfo | null>(null);
+    const token = useTypeSelector(store => store.authUser.token);
+
+    const userLoading = useTypeSelector(store => store.authUser.loading);
+
+    console.log("routeParams", routeParams);
 
     // const goToLevel = async () => {
     //     navigate('/course/' + courseId + "/level/" + id);
@@ -32,26 +42,37 @@ export const LevelPage = () => {
     const color = useMemo(() => getBGColors(1), []);
 
     useEffect(() => {
-        window.onmessage = function (e) {
-            if (e.data && e.data.language) {
-                console.log(e.data)
-                // handle the e.data which contains the code object
-            }
+        if (!userLoading) {
+            void fetchLevelInfo();
         }
-    }, []);
+        // window.onmessage = function (e) {
+        //     if (e.data && e.data.language) {
+        //         console.log(e.data)
+        //         // handle the e.data which contains the code object
+        //     }
+        // }
+    }, [userLoading]);
 
-    return (<>
+    const fetchLevelInfo = async () => {
+        setLoading(true);
+        const data = await SBApi.withAuthorization(token as string).get<CourseLevelInfo>(`course/${routeParams?.courseId as string}/level/${routeParams?.levelId as string}`);
+        if (data.isOk) {
+            setLevelInfo(data.data)
+        }
+        setLoading(false);
+    }
+
+    return (
+        <>
             <br/>
             <br/>
-
-            <Editor height="450px" defaultLanguage="csharp" defaultValue={startText}  />
-
-            <iframe
-                frameBorder="0"
-                height="450px"
-                src="https://onecompiler.com/embed/csharp?codeChangeEvent=true&hideTitle=true&hideNewFileOption=true&hideNew=true&hideLanguageSelection=true&hideStdin=true"
-                width="100%">
-            </iframe>
+            <Editor height="450px" defaultLanguage="csharp" defaultValue={startText}/>
+            {/*<iframe*/}
+            {/*    frameBorder="0"*/}
+            {/*    height="450px"*/}
+            {/*    src="https://onecompiler.com/embed/csharp?codeChangeEvent=true&hideTitle=true&hideNewFileOption=true&hideNew=true&hideLanguageSelection=true&hideStdin=true"*/}
+            {/*    width="100%">*/}
+            {/*</iframe>*/}
 
         </>
     );
