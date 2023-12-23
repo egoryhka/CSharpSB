@@ -18,14 +18,16 @@ namespace CSharpSbAPI.Services
 			var userCourse = _context.UserCourses.FirstOrDefault(x => x.UserId == userId && x.CourseId == courseId);
 			if (userCourse == null) return new Response(StatusResp.ClientError, errors: "Курс для пользователя не найден");
 
-			var query = from l in _context.Levels
-						join p in _context.Progresses
+			var query = from l in _context.Levels // все левелы (без привязки к юзерам)
+						join p in _context.Progresses // все прогрессы у которых левел есть среди нашего селекта
 							on l.Id equals p.LevelId into lp
-						from p in lp.DefaultIfEmpty()
-						where p.UserCourse == userCourse
+						from p in lp.DefaultIfEmpty() // если прогресса нет - ставим пустоту, но строчку достаём всёравно
+						where l.CourseId == courseId // отсекаем левелы по курсу
 						select new { l, p };
 
-			var levels = query.Select(x => new GetLevel(x.l, x.p));
+			var levels = query
+				.Where(x => x.p == null || x.p.UserCourse == userCourse) // оставляем только записи у которых UserCourse наш или пустой
+				.Select(x => new GetLevel(x.l, x.p));
 
 			var resp = new Response<IEnumerable<GetLevel>>(StatusResp.OK, levels);
 			return resp;
