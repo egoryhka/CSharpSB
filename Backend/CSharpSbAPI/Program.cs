@@ -22,8 +22,17 @@ namespace CSharpSbAPI
 			);
 
 			// EntityFramework
+			var connectionString = builder.Configuration
+				.GetConnectionString("CSharpSbDbConnectionString");
+
+			string startupPath = Environment.CurrentDirectory + @"\";
+			connectionString = connectionString.Replace("|DataDirectory|", startupPath);
+
+			Console.WriteLine("Путь: " + startupPath);
+			Console.WriteLine("Строка подключения: " + connectionString);
+
 			builder.Services.AddDbContext<CSharpSbDbContext>(options =>
-			options.UseSqlServer(builder.Configuration.GetConnectionString("CSharpSbDbConnectionString")));
+			options.UseSqlServer(connectionString));
 
 			// Swagger
 			builder.Services.AddEndpointsApiExplorer();
@@ -72,8 +81,6 @@ namespace CSharpSbAPI
 			builder.Services.AddScoped<CourseService>();
 			builder.Services.AddScoped<LevelService>();
 			builder.Services.AddScoped<GameService>();
-
-
 
 
 			// --------------------------------------------------

@@ -15,7 +15,7 @@ namespace CSharpSbAPI.Data
 
 		public CSharpSbDbContext(DbContextOptions<CSharpSbDbContext> options) : base(options)
 		{
-			Database.EnsureCreated();
+			//Database.EnsureCreated(); переходим на миграции
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)

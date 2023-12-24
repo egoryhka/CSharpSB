@@ -4,8 +4,8 @@
 	{
 		public int Id { get; set; }
 
-		public int UserCourseId { get; set; }
-		public int LevelId { get; set; }
+		public int? UserCourseId { get; set; }
+		public int? LevelId { get; set; }
 
 		public string? Code { get; set; }
 		public bool HelpUsed { get; set; }
