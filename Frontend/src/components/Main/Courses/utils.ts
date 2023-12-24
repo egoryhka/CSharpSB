@@ -11,7 +11,6 @@ export const getBGColors = (count: number) => {
 }
 
 export const getBGColorByStatus = (status: LevelStatus): { defaultColor: string, hover: string } => {
-    debugger
     switch (status) {
         case LevelStatus.Current:
             return {hover: purple[400], defaultColor: purple[100]};

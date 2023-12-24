@@ -93,8 +93,5 @@ namespace CSharpSbAPI.Services
 
 			return new Response<TestResult>(StatusResp.OK, testResult);
 		}
-
-
-
 	}
 }
