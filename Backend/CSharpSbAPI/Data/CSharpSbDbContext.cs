@@ -15,6 +15,7 @@ namespace CSharpSbAPI.Data
 
 		public CSharpSbDbContext(DbContextOptions<CSharpSbDbContext> options) : base(options)
 		{
+			Database.Migrate();
 			//Database.EnsureCreated(); переходим на миграции
 		}
 

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CSharpSbAPI.Migrations
 {
     [DbContext(typeof(CSharpSbDbContext))]
-    [Migration("20231224172406_PpDb_Migration_v2")]
-    partial class PpDb_Migration_v2
+    [Migration("20231224201954_PpDb_Migration_19854868320919")]
+    partial class PpDb_Migration_19854868320919
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -69,6 +69,9 @@ namespace CSharpSbAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NewTestProp")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Order")

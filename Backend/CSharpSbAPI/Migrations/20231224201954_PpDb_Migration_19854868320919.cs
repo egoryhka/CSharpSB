@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CSharpSbAPI.Migrations
 {
-    public partial class PpDb_Migration : Migration
+    public partial class PpDb_Migration_19854868320919 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,8 +49,11 @@ namespace CSharpSbAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CourseId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Order = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MainCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NewTestProp = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HelpText = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TipText = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ExpResultsJson = table.Column<string>(type: "nvarchar(max)", nullable: true)

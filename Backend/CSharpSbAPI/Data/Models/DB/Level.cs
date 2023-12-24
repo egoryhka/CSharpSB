@@ -12,7 +12,7 @@
 		public string? MainCode { get; set; }
 		public string? UserCode { get; set; }
 
-        public string? HelpText { get; set; }
+		public string? HelpText { get; set; }
 
         public string? TipText { get; set; }
 

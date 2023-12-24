@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CSharpSbAPI.Migrations
 {
     [DbContext(typeof(CSharpSbDbContext))]
-    [Migration("20231224154839_PpDb_Migration")]
-    partial class PpDb_Migration
+    [Migration("20231224202243_PpDb_Migration_204121165328268")]
+    partial class PpDb_Migration_204121165328268
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -65,6 +65,9 @@ namespace CSharpSbAPI.Migrations
                     b.Property<string>("HelpText")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("MainCode")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -72,6 +75,9 @@ namespace CSharpSbAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("TipText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserCode")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
