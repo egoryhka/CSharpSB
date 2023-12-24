@@ -25,11 +25,15 @@ namespace CSharpSbAPI
 			var connectionString = builder.Configuration
 				.GetConnectionString("CSharpSbDbConnectionString");
 
-			string startupPath = Environment.CurrentDirectory + @"\";
-			connectionString = connectionString.Replace("|DataDirectory|", startupPath);
+			// Попытка прокидывать .mdf файл через гит для синхронизации данных в бд
+			// когда Саня что-то добавляет на фронте 
+			// реализовать не удалось т.к.
+			// студия почему-то считает файл измененным при любом взаимодействии с базой
 
-			Console.WriteLine("Путь: " + startupPath);
-			Console.WriteLine("Строка подключения: " + connectionString);
+			//string startupPath = Environment.CurrentDirectory + @"\";
+			//connectionString = connectionString.Replace("|DataDirectory|", startupPath);
+			//Console.WriteLine("Путь: " + startupPath);
+			//Console.WriteLine("Строка подключения: " + connectionString);
 
 			builder.Services.AddDbContext<CSharpSbDbContext>(options =>
 			options.UseSqlServer(connectionString));
