@@ -61,7 +61,7 @@ namespace CSharpSbAPI.Services
 
 			var level = ((Response<Level>)levelRes).Data;
 
-			var userCourse = _context.UserCourses.Where(x => x.UserId == userId && x.CourseId == level.CourseId);
+			var userCourse = _context.UserCourses.FirstOrDefault(x => x.UserId == userId && x.CourseId == level.CourseId);
 			if (userCourse == null) return new Response(StatusResp.ClientError, errors: "Курс для пользователя не найден");
 
 			var progress = _context.Progresses.FirstOrDefault(x => x.LevelId == levelId && x.UserCourse == userCourse);

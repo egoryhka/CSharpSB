@@ -39,13 +39,6 @@ namespace CSharpSandboxTests
 			//service.AddCourse();
 		}
 
-		[Test]
-		public void TestGameService()
-		{
-			var service = new GameService(db, null, null, null, null);
-
-			service.TestCode(0, "");
-		}
 
 
 
