@@ -5,11 +5,8 @@ import {UnregisterRequest} from "../utils/Errors/ErrorPages/UnregisterRequest";
 import {Loader} from "../utils/Loader/Loader";
 import {NotFoundPage} from "../utils/Errors/ErrorPages/NotFoundPage";
 import {Box} from "@mui/material";
-import AddLevel from "./Courses/CoursePage/Level/AddLevel";
 import {Forbidden} from "../utils/Errors/ErrorPages/Forbidden";
 import {LevelPage} from "./Courses/CoursePage/Level/LevelPage";
-import {OtherUserProfileContainer} from "./Profile/OtherUserProfileContainer";
-
 export const Main: React.FC = () => {
     document.title = 'Главная';
 
@@ -20,6 +17,8 @@ export const Main: React.FC = () => {
     const ViewCourse = React.lazy(() => import("./Courses/CoursePage/ViewCourse"));
     const AddLevel = React.lazy(() => import("./Courses/CoursePage/Level/AddLevel"));
     const EditCourse = React.lazy(() => import("./Courses/CoursePage/EditCourses"));
+    const MainWiki = React.lazy(() => import("./Wiki/MainWiki"));
+    const WikiPage = React.lazy(() => import("./Wiki/WikiPage"));
 
     return (
         <Box sx={{marginTop: "36px", marginBottom: "36px"}}>
@@ -39,6 +38,9 @@ export const Main: React.FC = () => {
                     {/*  Все про уровни  */}
                     <Route path='/course/:id/level/add' element={<AddLevel />}/>
                     <Route path='/course/:courseId/level/:levelId' element={<LevelPage />}/>
+                    {/*  Wiki  */}
+                    <Route path='/wiki' element={<MainWiki />}/>
+                    <Route path='/wiki/:id' element={<WikiPage />}/>
                     {/*  // Error pages  */}
                     <Route path='/uregisterrequest' element={<UnregisterRequest />}/>
                     <Route path='/permissiondenied' element={<Forbidden />}/>

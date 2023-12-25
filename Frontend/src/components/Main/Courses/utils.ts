@@ -128,3 +128,30 @@ export const getLinkLevelText = (role?: Roles): string | undefined => {
             throw new Error("Unknown role type");
     }
 }
+
+export const startUserCode = `using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+
+namespace HelloWorld
+{
+\tpublic class Program
+\t{
+\t\tpublic static void Main(string[] args)
+\t\t{
+\t\t\t//-------------------;
+\t\t\t//Пишите код вот сюда;
+\t\t\t//-------------------;
+\t\t}
+\t}
+}`
+
+export const startMainCode = `Console.WriteLine(GetGreetingsMessage("Hello, World!"));`
+
+export const userCode = `public static string GetGreetingsMessage(string text)
+{
+//-------------------;
+//Пишите код вот сюда;
+//-------------------;
+}`

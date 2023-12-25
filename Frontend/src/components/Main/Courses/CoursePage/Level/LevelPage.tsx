@@ -1,25 +1,11 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useContext, useEffect, useMemo, useState} from "react";
-import {CourseInfo, CourseLevelInfo, getBGColors} from "../../utils";
+import {CourseInfo, CourseLevelInfo, getBGColors, startUserCode} from "../../utils";
 import {Editor} from "@monaco-editor/react";
 import {ApiProvider} from "../../../../../api/BaseResponse";
 import {useTypeSelector} from "../../../../utils/Hooks/UseTypeSelector";
 
-const startText = `using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
 
-namespace HelloWorld
-{
-\tpublic class Program
-\t{
-\t\tpublic static void Main(string[] args)
-\t\t{
-\t\t\tConsole.WriteLine("Hello, World!");
-\t\t}
-\t}
-}`
 
 export const LevelPage = () => {
     const navigate = useNavigate();
@@ -73,7 +59,7 @@ export const LevelPage = () => {
         <>
             <br/>
             <br/>
-            <Editor height="450px" defaultLanguage="csharp" defaultValue={startText}/>
+            <Editor height="450px" defaultLanguage="csharp" defaultValue={startUserCode}/>
             <iframe
                 frameBorder="0"
                 height="450px"
