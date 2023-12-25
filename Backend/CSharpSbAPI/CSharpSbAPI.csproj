@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Новая папка\**" />
+    <Content Remove="Data\Новая папка\**" />
+    <EmbeddedResource Remove="Data\Новая папка\**" />
+    <None Remove="Data\Новая папка\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.25" />
@@ -22,10 +29,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CodeCompilerLibrary\CodeCompilerLibrary.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data\Новая папка\" />
   </ItemGroup>
 
   <ItemGroup>
