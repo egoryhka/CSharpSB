@@ -66,7 +66,7 @@ namespace CodeCompilerLibrary.Tests
 				{
 					int line = ex.InnerException?.GetLineNumber() ?? ex.GetLineNumber();
 
-					var mes = (line != -1 ? $"Строка:{line} -> " : "") + ex.InnerException?.Message ?? ex.Message;
+					var mes = (line != -1 ? $"Строка:{line} -> " : "") + (ex.InnerException?.Message ?? ex.Message);
 					result.Errors.Add(mes);
 				}
 			}

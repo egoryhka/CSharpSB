@@ -4,7 +4,7 @@ import {CourseInfo, CourseLevelInfo, getBGColors, startUserCode} from "../../uti
 import {Editor} from "@monaco-editor/react";
 import {ApiProvider} from "../../../../../api/BaseResponse";
 import {useTypeSelector} from "../../../../utils/Hooks/UseTypeSelector";
-
+import {Button} from "@mui/material";
 
 
 export const LevelPage = () => {
@@ -12,6 +12,7 @@ export const LevelPage = () => {
     const SBApi = useContext(ApiProvider);
     const routeParams = useParams();
     const [loading, setLoading] = useState(false);
+    const [code, setCode] = useState("");
     const [levelInfo, setLevelInfo] = useState<CourseLevelInfo | null>(null);
     const token = useTypeSelector(store => store.authUser.token);
 
@@ -29,19 +30,17 @@ export const LevelPage = () => {
         if (!userLoading) {
             void fetchLevelInfo();
         }
-        window.onmessage = function (e) {
-            console.log(e)
-            if (e.data && e.data.language) {
-                console.log(e.data)
-                // handle the e.data which contains the code object
-            }
-        }
-        const itr = setInterval(() => window?.document?.querySelector(".top-section-group-results")?.remove(), 1000);
-        return () => clearTimeout(itr);
+
+        // window.onmessage = function (e) {
+        //     console.log(e)
+        //     if (e.data && e.data.language) {
+        //         console.log(e.data)
+        //         // handle the e.data which contains the code object
+        //     }
+        // }
     }, [userLoading]);
 
     useEffect(() => {
-
 
 
     });
@@ -50,23 +49,33 @@ export const LevelPage = () => {
         setLoading(true);
         const data = await SBApi.withAuthorization(token as string).get<CourseLevelInfo>(`course/${routeParams?.courseId as string}/level/${routeParams?.levelId as string}`);
         if (data.isOk) {
-            setLevelInfo(data.data)
+            setLevelInfo(data.data);
+            setCode(data.data.code ?? data.data.userCode ?? data.data.mainCode);
         }
         setLoading(false);
+    }
+
+    const sendCode = async () => {
+        const data = await SBApi.withAuthorization(token as string).post<CourseLevelInfo>(`game/test`, {
+            data: {
+                code: code,
+                levelId: levelInfo?.id
+            }
+        });
     }
 
     return (
         <>
             <br/>
             <br/>
-            <Editor height="450px" defaultLanguage="csharp" defaultValue={startUserCode}/>
+            <Editor height="450px" defaultLanguage="csharp" value={code} onChange={e => setCode(e ?? "")}/>
             <iframe
                 frameBorder="0"
                 height="450px"
                 src="https://sharplab.io/#v2:CYLg1APgAgTAjAWAFBQMwAJboMLoN7LpGYZQAs6AsgBQCU+hxTUcAnNQEQe0DcjTA9P3QBfZCKA="
                 width="100%">
             </iframe>
-
+            <Button onClick={sendCode}>Отправить на проверку</Button>
         </>
     );
 };

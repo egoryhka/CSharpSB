@@ -1,4 +1,5 @@
 ﻿using CSharpSbAPI.Data.Models;
+using CSharpSbAPI.Data.Models.DTO.Level;
 using CSharpSbAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +16,7 @@ namespace CSharpSbAPI.Controllers
 		}
 
 		[HttpPost("test")]
-		public Response TestCode(int levelId, string code) => _gameService.TestCode(levelId, code);
+		public Response TestCode(TestCode model) => _gameService.TestCode(model.levelId, model.code);
 
 		[HttpGet("nextLevel")]
 		public Response NextLevel(int levelId, int userId) => _gameService.NextLevel(levelId, userId);

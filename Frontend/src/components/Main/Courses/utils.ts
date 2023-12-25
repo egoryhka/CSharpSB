@@ -45,8 +45,14 @@ export interface CourseLevelInfo {
     name: string
     description: string
     order: number;
-    helpText: string;
     levelStatus: LevelStatus;
+    mainCode: string;
+    userCode: string;
+    helpText: string;
+    helpUsed: boolean;
+    start: boolean;
+    end: boolean;
+    code: string;
 }
 
 export interface CourseInfo {
