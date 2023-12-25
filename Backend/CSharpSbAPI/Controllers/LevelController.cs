@@ -27,7 +27,15 @@ namespace CSharpSbAPI.Controllers
 			return _levelService.GetAll(courseId, userId);
 		}
 
-		[HttpGet("{levelId}")] public Response GetLevel(int levelId) => _levelService.GetItem(levelId);
+		[HttpGet("{levelId}")]
+		[Authorize]
+		public Response GetLevel(int levelId)
+		{
+			int.TryParse(User?.FindFirst("Id")?.Value, out var userId);
+			return _levelService.GetLevel(levelId, userId);
+		}
+
+		//[HttpGet("{levelId}")] public Response GetLevel(int levelId) => _levelService.GetItem(levelId);
 
 		[HttpPost("add")] public Response AddLevel(int courseId, AddLevel level) => _levelService.AddLevel(level, courseId);
 

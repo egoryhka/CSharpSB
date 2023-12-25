@@ -13,6 +13,31 @@ namespace CSharpSbAPI.Services
 		{
 		}
 
+		public Response GetLevel(int levelId, int userId)
+		{
+			var level = _context.Levels.Find(levelId);
+			if (level == null) return new Response(StatusResp.ClientError, errors: "Уровень не найден");
+
+			var userCourse = _context.UserCourses.FirstOrDefault(x => x.UserId == userId && x.CourseId == level.CourseId);
+			if (userCourse == null) return new Response(StatusResp.ClientError, errors: "Курс для пользователя не найден");
+
+			var currentUserProgresses = from p in _context.Progresses
+										where p.UserCourse == userCourse
+										select p;
+
+			var query = from l in _context.Levels
+						join p in currentUserProgresses
+							on l.Id equals p.LevelId into lp
+						from p in lp.DefaultIfEmpty()
+						where l.Id == levelId
+						select new { l, p };
+
+			var res = query.First();
+			
+			var resp = new Response<GetLevel>(StatusResp.OK, new GetLevel(res.l, res.p));
+			return resp;
+		}
+
 		public Response GetAll(int courseId, int userId)
 		{
 			var userCourse = _context.UserCourses.FirstOrDefault(x => x.UserId == userId && x.CourseId == courseId);
