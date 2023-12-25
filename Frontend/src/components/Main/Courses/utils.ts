@@ -53,6 +53,8 @@ export interface CourseLevelInfo {
     start: boolean;
     end: boolean;
     code: string;
+    nextLevelId?: string;
+    prevLevelId?: string;
 }
 
 export interface CourseInfo {

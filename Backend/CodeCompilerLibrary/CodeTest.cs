@@ -80,12 +80,12 @@ namespace CodeCompilerLibrary.Tests
 		{
 			Real = real;
 			Expected = expected;
-			IsCorrent = isCorrect;
+			IsCorrect = isCorrect;
 		}
 
 		public string Real { get; set; }
 		public string Expected { get; set; }
-		public bool IsCorrent { get; set; }
+		public bool IsCorrect { get; set; }
 	}
 
 
