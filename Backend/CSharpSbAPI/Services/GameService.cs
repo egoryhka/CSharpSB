@@ -23,7 +23,7 @@ namespace CSharpSbAPI.Services
 			_progressService = progressService;
 			_accountService = accountService;
 		}
-	
+
 		public Response NextLevel(int levelId, int userId)
 		{
 			var userRes = _accountService.GetItem(userId);
@@ -41,7 +41,7 @@ namespace CSharpSbAPI.Services
 
 			if (!_context.Progresses.Any(x => x.UserCourse.UserId == userId && x.LevelId == nextLevel.Id))
 			{
-				
+
 				var res = _progressService.Add(new Progress()
 				{
 					LevelId = nextLevel.Id,
@@ -54,42 +54,31 @@ namespace CSharpSbAPI.Services
 			return Response.OK;
 		}
 
-		public Response TestCode(int levelId, string code)
+		public Response TestCode(int userId, int levelId, string code)
 		{
 			var levelRes = _levelService.GetItem(levelId);
 			if (levelRes.Status != StatusResp.OK) return levelRes;
 
 			var level = ((Response<Level>)levelRes).Data;
 
-			var correctOutputs = level.ExpResultsJson.FromJson<List<string>>();
+			var userCourse = _context.UserCourses.Where(x => x.UserId == userId && x.CourseId == level.CourseId);
+			if (userCourse == null) return new Response(StatusResp.ClientError, errors: "Курс для пользователя не найден");
 
+			var progress = _context.Progresses.FirstOrDefault(x => x.LevelId == levelId && x.UserCourse == userCourse);
+			if (progress == null) return new Response(StatusResp.ClientError, errors: "Не найден прогресс по данному уровню");
 
-			var mainCode = @"
-					     Console.WriteLine(Max(new int[0]));
-					     Console.WriteLine(Max(new[] { 3 }));
-					     Console.WriteLine(Max(new[] { 3, 1, 2 }));
-					     Console.WriteLine(Max(new[] { ""A"", ""B"", ""C"" }));";
+			var correctOutputs = level.ExpResultsJson?.FromJson<List<string>>() ?? new List<string>();
 
-			code = @"
-						static T Max<T>(T[] source) where T:IComparable
-						{
-						    if(source.Length == 0)
-						        return default(T);
-								
-						    var max = source[0];
-							
-							for(int i=1;i<source.Length;i++)
-							{
-							  if(source[i].CompareTo(max) == 1) max = source[i];
-							}
+			var userCodeExists = !string.IsNullOrEmpty(level.UserCode);
 
-							
-						
-							return max;
-						}
-					";
+			var mainCode = userCodeExists ? level.MainCode : code;
+			var userCode = userCodeExists ? code : "";
 
-			var testResult = CodeTest.Test(mainCode, code, correctOutputs);
+			var testResult = CodeTest.Test(mainCode, userCode, correctOutputs);
+
+			progress.Code = code;
+			if (testResult.Status == TestResultStatus.Success) progress.Status = Status.Completed;
+			_context.SaveChanges();
 
 			return new Response<TestResult>(StatusResp.OK, testResult);
 		}

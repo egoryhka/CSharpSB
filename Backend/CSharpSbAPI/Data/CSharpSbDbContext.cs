@@ -13,9 +13,8 @@ namespace CSharpSbAPI.Data
 		public DbSet<Level> Levels { get; set; } = null!;
 		public DbSet<Progress> Progresses { get; set; } = null!;
 
-		public CSharpSbDbContext(DbContextOptions<CSharpSbDbContext> options) : base(options)
+		public CSharpSbDbContext(DbContextOptions/*<CSharpSbDbContext>*/ options) : base(options)
 		{
-			Database.Migrate();
 			//Database.EnsureCreated(); переходим на миграции
 		}
 

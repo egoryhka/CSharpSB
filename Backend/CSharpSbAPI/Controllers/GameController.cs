@@ -16,7 +16,11 @@ namespace CSharpSbAPI.Controllers
 		}
 
 		[HttpPost("test")]
-		public Response TestCode(TestCode model) => _gameService.TestCode(model.levelId, model.code);
+		public Response TestCode(TestCode model)
+		{
+			int.TryParse(User?.FindFirst("Id")?.Value, out var userId);
+			return _gameService.TestCode(userId, model.levelId, model.code);
+		}
 
 		[HttpGet("nextLevel")]
 		public Response NextLevel(int levelId, int userId) => _gameService.NextLevel(levelId, userId);

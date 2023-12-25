@@ -24,7 +24,6 @@ namespace CSharpSbAPI.Controllers
 		[HttpGet("user/{id}/all")]
 		public Response GetUsersCourses(int id, int page)
 		{
-
 			return _courseService.GetUsersCourses(id, page);
 		}
 

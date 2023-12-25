@@ -16,13 +16,13 @@ namespace CSharpSandboxTests
 
 		public ServicesUnitTest()
 		{
-			var options = GetOptions("Server=(localdb)\\mssqllocaldb;Database=GAVNOMOCHAZHOPA;Trusted_Connection=True;");
+			var options = GetOptions("Server=(localdb)\\mssqllocaldb;AttachDbFilename=|DataDirectory|PpDb.mdf;Database=PpDb;Trusted_Connection=Yes;");
 			db = new CSharpSbDbContext(options);
 		}
 
-		private static DbContextOptions<CSharpSbDbContext> GetOptions(string connectionString)
+		private static DbContextOptions GetOptions(string connectionString)
 		{
-			return (DbContextOptions<CSharpSbDbContext>)SqlServerDbContextOptionsExtensions
+			return SqlServerDbContextOptionsExtensions
 				.UseSqlServer(new DbContextOptionsBuilder(), connectionString).Options;
 		}
 
@@ -39,6 +39,13 @@ namespace CSharpSandboxTests
 			//service.AddCourse();
 		}
 
+		[Test]
+		public void TestGameService()
+		{
+			var service = new GameService(db, null, null, null, null);
+
+			service.TestCode(0, "");
+		}
 
 
 
