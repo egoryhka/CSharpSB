@@ -11,9 +11,10 @@ interface AlertHintProps {
     size: OverridableStringUnion<'small' | 'medium' | 'large', IconButtonPropsSizeOverrides>;
     text: string;
     closeHandler?: () => void;
+    actionIcon?: React.ReactNode;
 }
 
-const AlertHint = ({collapse, severity, text, size, closeHandler}: AlertHintProps) => {
+const AlertHint = ({collapse, severity, text, size, closeHandler, actionIcon}: AlertHintProps) => {
     return (
         <Box sx={{width: '100%'}}>
             <Collapse in={collapse}>
@@ -26,7 +27,7 @@ const AlertHint = ({collapse, severity, text, size, closeHandler}: AlertHintProp
                             size={size}
                             onClick={closeHandler}
                         >
-                            <CloseIcon fontSize="inherit"/>
+                            {actionIcon ?? <CloseIcon fontSize="inherit"/>}
                         </IconButton>
                     }
                     sx={{mb: 2}}

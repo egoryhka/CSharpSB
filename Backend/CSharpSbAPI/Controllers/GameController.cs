@@ -22,7 +22,10 @@ namespace CSharpSbAPI.Controllers
 			return _gameService.TestCode(userId, model.levelId, model.code);
 		}
 
-		[HttpGet("nextLevel")]
-		public Response NextLevel(int levelId, int userId) => _gameService.NextLevel(levelId, userId);
+		[HttpGet("nextLevel/{levelId}")]
+		public Response NextLevel(int levelId) {
+			int.TryParse(User?.FindFirst("Id")?.Value, out var userId);
+			return _gameService.NextLevel(levelId, userId);
+		}
 	}
 }
