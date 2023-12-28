@@ -1,6 +1,6 @@
 ﻿public class GetLevel
 {
-	public GetLevel(Level level, Progress progress)
+	public GetLevel(Level level, Progress progress, GetLevel next = null!, GetLevel prev = null!)
 	{
 		Id = level.Id;
 		Name = level.Name;
@@ -15,6 +15,9 @@
 		End = progress?.TimeEnd;
 		Code = progress?.Code;
 		HelpUsed = progress?.HelpUsed;
+
+		Next = next;
+		Prev = prev;
 	}
 	public int Id { get; set; }
 
@@ -31,4 +34,8 @@
 
 	public string? HelpText { get; set; }
 	public bool? HelpUsed { get; set; }
+
+	public GetLevel? Next { get; set; }
+	public GetLevel? Prev { get; set; }
+
 }

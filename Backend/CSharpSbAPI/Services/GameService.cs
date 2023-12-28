@@ -33,7 +33,9 @@ namespace CSharpSbAPI.Services
 			if (levelRes.Status != StatusResp.OK) return levelRes;
 
 			var level = ((Response<Level>)levelRes).Data;
-			var nextLevel = _context.Levels.FirstOrDefault(x => x.CourseId == level.CourseId && x.Order == level.Order + 1);
+			var orderedLevels = _context.Levels.Where(x => x.CourseId == level.CourseId).OrderBy(x => x.Order).ToList();
+
+			var nextLevel = orderedLevels.ElementAtOrDefault(orderedLevels.IndexOf(level) + 1);
 			if (nextLevel == null) return new Response(StatusResp.ClientError, errors: "Уровень не найден");
 
 			var userCourse = _context.UserCourses.FirstOrDefault(x => x.UserId == userId && x.CourseId == nextLevel.CourseId);
@@ -81,6 +83,25 @@ namespace CSharpSbAPI.Services
 			_context.SaveChanges();
 
 			return new Response<TestResult>(StatusResp.OK, testResult);
+		}
+
+		public Response ResetCode(int userId, int levelId)
+		{
+			var levelRes = _levelService.GetItem(levelId);
+			if (levelRes.Status != StatusResp.OK) return levelRes;
+
+			var level = ((Response<Level>)levelRes).Data;
+
+			var userCourse = _context.UserCourses.FirstOrDefault(x => x.UserId == userId && x.CourseId == level.CourseId);
+			if (userCourse == null) return new Response(StatusResp.ClientError, errors: "Курс для пользователя не найден");
+
+			var progress = _context.Progresses.FirstOrDefault(x => x.LevelId == levelId && x.UserCourse == userCourse);
+			if (progress == null) return new Response(StatusResp.ClientError, errors: "Не найден прогресс по данному уровню");
+
+			progress.Code = "";
+			_context.SaveChanges();
+
+			return Response.OK;
 		}
 	}
 }

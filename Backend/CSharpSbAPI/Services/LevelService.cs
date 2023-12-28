@@ -18,23 +18,32 @@ namespace CSharpSbAPI.Services
 			var level = _context.Levels.Find(levelId);
 			if (level == null) return new Response(StatusResp.ClientError, errors: "Уровень не найден");
 
-			var userCourse = _context.UserCourses.FirstOrDefault(x => x.UserId == userId && x.CourseId == level.CourseId);
-			if (userCourse == null) return new Response(StatusResp.ClientError, errors: "Курс для пользователя не найден");
+			var progress = _context.Progresses
+				.FirstOrDefault(x => x.UserCourse.UserId == userId &&
+								x.UserCourse.CourseId == level.CourseId &&
+								x.LevelId == levelId);
 
-			var currentUserProgresses = from p in _context.Progresses
-										where p.UserCourse == userCourse
-										select p;
+			if (progress == null) return new Response(StatusResp.ClientError, errors: "По данному уровню отсутствует прогресс");
 
-			var query = from l in _context.Levels
-						join p in currentUserProgresses
-							on l.Id equals p.LevelId into lp
-						from p in lp.DefaultIfEmpty()
-						where l.Id == levelId
-						select new { l, p };
 
-			var res = query.First();
-			
-			var resp = new Response<GetLevel>(StatusResp.OK, new GetLevel(res.l, res.p));
+			var orderedLevels = _context.Levels.Where(x => x.CourseId == level.CourseId).OrderBy(x => x.Order).ToList();
+
+			var nextLevel = orderedLevels.ElementAtOrDefault(orderedLevels.IndexOf(level) + 1);
+			var prevLevel = orderedLevels.ElementAtOrDefault(orderedLevels.IndexOf(level) - 1);
+
+			var nextProgress = nextLevel != null ? _context.Progresses
+				.FirstOrDefault(x => x.UserCourse.UserId == userId &&
+								x.UserCourse.CourseId == nextLevel.CourseId &&
+								x.LevelId == nextLevel.Id) : null;
+			var prevProgress = prevLevel != null ? _context.Progresses
+				.FirstOrDefault(x => x.UserCourse.UserId == userId &&
+								x.UserCourse.CourseId == prevLevel.CourseId &&
+								x.LevelId == prevLevel.Id) : null;
+
+			var next = nextLevel != null ? new GetLevel(nextLevel, nextProgress) : null;
+			var prev = prevLevel != null ? new GetLevel(prevLevel, prevProgress) : null;
+
+			var resp = new Response<GetLevel>(StatusResp.OK, new GetLevel(level, progress, next, prev));
 			return resp;
 		}
 
@@ -50,11 +59,11 @@ namespace CSharpSbAPI.Services
 			var query = from l in _context.Levels
 						join p in currentUserProgresses
 							on l.Id equals p.LevelId into lp
-						from p in lp.DefaultIfEmpty() 
-						where l.CourseId == courseId 
+						from p in lp.DefaultIfEmpty()
+						where l.CourseId == courseId
 						select new { l, p };
 
-			var levels = query.Select(x => new GetLevel(x.l, x.p));
+			var levels = query.Select(x => new GetLevel(x.l, x.p, null!, null!));
 
 			var resp = new Response<IEnumerable<GetLevel>>(StatusResp.OK, levels);
 			return resp;
