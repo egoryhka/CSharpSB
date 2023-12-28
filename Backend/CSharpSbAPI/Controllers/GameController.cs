@@ -27,5 +27,13 @@ namespace CSharpSbAPI.Controllers
 			int.TryParse(User?.FindFirst("Id")?.Value, out var userId);
 			return _gameService.NextLevel(levelId, userId);
 		}
+
+
+		[HttpGet("resetCode/{levelId}")]
+		public Response ResetCode(int levelId)
+		{
+			int.TryParse(User?.FindFirst("Id")?.Value, out var userId);
+			return _gameService.ResetCode(levelId, userId);
+		}
 	}
 }

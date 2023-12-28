@@ -87,7 +87,7 @@ namespace CSharpSbAPI.Services
 			return new Response<TestResult>(StatusResp.OK, testResult);
 		}
 
-		public Response ResetCode(int userId, int levelId)
+		public Response ResetCode(int levelId, int userId)
 		{
 			var levelRes = _levelService.GetItem(levelId);
 			if (levelRes.Status != StatusResp.OK) return levelRes;
