@@ -53,6 +53,26 @@ export interface CourseLevelInfo {
     start: boolean;
     end: boolean;
     code: string;
+    nextLevelId?: string;
+    prevLevelId?: string;
+}
+
+export interface CodeCheckResult {
+    errors: string[];
+    outputs: CodeCheckOutputResult[];
+    status: CheckCodeStatusTypes;
+}
+
+export interface CodeCheckOutputResult {
+    isCorrect: boolean;
+    expected: string;
+    real: string;
+}
+
+export enum CheckCodeStatusTypes {
+    Error,
+    Failure,
+    Success,
 }
 
 export interface CourseInfo {

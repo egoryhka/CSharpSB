@@ -48,12 +48,14 @@ namespace CSharpSbAPI.Services
 				{
 					LevelId = nextLevel.Id,
 					UserCourse = userCourse,
+					Status = Status.Current,
+					TimeStart = DateTime.Now,
 				});
 
 				if (res.Status != StatusResp.OK) return res;
 			}
 
-			return Response.OK;
+			return new Response<int>(StatusResp.OK, nextLevel.Id);
 		}
 
 		public Response TestCode(int userId, int levelId, string code)
