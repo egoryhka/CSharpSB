@@ -16,7 +16,11 @@ namespace CodeCompilerLibrary.Tests
             using System.Linq;
             using System.Text;
             using System.Threading.Tasks;
-            
+            using System.Runtime.InteropServices;
+			using System.Windows;
+			using System.Windows.Forms;
+			using System.IO;
+
             public class Program 
             {{
             	public static void Main()
