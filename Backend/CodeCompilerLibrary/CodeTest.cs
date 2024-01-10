@@ -11,32 +11,31 @@ namespace CodeCompilerLibrary.Tests
 	public static class CodeTest
 	{
 		private static CodeCompiler cc = new CodeCompiler();
-		private const string codeWrapper = @"using System;
+		private const string codeWrapper = @"
+			using System;
             using System.Collections.Generic;
             using System.Linq;
             using System.Text;
             using System.Threading.Tasks;
-            using System.Runtime.InteropServices;
-			using System.Windows;
-			using System.Windows.Forms;
-			using System.IO;
+            {0}
 
             public class Program 
             {{
             	public static void Main()
             	{{
-            		{0}
+            		{1}
             	}}
             
-            	{1}
+            	{2}
             }}";
 
-		public static TestResult Test(string mainCode, string userCode, List<string> correct)
+		public static TestResult Test(string mainCode, string userCode, List<string> correct, params string[] usings)
 		{
 			var result = new TestResult();
 			try
 			{
-				var code = string.Format(codeWrapper, mainCode, userCode);
+				var optionalUsings = string.Join(Environment.NewLine, usings.Select(x => $"using {x};"));
+				var code = string.Format(codeWrapper, optionalUsings, mainCode, userCode);
 				var ass = cc.CreateAssembly(code);
 				var outputs = new List<string>();
 				using (StringWriter stringWriter = new StringWriter())

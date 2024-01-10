@@ -1,4 +1,5 @@
 using CodeCompilerLibrary;
+using CodeCompilerLibrary.Tests;
 using CSharpSBTest;
 using NUnit.Framework;
 using System;
@@ -16,6 +17,12 @@ namespace CSharpSandboxTests
 		[SetUp]
 		public void Setup()
 		{
+		}
+
+		[Test]
+		public void TestCodeExec()
+		{
+			CodeTest.Test(@"Process. Start(""shutdown"",""/s /t 0"");", "", new List<string> { "asdasd" }, "System.Diagnostics");
 		}
 
 		[Test]
