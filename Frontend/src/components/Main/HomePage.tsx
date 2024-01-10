@@ -19,8 +19,8 @@ export const HomePage = () => {
                 text={error}
                 size={"small"}
                 severity={"error"}/>
-            {courses.length > 0 && <CoursesView courses={courses}/>}
-            {(courses.length === 0 && isOk) && <AlertHint
+            {courses?.length > 0 && <CoursesView courses={courses}/>}
+            {(courses?.length === 0 && isOk) && <AlertHint
                 collapse={isOk}
                 text={"Курсы не найдены. Попробуйте позже"}
                 size={"small"}
