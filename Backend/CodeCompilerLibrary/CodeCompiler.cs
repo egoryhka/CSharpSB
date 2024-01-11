@@ -18,11 +18,11 @@ namespace CodeCompilerLibrary
 		/// </summary>
 		public CodeCompiler(params string[] neededAssemblies)
 		{
-			var trustedAssembliesPaths = ((string)AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES")).Split(Path.PathSeparator);
+			var trustedAssembliesPaths = ((string)AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES")!).Split(Path.PathSeparator);
 
 			trustedAssembliesPaths
 				.Where(p => neededAssemblies.Length == 0 || neededAssemblies.Contains(Path.GetFileNameWithoutExtension(p)))
-				.Select(x => x).ToList().ForEach(p => references.Add(MetadataReference.CreateFromFile(p)));
+				.ToList().ForEach(p => references.Add(MetadataReference.CreateFromFile(p)));
 		}
 
 		public Assembly CreateAssembly(string code)

@@ -34,7 +34,11 @@ namespace CodeCompilerLibrary.Tests
 			var result = new TestResult();
 			try
 			{
-				var optionalUsings = string.Join(Environment.NewLine, usings.Select(x => $"using {x};"));
+				var optionalUsings =
+					string.Join(Environment.NewLine, usings.Select(x => $"using {x};")) + Environment.NewLine +
+					string.Join(Environment.NewLine, mainCode.GetInCommentUsings().Select(x => $"using {x};")) + Environment.NewLine +
+					string.Join(Environment.NewLine, userCode.GetInCommentUsings().Select(x => $"using {x};"));
+
 				var code = string.Format(codeWrapper, optionalUsings, mainCode, userCode);
 				var ass = cc.CreateAssembly(code);
 				var outputs = new List<string>();
