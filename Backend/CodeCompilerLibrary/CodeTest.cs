@@ -53,9 +53,11 @@ namespace CodeCompilerLibrary.Tests
 					Console.SetOut(standardOutput);
 				}
 
-				for (int i = 0; i < Math.Max(correct.Count(), outputs.Count); i++)
+				for (int i = 0; i < correct.Count(); i++)
 				{
-					var compareRes = new Output(outputs[i] ?? "", correct[i] ?? "", (outputs[i] ?? "") == (correct[i] ?? ""));
+					var exp = correct[i] ?? "";
+					var real = i < outputs.Count ? outputs[i] ?? "" : "";
+					var compareRes = new Output(real, exp, exp == real);
 					result.Outputs.Add(compareRes);
 				}
 
