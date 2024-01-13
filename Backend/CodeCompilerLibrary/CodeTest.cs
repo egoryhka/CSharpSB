@@ -55,10 +55,11 @@ namespace CodeCompilerLibrary.Tests
 
 				for (int i = 0; i < Math.Max(correct.Count(), outputs.Count); i++)
 				{
-					result.Outputs.Add(new Output(outputs[i] ?? "", correct[i] ?? "", (outputs[i] ?? "") == (correct[i] ?? "")));
+					var compareRes = new Output(outputs[i] ?? "", correct[i] ?? "", (outputs[i] ?? "") == (correct[i] ?? ""));
+					result.Outputs.Add(compareRes);
 				}
 
-				result.Status = TestResultStatus.Success;
+				result.Status = result.Outputs.Any(x => !x.IsCorrect) ? TestResultStatus.Failure : TestResultStatus.Success;
 			}
 			catch (Exception ex)
 			{
