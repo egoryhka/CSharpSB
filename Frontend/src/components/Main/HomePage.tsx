@@ -19,7 +19,8 @@ export const HomePage = () => {
                 text={error}
                 size={"small"}
                 severity={"error"}/>
-            {courses?.length > 0 && <CoursesView courses={courses}/>}
+            <CoursesView courses={[{name: "cc", id: 1, users: [{name: "123", id: "1", logo: ""}]}]}/>
+            {courses?.length > 0 && <CoursesView courses={[{name: "cc", id: 1, users: [{name: "123", id: "1", logo: ""}]}]}/>}
             {(courses?.length === 0 && isOk) && <AlertHint
                 collapse={isOk}
                 text={"Курсы не найдены. Попробуйте позже"}

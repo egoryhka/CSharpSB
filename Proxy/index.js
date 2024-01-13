@@ -29,25 +29,18 @@ app.use("/api", createProxyMiddleware({
     changeOrigin: true,
 }));
 
-console.log("Use frontend dev-server mode")
-app.use("*", createProxyMiddleware({
-    target: FRONTEND_TARGET,
-    changeOrigin: true,
-    ws: true
-}));
-//
-// if (process.env.ENV === "production") {
-//     console.log("Use frontend production mode");
-//     app.get("*", (req, res) => {
-//         res.sendFile(path.join(__dirname, "build", "index.html"));
-//     });
-// } else {
-//     console.log("Use frontend dev-server mode")
-//     app.use(createProxyMiddleware({
-//         target: FRONTEND_TARGET,
-//         changeOrigin: true,
-//     }));
-// }
+if (process.env.ENV === "production") {
+    console.log("Use frontend production mode");
+    app.get("*", (req, res) => {
+        res.sendFile(path.join(__dirname, "build", "index.html"));
+    });
+} else {
+    console.log("Use frontend dev-server mode")
+    app.use(createProxyMiddleware({
+        target: FRONTEND_TARGET,
+        changeOrigin: true,
+    }));
+}
 
 
 

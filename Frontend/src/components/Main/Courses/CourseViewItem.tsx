@@ -1,19 +1,19 @@
-import {Avatar, AvatarGroup, Box, Grid, Typography} from "@mui/material";
+import {Avatar, AvatarGroup, Box, Card, Grid, Typography} from "@mui/material";
 import {Link} from "react-router-dom";
 import React from "react";
 import {ICourse} from "../../../api/ConferenceTimeLine/getConferencesTimeLine";
 import {CustomTooltip} from "../../utils/CustomTooltip/CustomTooltip";
-import {blue} from "@mui/material/colors";
+import {blue, green} from "@mui/material/colors";
 
 export const CourseViewItem = ({name, id, users, description}: ICourse) => {
-    const BGColor = blue[100];
+    const BGColor = blue[400];
 
     return (
-        <Grid key={id} component={Link} replace to={`course/${id}`} item
-              bgcolor={BGColor} sx={{width: "100%", height: 80, opacity: .8, borderRadius: 5, padding: 1}}>
+        <Card key={id} component={Link} replace to={`course/${id}`}
+               sx={{width: "100%", opacity: .8, borderRadius: 5, padding: 1, borderColor: BGColor}}>
             <Box sx={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
                 <Grid>
-                    <Typography variant={"h5"}>С# {name}</Typography>
+                    <Typography display={"inline"} variant={"h5"} color={green[700]}>C# {" "}</Typography><Typography display={"inline"} variant={"h5"} color={BGColor}>{name}</Typography>
                 </Grid>
                 <AvatarGroup total={users.length ?? 0}>
                     {users.map(user =>
@@ -26,6 +26,6 @@ export const CourseViewItem = ({name, id, users, description}: ICourse) => {
                 </AvatarGroup>
             </Box>
 
-        </Grid>
+        </Card>
     )
 }
