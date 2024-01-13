@@ -16,7 +16,7 @@ const ANALYZE_SERVICE_PORT = JSON.parse(config).ANALYZE_SERVICE_PORT;
 
 //
 // const HOST = JSON.parse(config).HOST || "localhost";
-const HOST = "192.168.0.127";
+const HOST = "127.0.0.1" ?? "192.168.0.127";
 const BACKEND_TARGET = `http://${HOST}:5000`;
 const ORIGIN = `http://${HOST}:${FRONTEND_PORT}`;
 const ANALYZE_SERVICE = `http://${HOST}:${ANALYZE_SERVICE_PORT}`;

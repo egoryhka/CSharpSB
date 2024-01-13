@@ -5,7 +5,6 @@ import {Editor} from "@monaco-editor/react";
 import {ApiProvider} from "../../../../../api/BaseResponse";
 import {useTypeSelector} from "../../../../utils/Hooks/UseTypeSelector";
 import {
-    Alert,
     Box,
     Button,
     Card,
@@ -50,9 +49,9 @@ export const LevelPage = () => {
     const [loadingResult, setLoadingResult] = useState(false);
     const [checkStatus, setCheckStatus] = useState<CodeCheckResult | null>(null);
 
-    const userLoading = useTypeSelector(store => store.authUser.loading);
+    const [editMode, setEditMode] = useState(false);
 
-    console.log("routeParams", routeParams);
+    const userLoading = useTypeSelector(store => store.authUser.loading);
 
     // const goToLevel = async () => {
     //     navigate('/course/' + courseId + "/level/" + id);
@@ -64,14 +63,6 @@ export const LevelPage = () => {
         if (!userLoading) {
             void fetchLevelInfo();
         }
-
-        // window.onmessage = function (e) {
-        //     console.log(e)
-        //     if (e.data && e.data.language) {
-        //         console.log(e.data)
-        //         // handle the e.data which contains the code object
-        //     }
-        // }
     }, [userLoading, routeParams.levelId]);
 
     useEffect(() => {
@@ -135,6 +126,10 @@ export const LevelPage = () => {
         navigate(`/course/${routeParams?.courseId}`)
     };
 
+    const goToEditLevel = () => {
+        navigate(`/course/${routeParams?.courseId}/level/${routeParams?.levelId}/edit`);
+    };
+
     return (
         <>
             {levelInfo?.name ?
@@ -146,6 +141,9 @@ export const LevelPage = () => {
                         </Tooltip>
 
                         <Typography variant={"h4"}>{levelInfo?.name}</Typography>
+
+                        {levelInfo.levelStatus === LevelStatus.Admin &&
+                            <Button onClick={goToEditLevel} variant={"contained"}>Редактировать</Button>}
 
                         <Tooltip title={"Следующий уровень"}>
                             <IconButton disabled={!levelInfo?.nextLevelId} color={"primary"} size={"large"}
@@ -161,7 +159,8 @@ export const LevelPage = () => {
             {levelInfo?.levelStatus === LevelStatus.Completed ?
                 <AlertHint text={"Этот уровень уже пройден!"} collapse={true}
                            size={"medium"} severity={"success"} closeHandler={goToNextLevel}
-                           actionIcon={<CustomTooltip text={"Перейти на следующий уровень"}><ForwardIcon/></CustomTooltip>}/>
+                           actionIcon={<CustomTooltip
+                               text={"Перейти на следующий уровень"}><ForwardIcon/></CustomTooltip>}/>
                 : null}
 
             <br/>
@@ -179,8 +178,23 @@ export const LevelPage = () => {
                     <Typography variant={"h6"}>Впиши своё решение в редактор:</Typography>
                     <br/>
                     <br/>
-                    <Editor height="200px" defaultLanguage="csharp" value={code}
-                            onChange={e => setCode(e ?? "")}/>
+
+                    {levelInfo.mainCode ?
+                        <>
+                            <Typography variant={"h6"}>Основной код, который должен выполнится</Typography>
+                            <Editor height="200px" defaultLanguage="csharp" value={levelInfo.mainCode}
+                                    options={{readOnly: true}}/>
+                            <br/>
+                            <Divider  />
+                            <br/>
+                            <Typography variant={"h6"}>Твой код</Typography>
+                            <Editor height="200px" defaultLanguage="csharp" value={code}
+                                    onChange={e => setCode(e ?? "")}/>
+                        </> : <Editor height="200px" defaultLanguage="csharp" value={code}
+                                      onChange={e => setCode(e ?? "")}/>
+                    }
+
+
                     <Box sx={{display: "flex", justifyContent: "space-between", marginTop: 2}}>
                         <Button startIcon={<SendIcon/>} onClick={sendCode} variant={"contained"}>Отправить на
                             проверку</Button>
@@ -268,7 +282,8 @@ export const LevelPage = () => {
                             уровень</Button> : null}
                 </Card> : null}
 
-            <Button startIcon={<ReplyIcon/>} onClick={goToCourse} variant={"contained"} size={"large"}>Вернуться на курс</Button>
+            <Button startIcon={<ReplyIcon/>} onClick={goToCourse} variant={"contained"} size={"large"}>Вернуться на
+                курс</Button>
             {/*<iframe*/}
             {/*    frameBorder="0"*/}
             {/*    height="450px"*/}
