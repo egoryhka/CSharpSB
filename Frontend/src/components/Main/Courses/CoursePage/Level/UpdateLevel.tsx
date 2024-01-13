@@ -54,7 +54,7 @@ export default () => {
 
     const fetchLevelInfo = async () => {
         setLoading(true);
-        const data = await SBApi.withAuthorization(token as string).get<CourseLevelInfo>(`course/${routeParams?.courseId as string}/level/${routeParams?.levelId as string}`);
+        const data = await SBApi.withAuthorization(token as string).get<CourseLevelInfo>(`course/${routeParams?.courseId as string}/level/${routeParams?.levelId as string}/edit`);
         if (data.isOk) {
             if (data.data.levelStatus !== LevelStatus.Admin) {
                 navigate(`/permissiondenied`);
