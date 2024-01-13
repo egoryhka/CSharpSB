@@ -16,7 +16,6 @@ export const CoursesView = ({courses}: CoursesViewProps) => {
             <Typography component="h2" variant="h5">Список курсов:</Typography>
             <Box sx={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
                 <Typography>{dateNow.toLocaleDateString()}</Typography>
-                <Typography>{dateAfterMonth}</Typography>
             </Box>
             <Grid container columns={30} rowGap={1}>
                 {courses.map(CourseViewItem)}

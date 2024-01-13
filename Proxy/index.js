@@ -18,8 +18,7 @@ const ANALYZE_SERVICE_PORT = JSON.parse(config).ANALYZE_SERVICE_PORT;
 // const HOST = JSON.parse(config).HOST || "localhost";
 const HOST = "127.0.0.1" ?? "192.168.0.127";
 const BACKEND_TARGET = `http://${HOST}:5000`;
-const ORIGIN = `http://${HOST}:${FRONTEND_PORT}`;
-const ANALYZE_SERVICE = `http://${HOST}:${ANALYZE_SERVICE_PORT}`;
+const FRONTEND_TARGET = `http://${HOST}:${FRONTEND_PORT}`;
 
 app.use(cors());
 app.use(morgan('dev'));
@@ -30,18 +29,25 @@ app.use("/api", createProxyMiddleware({
     changeOrigin: true,
 }));
 
-if (process.env.ENV === "production") {
-    console.log("Use frontend production mode");
-    app.get("*", (req, res) => {
-        res.sendFile(path.join(__dirname, "build", "index.html"));
-    });
-} else {
-    console.log("Use frontend dev-server mode")
-    app.use(createProxyMiddleware({
-        target: ORIGIN,
-        changeOrigin: true,
-    }));
-}
+console.log("Use frontend dev-server mode")
+app.use("*", createProxyMiddleware({
+    target: FRONTEND_TARGET,
+    changeOrigin: true,
+    ws: true
+}));
+//
+// if (process.env.ENV === "production") {
+//     console.log("Use frontend production mode");
+//     app.get("*", (req, res) => {
+//         res.sendFile(path.join(__dirname, "build", "index.html"));
+//     });
+// } else {
+//     console.log("Use frontend dev-server mode")
+//     app.use(createProxyMiddleware({
+//         target: FRONTEND_TARGET,
+//         changeOrigin: true,
+//     }));
+// }
 
 
 
