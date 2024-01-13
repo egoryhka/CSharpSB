@@ -96,11 +96,11 @@ export const LevelPage = () => {
     }
 
     const nextLevel = async () => {
-        navigate(`/course/${levelInfo?.id}/level/${levelInfo?.nextLevelId ?? "2"}`)
+        navigate(`/course/${levelInfo?.id}/level/${levelInfo?.next?.id ?? "2"}`)
     };
 
     const prevLevel = async () => {
-        navigate(`/course/${levelInfo?.id}/level/${levelInfo?.prevLevelId ?? "2"}`)
+        navigate(`/course/${levelInfo?.id}/level/${levelInfo?.prev?.id ?? "2"}`)
     };
 
     const getTip = async () => {
@@ -136,7 +136,7 @@ export const LevelPage = () => {
                 <>
                     <Box sx={{display: "flex", justifyContent: "space-between"}}>
                         <Tooltip title={"Предыдущий уровень"}>
-                            <IconButton disabled={!levelInfo?.prevLevelId} color={"primary"} size={"large"}
+                            <IconButton disabled={!levelInfo?.prev?.id} color={"primary"} size={"large"}
                                         onClick={() => prevLevel()}><KeyboardArrowLeftIcon/></IconButton>
                         </Tooltip>
 
@@ -146,7 +146,7 @@ export const LevelPage = () => {
                             <Button onClick={goToEditLevel} variant={"contained"}>Редактировать</Button>}
 
                         <Tooltip title={"Следующий уровень"}>
-                            <IconButton disabled={!levelInfo?.nextLevelId} color={"primary"} size={"large"}
+                            <IconButton disabled={!levelInfo?.next?.id} color={"primary"} size={"large"}
                                         onClick={() => nextLevel()}><KeyboardArrowRightIcon/></IconButton>
                         </Tooltip>
                     </Box>
@@ -179,7 +179,7 @@ export const LevelPage = () => {
                     <br/>
                     <br/>
 
-                    {levelInfo.mainCode ?
+                    {levelInfo.mainCode && levelInfo.userCode ?
                         <>
                             <Typography variant={"h6"}>Основной код, который должен выполнится</Typography>
                             <Editor height="200px" defaultLanguage="csharp" value={levelInfo.mainCode}

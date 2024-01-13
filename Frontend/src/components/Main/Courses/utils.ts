@@ -53,8 +53,9 @@ export interface CourseLevelInfo {
     start: boolean;
     end: boolean;
     code: string;
-    nextLevelId?: string;
-    prevLevelId?: string;
+    next?: CourseLevelInfo;
+    prev?: CourseLevelInfo;
+    expResultsJson?: string;
 }
 
 export interface CodeCheckResult {

@@ -56,17 +56,16 @@ export default () => {
         setLoading(true);
         const data = await SBApi.withAuthorization(token as string).get<CourseLevelInfo>(`course/${routeParams?.courseId as string}/level/${routeParams?.levelId as string}/edit`);
         if (data.isOk) {
-            if (data.data.levelStatus !== LevelStatus.Admin) {
-                navigate(`/permissiondenied`);
-            } else {
-                setLevelInfo(data.data);
-                setHelpText(data.data.helpText);
-                setMainCodeValue(data.data.mainCode);
-                setUserCodeValue(data.data.userCode);
-                setName(data.data.name);
-                setDescription(data.data.description);
-                setId(data.data.id);
-            }
+            setLevelInfo(data.data);
+            setHelpText(data.data.helpText);
+            setMainCodeValue(data.data.mainCode);
+            setUserCodeValue(data.data.userCode);
+            setName(data.data.name);
+            setDescription(data.data.description);
+            setId(data.data.id);
+            const expResultsJson = JSON.parse(data.data.expResultsJson ?? "") as string[];
+            const a = expResultsJson.map((e, i) => ({order: i, value: e}));
+            setResultOutputCode(a);
         }
         setLoading(false);
     }
@@ -84,7 +83,19 @@ export default () => {
                 .sort(o => o.order)
                 .map(o => o.value));
             const data = await SBApi.withAuthorization(token).post(`course/${routeParams.courseId}/level/update`,
-                {data: {name, description, helpText, compileResult: executeResult, mainCode: mainCodeValue, userCode: userCodeValue, id: id}});
+                {
+                    data: {
+                        ...levelInfo,
+                        name,
+                        description,
+                        helpText,
+                        expResultsJson: executeResult,
+                        mainCode: mainCodeValue,
+                        userCode: userCodeValue,
+                        id: id,
+                        courseId: routeParams.courseId
+                    }
+                });
             if (data.isOk) {
                 navigate('/course/' + routeParams.courseId);
             }
