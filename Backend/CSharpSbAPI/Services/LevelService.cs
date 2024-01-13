@@ -13,6 +13,18 @@ namespace CSharpSbAPI.Services
 		{
 		}
 
+		public Response GetLevelEdit(int levelId, int userId)
+		{
+			var level = _context.Levels.Find(levelId);
+			if (level == null) return new Response(StatusResp.ClientError, errors: "Уровень не найден");
+
+			var userCourse = _context.UserCourses.FirstOrDefault(x => x.UserId == userId & x.CourseId == level.CourseId);
+			if(userCourse == null || userCourse.Role != Role.Owner) return new Response(StatusResp.ClientError, errors: "Запрещено");
+
+			var resp = new Response<Level>(StatusResp.OK, level);
+			return resp;
+		}
+
 		public Response GetLevel(int levelId, int userId)
 		{
 			var level = _context.Levels.Find(levelId);

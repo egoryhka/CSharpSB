@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSharpSbAPI.Services
 {
-    public abstract class CrudService<T> where T : class, IItem
+	public abstract class CrudService<T> where T : class, IItem
 	{
 		protected readonly CSharpSbDbContext _context;
 
@@ -39,7 +39,7 @@ namespace CSharpSbAPI.Services
 		public virtual Response UpdateItem(T item)
 		{
 			var exist = _context.Set<T>().Find(item.Id);
-			if (exist == null) return new Response(StatusResp.ClientError,errors: "Не найден");
+			if (exist == null) return new Response(StatusResp.ClientError, errors: "Не найден");
 
 			var res = ValidateUpdate(item);
 			if (res.Status != StatusResp.OK) return res;
