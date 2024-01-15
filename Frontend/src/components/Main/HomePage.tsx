@@ -11,8 +11,8 @@ export const HomePage = () => {
     const {courses, loading, error, isOk} = useFetchCourses();
     return (
         <div>
-            <Typography variant={"h4"} component={"h5"}>Сервис правильного питания - призван помочь людям изучать языки
-                программирования. Пока ток шарп остальное в будущий версиях</Typography>
+            <Typography variant={"h4"} component={"h5"}>Сервис SbSharp - призван помочь людям изучать языки
+                программирования. Пока только C#, остальное в будущий версиях</Typography>
             {loading ? <Loader text={"Загружаем курсы"}/> : null}
             <AlertHint
                 collapse={Boolean(error)}

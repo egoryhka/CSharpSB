@@ -11,7 +11,9 @@ export const Level = ({id, name, description, helpText, order, courseId, userRol
     const navigate = useNavigate();
 
     const goToLevel = async () => {
-        navigate('/course/' + courseId + "/level/" + id);
+        if (levelStatus !== LevelStatus.Closed && levelStatus != null) {
+            navigate('/course/' + courseId + "/level/" + id);
+        }
     }
 
     const {defaultColor, hover} = getBGColorByStatus(levelStatus);
@@ -28,7 +30,7 @@ export const Level = ({id, name, description, helpText, order, courseId, userRol
             transition: "all .5s ease",
             backgroundColor: defaultColor,
             ":hover": {
-                backgroundColor: levelStatus === LevelStatus.Closed ? defaultColor : hover,
+                backgroundColor: (levelStatus === LevelStatus.Closed) ? defaultColor : hover,
             }
         }}>
             <Typography variant={"h6"}>{order + ". " + name}</Typography>

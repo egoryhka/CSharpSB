@@ -16,7 +16,7 @@ const ANALYZE_SERVICE_PORT = JSON.parse(config).ANALYZE_SERVICE_PORT;
 
 //
 // const HOST = JSON.parse(config).HOST || "localhost";
-const HOST = "127.0.0.1" ?? "192.168.0.127";
+const HOST = "192.168.0.127";
 const BACKEND_TARGET = `http://${HOST}:5000`;
 const FRONTEND_TARGET = `http://${HOST}:${FRONTEND_PORT}`;
 
@@ -29,20 +29,9 @@ app.use("/api", createProxyMiddleware({
     changeOrigin: true,
 }));
 
-if (process.env.ENV === "production") {
-    console.log("Use frontend production mode");
-    app.get("*", (req, res) => {
-        res.sendFile(path.join(__dirname, "build", "index.html"));
-    });
-} else {
-    console.log("Use frontend dev-server mode")
-    app.use(createProxyMiddleware({
-        target: FRONTEND_TARGET,
-        changeOrigin: true,
-    }));
-}
-
-
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "build", "index.html"));
+});
 
 if (!PROXY_PORT) {
     throw new Error("PROXY_PORT is not defined in ../services.launch.json")

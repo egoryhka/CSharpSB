@@ -75,7 +75,7 @@ export const LevelPage = () => {
         const data = await SBApi.withAuthorization(token as string).get<CourseLevelInfo>(`course/${routeParams?.courseId as string}/level/${routeParams?.levelId as string}`);
         if (data.isOk) {
             setLevelInfo(data.data);
-            setCode(data.data.code ?? data.data.userCode ?? data.data.mainCode);
+            setCode(data.data.code || data.data.userCode || data.data.mainCode);
         }
         setLoading(false);
     }
