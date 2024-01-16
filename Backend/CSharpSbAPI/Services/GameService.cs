@@ -81,7 +81,8 @@ namespace CSharpSbAPI.Services
 			var testResult = CodeTest.Test(mainCode, userCode, correctOutputs);
 
 			progress.Code = code;
-			if (testResult.Status == TestResultStatus.Success) progress.Status = Status.Completed;
+			if (testResult.Status == TestResultStatus.Success &&
+				userCourse.Role != Role.Owner) progress.Status = Status.Completed;
 			_context.SaveChanges();
 
 			return new Response<TestResult>(StatusResp.OK, testResult);
